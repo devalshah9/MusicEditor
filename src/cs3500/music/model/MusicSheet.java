@@ -32,8 +32,8 @@ public class MusicSheet {
    * individually which will make the index 0 every single add operation. Thus, the special case
    * boolean prevents this from happening.
    * Adding notes works as such: The method, if given proper indices that are not out of bounds,
-   * will add a beginnning note to the starting beat of the HashMap, and will add a sustain to
-   * every part of the HashMap indexed until the value beat + duration is reached. If the
+   * will add a beginnning note to the starting beat of the TreeMap, and will add a sustain to
+   * every part of the TreeMap indexed until the value beat + duration is reached. If the
    * note runs into a beginning note of the same pitch and octave before beat + duration is reached,
    * the method will cease. If the beginning note occurs during a sustain of the same note at that
    * beat, the sustain will be overwritten by a beginning note and the normal add process until
