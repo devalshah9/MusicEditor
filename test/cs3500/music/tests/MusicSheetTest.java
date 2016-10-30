@@ -1,15 +1,20 @@
-package cs3500.music.model;
+package cs3500.music.tests;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import cs3500.music.model.MusicSheet;
+import cs3500.music.model.Note;
+import cs3500.music.model.Octave;
+import cs3500.music.model.Pitch;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Created by akati on 10/18/2016.
+ * Tests for the MusicSheet cass.
  */
 public class MusicSheetTest {
 

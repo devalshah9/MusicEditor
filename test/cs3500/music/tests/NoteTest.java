@@ -1,4 +1,4 @@
-package cs3500.music.model;
+package cs3500.music.tests;
 
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ import cs3500.music.model.Pitch;
 
 import static org.junit.Assert.assertEquals;
 /**
- * Created by akati on 10/18/2016.
+ * Tests for the Note class.
  */
 public class NoteTest {
 

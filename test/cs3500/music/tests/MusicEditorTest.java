@@ -1,11 +1,17 @@
-package cs3500.music.model;
+package cs3500.music.tests;
 
 import org.junit.Test;
 
+import cs3500.music.model.MusicEditor;
+import cs3500.music.model.Note;
+import cs3500.music.model.Octave;
+import cs3500.music.model.Pitch;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * Tests for the MusicEditor class.
+ */
 public class MusicEditorTest {
 
   Note note1 = new Note(Pitch.A, Octave.FIVE, true);

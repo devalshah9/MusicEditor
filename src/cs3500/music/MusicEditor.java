@@ -22,4 +22,3 @@ public class MusicEditor {
     // You probably need to connect these views to your model, too...
   }
 }
-*/
