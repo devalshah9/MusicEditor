@@ -228,84 +228,9 @@ public class MusicSheet {
     return furthestBeat + 1;
   }
 
-
   //Sorts a list of notes based on their pitch and octave, lowest to highest.
   public void sortListOfNotes(ArrayList<Note> notes) {
     Collections.sort(notes);
-  }
-
-  //Overrides toString, creating a String that starts with all of the present notes on the
-  //first line, following by as many beast as required to reach the farthest beat, padded with
-  //spaces. The beginnings of notes are marked by X, and a sustain is marked by |. A rest is
-  //simply a space. If there are no notes in the piece, the message "No notes to present"
-  //will be returned instead.
-  @Override
-  public String toString() {
-    ArrayList<Note> notes = new ArrayList<Note>();
-    for (Octave oct : Octave.values()) {
-      for (Pitch pit : Pitch.values()) {
-        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
-          break;
-        }
-        notes.add(new Note(pit, oct, false));
-      }
-    }
-    String result = "";
-    if (this.getFurthestBeat() == -1 || this.getHighestNote() == null
-            || this.getLowestNote() == null) {
-      return "No notes to present.";
-    }
-
-    int beginIndex = notes.indexOf(this.getLowestNote());
-    int endIndex = notes.indexOf(this.getHighestNote());
-    List<Note> newNotes = notes.subList(beginIndex, endIndex + 1);
-    int columnLength = 5;
-    result = result + "\n";
-    ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
-    int beatNumberColumnLength = String.valueOf(this.getFurthestBeat()).toString().length();
-    for (int n = 0; n < beatNumberColumnLength; n++) {
-      result = result + " ";
-    }
-    result = result + "  ";
-    for (int n = 0; n < newNotes.size(); n++) {
-      result = result + newNotes.get(n).toString();
-      for (int i = newNotes.get(n).toString().length(); i < 5; i++) {
-        result = result + " ";
-      }
-    }
-    result = result + "\n";
-    for (int n = 0; n < this.getFurthestBeat(); n++) {
-      beatNumbers.add(n);
-    }
-    for (int n = 0; n < beatNumbers.size(); n++) {
-      Integer p = beatNumbers.get(n);
-      for (int i = beatNumberColumnLength; i > p.toString().length(); i--) {
-        result = result + " ";
-      }
-      result = result + (beatNumbers.get(n));
-      result = result + "  ";
-      if (!(this.beats.containsKey(beatNumbers.get(n)))) {
-        for (int j = 0; j < newNotes.size(); j++) {
-          result = result + "     ";
-        }
-      } else {
-        for (int j = 0; j < newNotes.size(); j++) {
-          if (this.beats.get(beatNumbers.get(n)).contains(newNotes.get(j))) {
-            int indexNote = this.beats.get(beatNumbers.get(n)).indexOf(newNotes.get(j));
-            if (this.beats.get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
-              result = result + "X" + "    ";
-            } else {
-              result = result + "|" + "    ";
-            }
-          } else {
-            result = result + "     ";
-          }
-        }
-      }
-      result = result + "\n";
-    }
-
-    return result;
   }
 
   /**

@@ -100,19 +100,4 @@ public interface IMusicEditor<MusicSheet> {
    */
   public void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
-
-  /**
-   * This method gets the state of the music sheet at the given index, provided the index was in
-   * bounds of the music editor. The format is the note names at the top ordered by octave and pitch
-   * and the beat numbers padded to the left by spaces with as many columns as needed by the highest
-   * beat number. A beginning note is marked by an x, and a sustain note is marked by a |.
-   * If there are no notes currently written, the method will return "No notes to present.".
-   *
-   * @param index The sheet to get the state of.
-   * @return A String with the state of the music sheet.
-   * @throws IllegalArgumentException If the index is out of bounds.
-   */
-  public String getSheetState(int index) throws IllegalArgumentException;
-
-
 }

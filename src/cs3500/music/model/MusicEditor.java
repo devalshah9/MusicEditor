@@ -173,13 +173,5 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
   }
 
 
-  @Override
-  public String getSheetState(int index) throws IllegalArgumentException {
-    if (index > this.sheets.size() - 1 || index < 0) {
-      throw new IllegalArgumentException("Invalid index.");
-    } else {
-      return this.sheets.get(index).toString();
-    }
-  }
 }
 
