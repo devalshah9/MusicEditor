@@ -5,6 +5,7 @@ import javax.sound.midi.*;
 /**
  * A skeleton for MIDI playback
  */
+
 public class MidiViewImpl implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
@@ -49,6 +50,7 @@ public class MidiViewImpl implements IMusicView {
    *   </a>
    */
 
+
   public void playNote() throws InvalidMidiDataException {
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, 0, 60, 64);
@@ -57,3 +59,4 @@ public class MidiViewImpl implements IMusicView {
     this.receiver.close(); // Only call this once you're done playing *all* notes
   }
 }
+
