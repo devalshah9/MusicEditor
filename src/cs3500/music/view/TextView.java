@@ -2,6 +2,7 @@ package cs3500.music.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.MusicSheet;
@@ -16,11 +17,8 @@ public class TextView implements IMusicView{
 
   @Override
   public void renderSong(IMusicEditor model, int index) throws IllegalArgumentException{
-    if (index > model.sheets.size() - 1 || index < 0) {
-      throw new IllegalArgumentException("Invalid index.");
-    } else {
-      return model.sheets.get(index).renderNotes();
-    }
+    MusicSheet sheet = (MusicSheet) model.getSheet(index);
+    String result = renderNotes(sheet);
   }
 
   /**
@@ -75,15 +73,15 @@ public class TextView implements IMusicView{
       }
       result = result + (beatNumbers.get(n));
       result = result + "  ";
-      if (!(sheet.beats.containsKey(beatNumbers.get(n)))) {
+      if (!(sheet.getBeats().containsKey(beatNumbers.get(n)))) {
         for (int j = 0; j < newNotes.size(); j++) {
           result = result + "     ";
         }
       } else {
         for (int j = 0; j < newNotes.size(); j++) {
-          if (sheet.beats.get(beatNumbers.get(n)).contains(newNotes.get(j))) {
-            int indexNote = sheet.beats.get(beatNumbers.get(n)).indexOf(newNotes.get(j));
-            if (sheet.beats.get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
+          if (sheet.getBeats().get(beatNumbers.get(n)).contains(newNotes.get(j))) {
+            int indexNote = sheet.getBeats().get(beatNumbers.get(n)).indexOf(newNotes.get(j));
+            if (sheet.getBeats().get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
               result = result + "X" + "    ";
             } else {
               result = result + "|" + "    ";

@@ -172,6 +172,16 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
 
   }
 
+  public MusicSheet getSheet(int sheetIndex)
+          throws IllegalArgumentException{
+    if (this.sheets.contains(sheetIndex)) {
+      return (this.sheets.get(sheetIndex));
+    }
+    else {
+      throw new IllegalArgumentException("invalid index.");
+    }
+  }
+
 
 }
 

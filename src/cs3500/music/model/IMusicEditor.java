@@ -1,5 +1,8 @@
 package cs3500.music.model;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 /**
  * This is the interface for a MusicEditor model. It's parameterized over
  * the parameter MusicSheet.
@@ -100,4 +103,8 @@ public interface IMusicEditor<MusicSheet> {
    */
   public void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
+
+  public MusicSheet getSheet (int index) throws IllegalArgumentException;
 }
+
+
