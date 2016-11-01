@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import cs3500.music.view.MusicGraphicsFrame;
+import cs3500.music.view.GuiViewFrame;
 import cs3500.music.view.MidiViewImpl;
 
 /**
-import cs3500.music.view.MusicGraphicsFrame;
+import cs3500.music.view.GuiViewFrame;
 import cs3500.music.view.MidiViewImpl;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import javax.sound.midi.InvalidMidiDataException;
 
 public class MusicEditor {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    MusicGraphicsFrame view = new MusicGraphicsFrame();
+    GuiViewFrame view = new GuiViewFrame();
     MidiView midiView = new MidiViewImpl();
 
 
