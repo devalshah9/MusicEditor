@@ -13,6 +13,7 @@ public class MusicGraphicsFrame extends JFrame implements IMusicView {
   private final NotesPanel displayPanel; // You may want to refine this to a subtype of JPanel
   private final JPanel beatNumbers;
   private final JPanel noteLabels;
+
   /**
    * Creates new GuiView.
    */
