@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import javax.sound.midi.*;
 
+import cs3500.music.commons.*;
+
 /**
  * A skeleton for MIDI playback
  */
@@ -19,6 +21,7 @@ public class MidiViewImpl implements IMusicView {
       e.printStackTrace();
     }
   }
+
   /**
    * Relevant classes and methods from the javax.sound.midi library:
    * <ul>
@@ -50,7 +53,10 @@ public class MidiViewImpl implements IMusicView {
    *   </a>
    */
 
+  public void playNote(Note note, int duration) throws InvalidMidiDataException {
 
+
+  }
   public void playNote() throws InvalidMidiDataException {
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, 0, 60, 64);

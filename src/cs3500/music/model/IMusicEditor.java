@@ -1,7 +1,6 @@
 package cs3500.music.model;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
+import cs3500.music.commons.*;
 
 /**
  * This is the interface for a MusicEditor model. It's parameterized over

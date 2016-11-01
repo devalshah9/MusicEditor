@@ -1,4 +1,4 @@
-package cs3500.music.model;
+package cs3500.music.commons;
 
 import java.util.Objects;
 
@@ -16,6 +16,7 @@ public class Note implements Comparable<Note> {
   private Pitch pitch;
   private Octave octave;
   private boolean beginningOfNote;
+  private int instrument;
 
 
   /**
@@ -26,7 +27,7 @@ public class Note implements Comparable<Note> {
    * @param octave The Octave of the Note.
    * @param beginning Whether the note is a beginning of a note, or a sustain.
    */
-  public Note(Pitch pitch, Octave octave, boolean beginning) {
+  public Note(Pitch pitch, Octave octave, boolean beginning, int instrument) {
     if (octave.equals(Octave.TEN)) {
       if(pitch.compareTo(Pitch.G) > 0) {
         throw new IllegalArgumentException("That note is too high.");
@@ -35,6 +36,9 @@ public class Note implements Comparable<Note> {
     this.pitch = pitch;
     this.octave = octave;
     this.beginningOfNote = beginning;
+    if (instrument < 0 || instrument > 127) {
+      throw new IllegalArgumentException("Invalid instrument value.");
+    }
   }
 
   /**
@@ -61,6 +65,13 @@ public class Note implements Comparable<Note> {
     return this.beginningOfNote;
   }
 
+  public int getInstrument() {return this.instrument; }
+
+  public int notesBetweenTwoNotes(Note other) {
+    return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12) +
+    this.getPitch().ordinal() - other.getPitch().ordinal());
+  }
+
   @Override
   public String toString() {
     return this.pitch.toString() + this.octave.toString();
@@ -82,7 +93,8 @@ public class Note implements Comparable<Note> {
   public boolean equals(Object object) {
     if (object instanceof Note) {
       return (this.pitch.equals(((Note) object).pitch)
-              && this.octave.equals(((Note) object).octave));
+              && this.octave.equals(((Note) object).octave)
+              && this.instrument == ((Note) object).instrument);
     }
     else {
       return false;
@@ -91,7 +103,7 @@ public class Note implements Comparable<Note> {
 
   @Override
   public int hashCode() {
-    int hash = Objects.hash(this.pitch, this.octave);
+    int hash = Objects.hash(this.pitch, this.octave, this.instrument);
     return hash;
   }
 

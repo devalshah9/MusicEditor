@@ -2,13 +2,10 @@ package cs3500.music.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.MusicSheet;
-import cs3500.music.model.Note;
-import cs3500.music.model.Octave;
-import cs3500.music.model.Pitch;
+import cs3500.music.commons.*;
 
 /**
  * A view for the text representation of a Song.
@@ -36,7 +33,7 @@ public class TextView implements IMusicView{
         if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
           break;
         }
-        notes.add(new Note(pit, oct, false));
+        notes.add(new Note(pit, oct, false, 0));
       }
     }
     String result = "";

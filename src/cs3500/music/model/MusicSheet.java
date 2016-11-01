@@ -2,9 +2,9 @@ package cs3500.music.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.TreeMap;
+
+import cs3500.music.commons.*;
 
 
 public class MusicSheet {
@@ -57,11 +57,13 @@ public class MusicSheet {
       if (n == 0 && !meantToBeSustain) { //Special case boolean comes into play here.
         Pitch pitch = note.getPitch();
         Octave octave = note.getOctave();
-        note = new Note(pitch, octave, true);
+        int instrument = note.getInstrument();
+        note = new Note(pitch, octave, true, instrument);
       } else {
         Pitch pitch = note.getPitch();
         Octave octave = note.getOctave();
-        note = new Note(pitch, octave, false);
+        int instrument = note.getInstrument();
+        note = new Note(pitch, octave, false, instrument);
       }
       if (beats.containsKey(beat + n)) {
         if (beats.get(beat + n).contains(note)) {
@@ -314,6 +316,5 @@ public class MusicSheet {
   public int amountOfBeats() {
     return this.beats.size();
   }
-
 
 }

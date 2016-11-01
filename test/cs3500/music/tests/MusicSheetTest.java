@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import cs3500.music.model.MusicSheet;
-import cs3500.music.model.Note;
-import cs3500.music.model.Octave;
-import cs3500.music.model.Pitch;
+import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -3,9 +3,9 @@ package cs3500.music.tests;
 import org.junit.Test;
 
 import cs3500.music.model.MusicEditor;
-import cs3500.music.model.Note;
-import cs3500.music.model.Octave;
-import cs3500.music.model.Pitch;
+import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package cs3500.music.model;
+package cs3500.music.commons;
 
 /**
  * Octave enum that enumerates the octave numbers that a note can take. This protects
