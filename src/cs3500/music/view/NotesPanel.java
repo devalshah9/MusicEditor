@@ -70,19 +70,23 @@ public class NotesPanel extends JPanel {
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, -1);
 
-    double height = this.getPreferredSize().getHeight();
+    double height = this.getPreferredSize().getHeight() - 100;
     double width = this.getPreferredSize().getWidth();
 
     double boxWidth = width / measureLength;
+    int remainder = endBeat % measureLength;
 
     //Draws the vertical lines
-    for (int n = 0; n >= endBeat; n++) {
-      gimg.drawLine((0 + n * (int) boxWidth), (int) height, 0 + n * (int) boxWidth, 0);
+    for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
+      gimg.setColor(Color.BLACK);
+      gimg.drawLine((n * (int) boxWidth), (int) height + 55, n * (int) boxWidth, 0);
     }
     int numberOfDistinctNotes = this.highestNote.notesBetweenTwoNotes(lowestNote);
-    double boxHeight = 32;
-    for (int n = 0; n == numberOfDistinctNotes + 1; n++) { //horizontal lines
-      gimg.drawLine(0, 0 + (int) boxHeight * n, (int) width, 0 + (int) boxHeight * n);
+    double boxHeight = height/numberOfDistinctNotes;
+    for (int n = 0; n <= numberOfDistinctNotes + 2; n++) {
+      //horizontal lines
+      double endDraw = (endBeat/measureLength + remainder) * boxWidth;
+      gimg.drawLine(0, (int) boxHeight * n, (int) endDraw , (int) boxHeight * n);
     }
     for (int n = 0; n < this.notes.size(); n++) {
       //fill rectangles for notes
@@ -99,8 +103,6 @@ public class NotesPanel extends JPanel {
           int leftCornerY = (int) boxHeight * (currNote.notesBetweenTwoNotes(this.lowestNote));
           gimg.fillRect(leftCornerX, leftCornerY, (int) boxWidth / measureLength, (int) boxHeight);
         }
-      } else {
-        continue;
       }
     }
     gimg.setTransform(originalTransform);

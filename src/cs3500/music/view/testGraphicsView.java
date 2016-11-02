@@ -29,16 +29,19 @@ class testGraphicsView extends JFrame {
   public testGraphicsView() {
     super();
     this.notesPanel = new NotesPanel();
+    this.notesPanel.setMeasureLength(4);
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    this.getContentPane().add(notesPanel);
-    this.notesPanel.setPreferredSize(new Dimension(500, 500));
-    this.setPreferredSize(new Dimension(600, 600));
+
+    this.getContentPane().add(notesPanel, BorderLayout.SOUTH);
+    this.notesPanel.setPreferredSize(new Dimension(500, 375));
+    this.setPreferredSize(new Dimension(700,700));
     this.pack();
     this.editor = new MusicEditor();
     editor.createNewSheet();
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 2, 2);
+    editor.addSingleNote(0, note1, 20, 4);
     TreeMap<Integer, ArrayList<Note>> notes = editor.getBeats(0);
     notesPanel.setEndBeat(notes.lastKey());
     Note lowestNote = null;
@@ -64,7 +67,7 @@ class testGraphicsView extends JFrame {
           this.notesPanel.setHighestNote(currNotes.get(n));
           highestNote = currNotes.get(n);
         } else {
-          if (currNotes.get(n).compareTo(highestNote) < 0) {
+          if (currNotes.get(n).compareTo(highestNote) > 0) {
             this.notesPanel.setHighestNote(currNotes.get(n));
             highestNote = currNotes.get(n);
           }
