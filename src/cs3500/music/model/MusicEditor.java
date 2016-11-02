@@ -1,6 +1,7 @@
 package cs3500.music.model;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -183,6 +184,17 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       throw new IllegalArgumentException("invalid index.");
     }
   }
+  @Override
+  public TreeMap<Integer, ArrayList<Note>> getBeats(int index) {
+    if(this.sheets.size() < 0 || this.sheets.size() > index) {
+      return this.sheets.get(index).getBeats();
+    }
+    else {
+      throw new IllegalArgumentException("Invalid index.");
+    }
+  }
+
+
 
 
 }

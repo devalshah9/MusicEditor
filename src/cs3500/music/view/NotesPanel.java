@@ -2,13 +2,14 @@ package cs3500.music.view;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.*;
 
-import cs3500.music.commons.*;
+import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.MusicEditor;
 
@@ -23,6 +24,7 @@ public class NotesPanel extends JPanel {
   private int endBeat;
   private Note lowestNote;
   private Note highestNote;
+  JPanel p = new JPanel(new BorderLayout());
 
   public NotesPanel() {
     super();
@@ -54,7 +56,7 @@ public class NotesPanel extends JPanel {
   }
 
   @Override
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g) {
     // Handle the default painting
     super.paintComponent(g);
 
@@ -70,29 +72,28 @@ public class NotesPanel extends JPanel {
     double height = this.getPreferredSize().getHeight();
     double width = this.getPreferredSize().getWidth();
 
-    double boxWidth = width/measureLength;
+    double boxWidth = width / measureLength;
 
     //Draws the vertical lines
     for (int n = 0; n >= endBeat; n++) {
-      gimg.drawLine((0 + n * (int) boxWidth) , (int) height, 0 + n * (int) boxWidth, 0);
+      gimg.drawLine((0 + n * (int) boxWidth), (int) height, 0 + n * (int) boxWidth, 0);
     }
     int numberOfDistinctNotes = this.highestNote.notesBetweenTwoNotes(lowestNote);
-    double boxHeight = height/(numberOfDistinctNotes);
-    for(int n = 0; n == numberOfDistinctNotes + 1; n++ ) { //horizontal lines
+    double boxHeight = height / (numberOfDistinctNotes);
+    for (int n = 0; n == numberOfDistinctNotes + 1; n++) { //horizontal lines
       gimg.drawLine(0, 0 + (int) boxHeight * n, (int) width, 0 + (int) boxHeight * n);
     }
-    for(int n = 0; n < this.notes.size(); n++) { //fill rectangles for notes
-      if(notes.containsKey(n)) {
+    for (int n = 0; n < this.notes.size(); n++) { //fill rectangles for notes
+      if (notes.containsKey(n)) {
         ArrayList<Note> currentNotes = this.notes.get(n);
         for (int i = 0; i < currentNotes.size(); i++) {
           Note currNote = currentNotes.get(i);
-          if(currNote.getbeginningOfNote()) {
+          if (currNote.getbeginningOfNote()) {
             gimg.setColor(Color.BLACK);
-          }
-          else {
+          } else {
             gimg.setColor(Color.GREEN);
           }
-          int leftCornerX = (int) (boxWidth/measureLength) * n;
+          int leftCornerX = (int) (boxWidth / measureLength) * n;
           int leftCornerY = (int) boxHeight * (currNote.notesBetweenTwoNotes(this.lowestNote));
           gimg.fillRect(leftCornerX, leftCornerY, (int) boxWidth, (int) boxHeight);
         }
@@ -104,45 +105,3 @@ public class NotesPanel extends JPanel {
   }
 }
 
-
-class testGraphics extends JFrame implements IMusicView {
-
-  private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
-  private final IMusicEditor editor;
-  Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
-  Note note2 = new Note(Pitch.B, Octave.FIVE, true, 6);
-  Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
-
-  /**
-   * Creates new GuiView.
-   */
-
-  public testGraphics() {
-    super();
-    this.notesPanel = new NotesPanel();
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    this.getContentPane().add(notesPanel);
-    this.pack();
-    this.editor = new MusicEditor();
-    editor.createNewSheet();
-    editor.addSingleNote(0, note1, 4, 0);
-    editor.addSingleNote(0, note2, 5, 1);
-    editor.addSingleNote(0, note3, 3, 2);
-  }
-
-
-  @Override
-  public void initialize(){
-    this.setVisible(true);
-  }
-
-  @Override
-  public Dimension getPreferredSize(){
-    return new Dimension(100, 100);
-  }
-
-  @Override
-  public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
-    this.editor.getBeats(0);
-  }
-}

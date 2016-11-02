@@ -53,7 +53,8 @@ public interface IMusicView {;
    */
   static IMusicView create(ViewType type) {
     if (type.equals(ViewType.TEXT)) {
-      return new TextView();
+      return null;
+      //return new TextView();
     } else if (type.equals(ViewType.VISUAL)) {
       return new VisualView();
     } else {

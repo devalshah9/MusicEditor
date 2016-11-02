@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
 
 import cs3500.music.view.IMusicView;
-import cs3500.music.view.MidiViewImpl;
+//import cs3500.music.view.MidiViewImpl;
 
 /**
 import cs3500.music.view.GuiViewFrame;
