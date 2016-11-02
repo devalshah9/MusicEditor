@@ -16,7 +16,7 @@ public interface IMusicEditor<MusicSheet> {
    * in the editor. This new sheet has no beats or notes, and can be indexed by giving the
    * order in which it was created.
    */
-  public void createNewSheet();
+  void createNewSheet();
 
   /**
    * This method takes in an index for a sheet that is to be edited, the note that is to be added,
@@ -35,7 +35,7 @@ public interface IMusicEditor<MusicSheet> {
    * @param beat        The beat that the note begins from.
    * @throws IllegalArgumentException If the sheetNumber, duration, or beat is invalid.
    */
-  public void addSingleNote(int sheetNumber, Note note, int duration, int beat)
+  void addSingleNote(int sheetNumber, Note note, int duration, int beat)
           throws IllegalArgumentException;
 
   /**
@@ -53,7 +53,7 @@ public interface IMusicEditor<MusicSheet> {
    * @param overlaySheetIndex The index of the overlay's sheet.
    * @throws IllegalArgumentException If the indices of the sheets are invalid.
    */
-  public void overlayTwoSheets(int baseSheetIndex, int overlaySheetIndex);
+  void overlayTwoSheets(int baseSheetIndex, int overlaySheetIndex);
 
   /**
    * This method will take two indices that exist within the collection of sheets
@@ -65,7 +65,7 @@ public interface IMusicEditor<MusicSheet> {
    * @param nextSheetIndex The index of the sheet that will play second.
    * @throws IllegalArgumentException If the sheet indices are out of bounds.
    */
-  public void playSheetsConsecutively(int baseSheetIndex, int nextSheetIndex);
+  void playSheetsConsecutively(int baseSheetIndex, int nextSheetIndex);
 
   /**
    * This method will take a sheet index within the bounds of the editor, a note, and a beat
@@ -80,7 +80,7 @@ public interface IMusicEditor<MusicSheet> {
    * @throws IllegalArgumentException if the sheetIndex is out of bounds, the note doesnt exist at
    *                                  this beat, or the beat is out of bounds of the sheet.
    */
-  public void deleteNote(int sheetIndex, Note note, int beat) throws IllegalArgumentException;
+  void deleteNote(int sheetIndex, Note note, int beat) throws IllegalArgumentException;
 
   /**
    * This method allows the user to edit the length of a beat. The sheet index must be in bounds,
@@ -100,10 +100,10 @@ public interface IMusicEditor<MusicSheet> {
    *                                  in the startBeat, if the newEndBeat is out of bounbds, and if
    *                                  the note being edited was a sustain note.
    */
-  public void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
+  void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
-  public MusicSheet getSheet (int index) throws IllegalArgumentException;
+  MusicSheet getSheet (int index) throws IllegalArgumentException;
 }
 
 

@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import javax.swing.*;
 
 import cs3500.music.commons.*;
+import cs3500.music.model.IMusicEditor;
+import cs3500.music.model.MusicEditor;
 
 /**
  * Inner panel displaying all notes rendered as rectangles and lines denoting beat number
@@ -67,7 +69,7 @@ public class NotesPanel extends JPanel {
 
     double height = this.getPreferredSize().getHeight();
     double width = this.getPreferredSize().getWidth();
-    
+
     double boxWidth = width/measureLength;
 
     //Draws the vertical lines
@@ -100,5 +102,47 @@ public class NotesPanel extends JPanel {
     }
     gimg.setTransform(originalTransform);
   }
+}
 
+
+class testGraphics extends JFrame implements IMusicView {
+
+  private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
+  private final IMusicEditor editor;
+  Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
+  Note note2 = new Note(Pitch.B, Octave.FIVE, true, 6);
+  Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
+
+  /**
+   * Creates new GuiView.
+   */
+
+  public testGraphics() {
+    super();
+    this.notesPanel = new NotesPanel();
+    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    this.getContentPane().add(notesPanel);
+    this.pack();
+    this.editor = new MusicEditor();
+    editor.createNewSheet();
+    editor.addSingleNote(0, note1, 4, 0);
+    editor.addSingleNote(0, note2, 5, 1);
+    editor.addSingleNote(0, note3, 3, 2);
+  }
+
+
+  @Override
+  public void initialize(){
+    this.setVisible(true);
+  }
+
+  @Override
+  public Dimension getPreferredSize(){
+    return new Dimension(100, 100);
+  }
+
+  @Override
+  public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
+    this.editor.getBeats(0);
+  }
 }

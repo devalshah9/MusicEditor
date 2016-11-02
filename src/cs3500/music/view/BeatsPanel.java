@@ -55,9 +55,11 @@ public class BeatsPanel extends JPanel {
     double width = this.getPreferredSize().getWidth();
 
     for (int i = 0; i < endBeat; i += width / measureLength) {
-      gimg.drawString(Integer.toString(i), i, 0);
+      gimg.drawString(Integer.toString(i) + "         ", i, 0);
     }
 
     gimg.setTransform(originalTransform);
   }
 }
+
+

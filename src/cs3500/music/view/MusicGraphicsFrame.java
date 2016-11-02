@@ -14,9 +14,9 @@ import cs3500.music.commons.Note;
 
 public class MusicGraphicsFrame extends JFrame implements IMusicView {
 
-  private final NotesPanel displayPanel; // You may want to refine this to a subtype of JPanel
+  private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
   private final JPanel beatNumbers;
-  private final JPanel noteLabels;
+  //private final JPanel noteLabels;
 
   /**
    * Creates new GuiView.
@@ -24,9 +24,11 @@ public class MusicGraphicsFrame extends JFrame implements IMusicView {
 
   public MusicGraphicsFrame() {
     super();
-    this.displayPanel = new NotesPanel();
+    this.notesPanel = new NotesPanel();
+    this.beatNumbers = new BeatsPanel();
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    this.getContentPane().add(displayPanel);
+    this.getContentPane().add(notesPanel);
+    this.getContentPane().add(beatNumbers);
     this.pack();
   }
 
