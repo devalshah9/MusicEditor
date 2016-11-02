@@ -16,7 +16,6 @@ import cs3500.music.commons.*;
  */
 
 public class NotesPanel extends JPanel {
-  BufferedImage img;
   private TreeMap<Integer, ArrayList<Note>> notes;
   private int measureLength;
   private int endBeat;
@@ -68,6 +67,7 @@ public class NotesPanel extends JPanel {
 
     double height = this.getPreferredSize().getHeight();
     double width = this.getPreferredSize().getWidth();
+    
     double boxWidth = width/measureLength;
 
     //Draws the vertical lines
