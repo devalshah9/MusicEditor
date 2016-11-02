@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.TreeMap;
 
 import javax.swing.*;
@@ -128,6 +129,11 @@ class testGraphics extends JFrame implements IMusicView {
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 3, 2);
+    TreeMap<Integer,ArrayList<Note>> notes = editor.getBeats(0);
+    notesPanel.setEndBeat(notes.lastKey());
+    editor.
+
+    }
   }
 
 
@@ -144,5 +150,6 @@ class testGraphics extends JFrame implements IMusicView {
   @Override
   public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
     this.editor.getBeats(0);
+
   }
 }

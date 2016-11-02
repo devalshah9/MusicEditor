@@ -1,5 +1,8 @@
 package cs3500.music.model;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import cs3500.music.commons.*;
 
 /**
@@ -103,7 +106,9 @@ public interface IMusicEditor<MusicSheet> {
   void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
-  MusicSheet getSheet (int index) throws IllegalArgumentException;
+  TreeMap<Integer, ArrayList<Note>>  getBeats(int index);
+
+
 }
 
 
