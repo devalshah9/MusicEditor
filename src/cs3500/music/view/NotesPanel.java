@@ -24,7 +24,7 @@ public class NotesPanel extends JPanel {
   private int endBeat;
   private Note lowestNote;
   private Note highestNote;
-  JPanel p = new JPanel(new BorderLayout());
+  JPanel p = new JPanel();
 
   public NotesPanel() {
     super();
@@ -33,6 +33,7 @@ public class NotesPanel extends JPanel {
     endBeat = 0;
     lowestNote = null;
     highestNote = null;
+    p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
   }
 
   public void setNotes(TreeMap<Integer, ArrayList<Note>> notes) {
@@ -65,7 +66,7 @@ public class NotesPanel extends JPanel {
     gimg.setColor(Color.BLACK);
 
     AffineTransform originalTransform = gimg.getTransform();
-
+    System.out.println(notes);
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, -1);
 
@@ -79,11 +80,12 @@ public class NotesPanel extends JPanel {
       gimg.drawLine((0 + n * (int) boxWidth), (int) height, 0 + n * (int) boxWidth, 0);
     }
     int numberOfDistinctNotes = this.highestNote.notesBetweenTwoNotes(lowestNote);
-    double boxHeight = height / (numberOfDistinctNotes);
+    double boxHeight = 32;
     for (int n = 0; n == numberOfDistinctNotes + 1; n++) { //horizontal lines
       gimg.drawLine(0, 0 + (int) boxHeight * n, (int) width, 0 + (int) boxHeight * n);
     }
-    for (int n = 0; n < this.notes.size(); n++) { //fill rectangles for notes
+    for (int n = 0; n < this.notes.size(); n++) {
+      //fill rectangles for notes
       if (notes.containsKey(n)) {
         ArrayList<Note> currentNotes = this.notes.get(n);
         for (int i = 0; i < currentNotes.size(); i++) {
@@ -95,7 +97,7 @@ public class NotesPanel extends JPanel {
           }
           int leftCornerX = (int) (boxWidth / measureLength) * n;
           int leftCornerY = (int) boxHeight * (currNote.notesBetweenTwoNotes(this.lowestNote));
-          gimg.fillRect(leftCornerX, leftCornerY, (int) boxWidth, (int) boxHeight);
+          gimg.fillRect(leftCornerX, leftCornerY, (int) boxWidth / measureLength, (int) boxHeight);
         }
       } else {
         continue;
