@@ -11,6 +11,7 @@ import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
+import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
 
 /**
@@ -19,41 +20,36 @@ import cs3500.music.model.MusicEditor;
  */
 
 public class NotesPanel extends JPanel {
-  private TreeMap<Integer, ArrayList<Note>> notes;
   private int measureLength;
-  private int endBeat;
-  private Note lowestNote;
-  private Note highestNote;
+  private IViewModel viewModel;
+
   JPanel p = new JPanel();
 
-  public NotesPanel() {
+  public NotesPanel(IViewModel viewModel) {
     super();
-    notes = new TreeMap<Integer, ArrayList<Note>>();
     measureLength = 0;
-    endBeat = 0;
-    lowestNote = null;
-    highestNote = null;
+    this.viewModel = viewModel;
     p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
   }
 
-  public void setNotes(TreeMap<Integer, ArrayList<Note>> notes) {
-    this.notes = notes;
+  public void setNotes() {
+    viewModel.getNotes();
   }
 
   public void setMeasureLength(int length) {
     this.measureLength = length;
   }
 
-  public void setEndBeat(int beat) {
-    this.endBeat = beat;
+  public void setEndBeat() {
+    viewModel.getEndBeat();
   }
 
-  public void setLowestNote(Note note) {
-    this.lowestNote = note;
+  public void setLowestNote() {
+    viewModel.getLowestNote();
   }
 
-  public void setHighestNote(Note note) {
-    this.highestNote = note;
+  public void setHighestNote() {
+    viewModel.getHighestNote();
   }
 
   @Override
@@ -70,23 +66,23 @@ public class NotesPanel extends JPanel {
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, -1);
 
-    double height = this.getPreferredSize().getHeight() - 100;
-    double width = this.getPreferredSize().getWidth();
-
-    double boxWidth = width / measureLength;
+    int height = (int) this.getPreferredSize().getHeight() - 100;
+    int width = (int) this.getPreferredSize().getWidth();
+    int widthScale = 30;
+    int boxWidth =  measureLength * widthScale;
     int remainder = endBeat % measureLength;
 
     //Draws the vertical lines
     for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
       gimg.setColor(Color.BLACK);
-      gimg.drawLine((n * (int) boxWidth), (int) height + 55, n * (int) boxWidth, 0);
+      gimg.drawLine((n * boxWidth), height + 55, n * boxWidth, 0);
     }
     int numberOfDistinctNotes = this.highestNote.notesBetweenTwoNotes(lowestNote);
-    double boxHeight = height/numberOfDistinctNotes;
+    int boxHeight = height/numberOfDistinctNotes;
     for (int n = 0; n <= numberOfDistinctNotes + 2; n++) {
       //horizontal lines
       double endDraw = (endBeat/measureLength + remainder) * boxWidth;
-      gimg.drawLine(0, (int) boxHeight * n, (int) endDraw , (int) boxHeight * n);
+      gimg.drawLine(0, boxHeight * n, (int) endDraw , boxHeight * n);
     }
     for (int n = 0; n < this.notes.size(); n++) {
       //fill rectangles for notes
@@ -99,9 +95,9 @@ public class NotesPanel extends JPanel {
           } else {
             gimg.setColor(Color.GREEN);
           }
-          int leftCornerX = (int) (boxWidth / measureLength) * n;
-          int leftCornerY = (int) boxHeight * (currNote.notesBetweenTwoNotes(this.lowestNote));
-          gimg.fillRect(leftCornerX, leftCornerY, (int) boxWidth / measureLength, (int) boxHeight);
+          int leftCornerX = (boxWidth / measureLength) * n;
+          int leftCornerY = boxHeight * (currNote.notesBetweenTwoNotes(this.lowestNote));
+          gimg.fillRect(leftCornerX, leftCornerY, boxWidth / measureLength, boxHeight);
         }
       }
     }

@@ -74,7 +74,6 @@ class testGraphicsView extends JFrame {
         }
       }
     }
-    this.notesPanel.setMeasureLength(4);
     this.pack();
   }
 
@@ -85,7 +84,8 @@ class testGraphicsView extends JFrame {
 
   public void initialize() {
     this.setVisible(true);
-    this.notesPanel.setNotes(editor.getBeats(0));
+    this.notesPanel.setNotes();
+    this.notesPanel.setMeasureLength(4);
   }
 
   @Override
