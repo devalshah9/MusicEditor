@@ -17,6 +17,7 @@ public class Note implements Comparable<Note> {
   private Octave octave;
   private boolean beginningOfNote;
   private int instrument;
+  private int volume;
 
 
   /**
@@ -27,18 +28,24 @@ public class Note implements Comparable<Note> {
    * @param octave The Octave of the Note.
    * @param beginning Whether the note is a beginning of a note, or a sustain.
    */
-  public Note(Pitch pitch, Octave octave, boolean beginning, int instrument) {
+  public Note(Pitch pitch, Octave octave, boolean beginning, int instrument, int volume) {
     if (octave.equals(Octave.TEN)) {
       if(pitch.compareTo(Pitch.G) > 0) {
         throw new IllegalArgumentException("That note is too high.");
       }
     }
+    if (instrument < 0 || instrument > 127) {
+      throw new IllegalArgumentException("Invalid instrument.");
+    }
+    if (volume < 0 || volume > 127) {
+      throw new IllegalArgumentException("Invalid volume;");
+    }
+
     this.pitch = pitch;
     this.octave = octave;
     this.beginningOfNote = beginning;
-    if (instrument < 0 || instrument > 127) {
-      throw new IllegalArgumentException("Invalid instrument value.");
-    }
+    this.instrument = instrument;
+    this.volume = volume;
   }
 
   /**
@@ -65,7 +72,10 @@ public class Note implements Comparable<Note> {
     return this.beginningOfNote;
   }
 
-  public int getInstrument() {return this.instrument; }
+  public int getInstrument() { return this.instrument; }
+
+  public int getVolume() { return this.volume; }
+
 
   public int notesBetweenTwoNotes(Note other) {
     return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12) +
@@ -93,8 +103,7 @@ public class Note implements Comparable<Note> {
   public boolean equals(Object object) {
     if (object instanceof Note) {
       return (this.pitch.equals(((Note) object).pitch)
-              && this.octave.equals(((Note) object).octave)
-              && this.instrument == ((Note) object).instrument);
+              && this.octave.equals(((Note) object).octave));
     }
     else {
       return false;
@@ -103,7 +112,7 @@ public class Note implements Comparable<Note> {
 
   @Override
   public int hashCode() {
-    int hash = Objects.hash(this.pitch, this.octave, this.instrument);
+    int hash = Objects.hash(this.pitch, this.octave);
     return hash;
   }
 

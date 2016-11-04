@@ -24,10 +24,10 @@ public interface IMusicView {;
    * beat number. A beginning note is marked by an x, and a sustain note is marked by a |.
    * If there are no notes currently written, the method will return "No notes to present.".
    *
-   * @param notes The model to get the state of.
+   * @param model to get the state of.
    * @throws IllegalArgumentException If the index is out of bounds.
    */
-  void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException;
+  void renderSong(IViewModel model) throws IllegalArgumentException;
 
   /**
    * Enumeration for the three types of views.
@@ -54,7 +54,7 @@ public interface IMusicView {;
    */
   static IMusicView create(ViewType type, IViewModel model) {
     if (type.equals(ViewType.TEXT)) {
-      return new TextView(model);
+      return new TextView(model, new StringBuffer());
     } else if (type.equals(ViewType.VISUAL)) {
       return new VisualView(model);
     } else {

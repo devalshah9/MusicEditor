@@ -58,12 +58,14 @@ public class MusicSheet {
         Pitch pitch = note.getPitch();
         Octave octave = note.getOctave();
         int instrument = note.getInstrument();
-        note = new Note(pitch, octave, true, instrument);
+        int volume = note.getVolume();
+        note = new Note(pitch, octave, true, instrument, volume);
       } else {
         Pitch pitch = note.getPitch();
         Octave octave = note.getOctave();
         int instrument = note.getInstrument();
-        note = new Note(pitch, octave, false, instrument);
+        int volume = note.getVolume();
+        note = new Note(pitch, octave, false, instrument, volume);
       }
       if (beats.containsKey(beat + n)) {
         if (beats.get(beat + n).contains(note)) {

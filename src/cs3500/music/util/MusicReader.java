@@ -29,7 +29,7 @@ public class MusicReader {
    * @param <T> The main model interface type describing music compositions
    * @return
    */
-  public static <T> T parseFile(Readable readable, CompositionBuilder<T> piece) {
+  public static <IViewModel> IViewModel parseFile(Readable readable, CompositionBuilder<IViewModel> piece) {
     Scanner scanner = new Scanner(readable);
     while (scanner.hasNext()) {
       String lineType = scanner.next();

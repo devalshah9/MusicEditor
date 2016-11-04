@@ -8,7 +8,7 @@ import cs3500.music.commons.Note;
 /**
  * The implementation of the ViewModel interface.
  */
-public class ViewModel implements IViewModel{
+public class ViewModel implements IViewModel {
   private final TreeMap<Integer, ArrayList<Note>> notes;
   private final int measureLength;
 

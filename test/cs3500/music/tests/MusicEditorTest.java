@@ -14,9 +14,9 @@
 // */
 //public class MusicEditorTest {
 //
-//  Note note1 = new Note(Pitch.A, Octave.FIVE, true, 0);
-//  Note note2 = new Note(Pitch.B, Octave.FIVE, true, 0);
-//  Note note3 = new Note(Pitch.C, Octave.FIVE, true, 0);
+//  Note note1 = new Note(Pitch.A, Octave.FIVE, true);
+//  Note note2 = new Note(Pitch.B, Octave.FIVE, true);
+//  Note note3 = new Note(Pitch.C, Octave.FIVE, true);
 //  MusicEditor editor = new MusicEditor();
 //
 //  @Test

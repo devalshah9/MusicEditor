@@ -62,8 +62,21 @@ class testGraphicsView extends JFrame {
   }
 
   public static void main(String[] args) {
-    testGraphicsView newview = new testGraphicsView();
-    newview.initialize();
+
+    IMusicEditor editor = new MusicEditor();
+    editor.createNewSheet();
+    Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
+    Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6);
+    Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
+    editor.addSingleNote(0, note1, 4, 0);
+    editor.addSingleNote(0, note2, 5, 1);
+    editor.addSingleNote(0, note3, 2, 2);
+    editor.addSingleNote(0, note1, 20, 4);
+    IViewModel viewModel = new ViewModel(editor, 0, 4);
+    StringBuffer out = new StringBuffer();
+    TextView textView = new TextView(viewModel, out);
+    textView.renderSong(viewModel);
+    System.out.println(out.toString());
   }
 
   public void initialize() {

@@ -51,7 +51,7 @@ public class VisualView extends JFrame implements IMusicView {
   }
 
   @Override
-  public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
+  public void renderSong(IViewModel model) throws IllegalArgumentException {
 
   }
 
