@@ -47,10 +47,13 @@ class testGraphicsView extends JFrame {
     this.notesPanel = new NotesPanel(viewModel);
     this.beatsPanel = new BeatsPanel(viewModel);
     this.noteLabelsPanel = new NoteLabelsPanel(viewModel);
-    scrollNotesPane = new JScrollPane(notesPanel);
+    JPanel container = new JPanel();
+    container.setLayout(new BorderLayout());
+    container.add(this.notesPanel, BorderLayout.CENTER);
+    container.add(this.beatsPanel, BorderLayout.NORTH);
+    container.add(this.noteLabelsPanel,BorderLayout.WEST);
+    scrollNotesPane = new JScrollPane(container);
     this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
-    this.getContentPane().add(beatsPanel, BorderLayout.NORTH);
-    this.getContentPane().add(noteLabelsPanel, BorderLayout.WEST);
     this.notesPanel.setPreferredSize(new Dimension(800, 375));
     this.beatsPanel.setPreferredSize(new Dimension(800, 25));
     this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
