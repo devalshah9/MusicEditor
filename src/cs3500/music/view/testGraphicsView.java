@@ -18,11 +18,15 @@ import cs3500.music.view.NotesPanel;
 
 class testGraphicsView extends JFrame {
 
-  private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
+  private final NoteLabelsPanel noteLabelsPanel;
+  private final BeatsPanel beatsPanel;
+  private final NotesPanel notesPanel;
   private final IMusicEditor editor;
+  private JScrollPane scrollNotesPane;
   Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
   Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6);
   Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
+  JPanel p;
 
   /**
    * Creates new GuiView.
@@ -31,7 +35,7 @@ class testGraphicsView extends JFrame {
   public testGraphicsView() {
     super();
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+    this.p = new JPanel(new BorderLayout());
     this.editor = new MusicEditor();
     editor.createNewSheet();
     editor.addSingleNote(0, note1, 4, 0);
@@ -41,8 +45,15 @@ class testGraphicsView extends JFrame {
 
     IViewModel viewModel = new ViewModel(editor, 0, 4);
     this.notesPanel = new NotesPanel(viewModel);
-    this.getContentPane().add(notesPanel, BorderLayout.SOUTH);
+    this.beatsPanel = new BeatsPanel(viewModel);
+    this.noteLabelsPanel = new NoteLabelsPanel(viewModel);
+    scrollNotesPane = new JScrollPane(notesPanel);
+    this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
+    this.getContentPane().add(beatsPanel, BorderLayout.NORTH);
+    this.getContentPane().add(noteLabelsPanel, BorderLayout.WEST);
     this.notesPanel.setPreferredSize(new Dimension(800, 375));
+    this.beatsPanel.setPreferredSize(new Dimension(800, 25));
+    this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
     this.setPreferredSize(new Dimension(1000,1000));
     this.pack();
   }

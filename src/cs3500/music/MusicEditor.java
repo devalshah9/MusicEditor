@@ -16,11 +16,11 @@ import javax.sound.midi.InvalidMidiDataException;
 */
 
 public class MusicEditor {
-  public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    IMusicView visualView = IMusicView.create(IMusicView.ViewType.VISUAL);
-    IMusicView audibleView = IMusicView.create(IMusicView.ViewType.AUDIBLE);
-    IMusicView textView = IMusicView.create(IMusicView.ViewType.TEXT);
 
+  public static void main(String[] args) throws IOException, InvalidMidiDataException {
+//    IMusicView visualView = IMusicView.create(IMusicView.ViewType.VISUAL);
+//    IMusicView audibleView = IMusicView.create(IMusicView.ViewType.AUDIBLE);
+//    IMusicView textView = IMusicView.create(IMusicView.ViewType.TEXT);
 
 
   }

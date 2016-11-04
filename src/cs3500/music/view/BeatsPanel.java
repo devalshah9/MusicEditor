@@ -9,37 +9,26 @@ import java.util.TreeMap;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
+import cs3500.music.model.IViewModel;
 
 /**
  * Panel on the top for the beats of the song.
  */
 public class BeatsPanel extends JPanel {
-  private TreeMap<Integer, ArrayList<Note>> notes;
-  private int measureLength;
-  private int endBeat;
-  private JLabel beatsList;
 
-  public BeatsPanel() {
+  private IViewModel viewModel;
+  JPanel p = new JPanel();
+
+  public BeatsPanel(IViewModel viewModel) {
     super();
-    notes = new TreeMap<Integer, ArrayList<Note>>();
-    measureLength = 0;
-    endBeat = 0;
+    this.viewModel = viewModel;
+    p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
   }
 
-  public void setNotes(TreeMap<Integer, ArrayList<Note>> notes) {
-    this.notes = notes;
-  }
-
-  public void setMeasureLength(int length) {
-    this.measureLength = length;
-  }
-
-  public void setEndBeat(int beat) {
-    this.endBeat = beat;
-  }
 
   @Override
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g) {
+    // Handle the default painting
     super.paintComponent(g);
 
     Graphics2D gimg = (Graphics2D) g;
@@ -47,15 +36,21 @@ public class BeatsPanel extends JPanel {
     gimg.setColor(Color.BLACK);
 
     AffineTransform originalTransform = gimg.getTransform();
-
     gimg.translate(0, this.getPreferredSize().getHeight());
-    gimg.scale(1, -1);
+    gimg.scale(1, 1);
 
-    double height = this.getPreferredSize().getHeight();
-    double width = this.getPreferredSize().getWidth();
+    int measureLength = this.viewModel.getMeasureLength();
+    int endBeat = this.viewModel.getEndBeat();
 
-    for (int i = 0; i < endBeat; i += width / measureLength) {
-      gimg.drawString(Integer.toString(i) + "         ", i, 0);
+
+    int height = (int) (this.getPreferredSize().getHeight() * 0.90);
+    int widthScale = 30;
+    int boxWidth =  measureLength * widthScale;
+    int remainder = endBeat % measureLength;
+
+    // Draws the text of beat numbers
+    for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
+      gimg.drawString(Integer.toString(n * measureLength), (n * boxWidth + 25), 0);
     }
 
     gimg.setTransform(originalTransform);

@@ -2,12 +2,14 @@ package cs3500.music.view;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.TreeMap;
 
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 import cs3500.music.model.IViewModel;
 
 /**
@@ -29,21 +31,32 @@ public class NoteLabelsPanel extends JPanel {
   public void paintComponent(Graphics g) {
     // Handle the default painting
     super.paintComponent(g);
+    ArrayList<Note> newNotes = new ArrayList<Note>();
+    for (Octave oct : Octave.values()) {
+      for (Pitch pit : Pitch.values()) {
+        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+          break;
+        }
+        newNotes.add(new Note(pit, oct, false, 0));
+      }
+    }
 
     Graphics2D gimg = (Graphics2D) g;
 
     gimg.setColor(Color.BLACK);
 
     AffineTransform originalTransform = gimg.getTransform();
-    ;
     gimg.translate(0, this.getPreferredSize().getHeight());
-    gimg.scale(1, -1);
+    gimg.scale(1, 1);
 
     TreeMap<Integer, ArrayList<Note>> notes = this.viewModel.getNotes();
     int measureLength = this.viewModel.getMeasureLength();
     int endBeat = this.viewModel.getEndBeat();
     Note highestNote = this.viewModel.getHighestNote();
     Note lowestNote = this.viewModel.getLowestNote();
+    int lowestIndex = newNotes.indexOf(lowestNote);
+    int highestIndex = newNotes.indexOf(highestNote);
+    java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
 
 
     int height = (int) (this.getPreferredSize().getHeight() * 0.90);
@@ -51,39 +64,16 @@ public class NoteLabelsPanel extends JPanel {
     int widthScale = 30;
     int boxWidth =  measureLength * widthScale;
     int remainder = endBeat % measureLength;
-    int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+    int numberOfDistinctNotes =highestNote.notesBetweenTwoNotes(lowestNote);
     int newRemainder = height % numberOfDistinctNotes;
     int boxHeight = height/numberOfDistinctNotes;
 
-    //Draws the vertical lines
-    for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
-      gimg.setColor(Color.BLACK);
-      gimg.drawLine((n * boxWidth), boxHeight * (numberOfDistinctNotes + 1), n * boxWidth, 0);
-    }
-    for (int n = 0; n <= numberOfDistinctNotes + 1; n++) {
-      //horizontal lines
+    // draw the Notes Labels
+    for (int n = 0; n <= numberOfDistinctNotes; n++) {
       double endDraw = (endBeat/measureLength + remainder) * boxWidth;
-      gimg.drawLine(0, boxHeight * n, (int) endDraw , boxHeight * n);
-    }
-    for (int n = 0; n < notes.size(); n++) {
-      //fill rectangles for notes
-      if (notes.containsKey(n)) {
-        ArrayList<Note> currentNotes = notes.get(n);
-        for (int i = 0; i < currentNotes.size(); i++) {
-          Note currNote = currentNotes.get(i);
-          if (currNote.getbeginningOfNote()) {
-            gimg.setColor(Color.BLACK);
-          } else {
-            gimg.setColor(Color.GREEN);
-          }
-          int leftCornerX = (boxWidth / measureLength) * n;
-          int leftCornerY = boxHeight * (currNote.notesBetweenTwoNotes(lowestNote));
-          gimg.fillRect(leftCornerX, leftCornerY, boxWidth / measureLength, boxHeight);
-        }
-      }
+      String currNote = newList.get(n).toString();
+      gimg.drawString(currNote, 0, 0 - boxHeight * n - boxHeight / 2);
     }
     gimg.setTransform(originalTransform);
   }
-}
-
 }

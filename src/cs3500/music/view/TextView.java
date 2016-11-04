@@ -16,6 +16,10 @@ public class TextView implements IMusicView {
 
   private IViewModel viewModel;
 
+  public TextView(IViewModel viewModel) {
+    this.viewModel = viewModel;
+  }
+
   @Override
   public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
     String result = renderNotes(viewModel);
@@ -99,10 +103,6 @@ public class TextView implements IMusicView {
 
   @Override
   public void initialize() {
-
-  }
-
-  public void setViewModel(IViewModel viewModel) {
-    this.viewModel = viewModel;
+    // does not need to initialize anything
   }
 }

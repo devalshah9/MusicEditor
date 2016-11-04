@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import cs3500.music.commons.*;
 import cs3500.music.model.IMusicEditor;
+import cs3500.music.model.IViewModel;
 
 /**
  * The View interface for all different types of views.
@@ -51,14 +52,14 @@ public interface IMusicView {;
    * @param type the type of view
    * @return an object of the view
    */
-  static IMusicView create(ViewType type) {
+  static IMusicView create(ViewType type, IViewModel model) {
     if (type.equals(ViewType.TEXT)) {
-      return null;
-      //return new TextView();
+      return new TextView(model);
     } else if (type.equals(ViewType.VISUAL)) {
-      return new VisualView();
+      return new VisualView(model);
     } else {
-      return new AudibleView();
+      //return new AudibleView(model);
     }
+    return null;
   }
 }
