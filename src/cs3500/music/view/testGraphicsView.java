@@ -10,7 +10,9 @@ import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
+import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
+import cs3500.music.model.ViewModel;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.NotesPanel;
 
@@ -28,52 +30,20 @@ class testGraphicsView extends JFrame {
 
   public testGraphicsView() {
     super();
-    this.notesPanel = new NotesPanel();
-    this.notesPanel.setMeasureLength(4);
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    this.getContentPane().add(notesPanel, BorderLayout.SOUTH);
-    this.notesPanel.setPreferredSize(new Dimension(500, 375));
-    this.setPreferredSize(new Dimension(700,700));
-    this.pack();
     this.editor = new MusicEditor();
     editor.createNewSheet();
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 2, 2);
     editor.addSingleNote(0, note1, 20, 4);
-    TreeMap<Integer, ArrayList<Note>> notes = editor.getBeats(0);
-    notesPanel.setEndBeat(notes.lastKey());
-    Note lowestNote = null;
-    for (Object value : notes.values()) {
-      ArrayList<Note> currNotes = (ArrayList<Note>) value;
-      for (int n = 0; n < currNotes.size(); n++) {
-        if (lowestNote == null) {
-          this.notesPanel.setLowestNote(currNotes.get(n));
-          lowestNote = currNotes.get(n);
-        } else {
-          if (currNotes.get(n).compareTo(lowestNote) < 0) {
-            this.notesPanel.setLowestNote(currNotes.get(n));
-            lowestNote = currNotes.get(n);
-          }
-        }
-      }
-    }
-    Note highestNote = null;
-    for (Object value : notes.values()) {
-      ArrayList<Note> currNotes = (ArrayList<Note>) value;
-      for (int n = 0; n < currNotes.size()-1; n++) {
-        if (highestNote == null) {
-          this.notesPanel.setHighestNote(currNotes.get(n));
-          highestNote = currNotes.get(n);
-        } else {
-          if (currNotes.get(n).compareTo(highestNote) > 0) {
-            this.notesPanel.setHighestNote(currNotes.get(n));
-            highestNote = currNotes.get(n);
-          }
-        }
-      }
-    }
+
+    IViewModel viewModel = new ViewModel(editor, 0, 4);
+    this.notesPanel = new NotesPanel(viewModel);
+    this.getContentPane().add(notesPanel, BorderLayout.SOUTH);
+    this.notesPanel.setPreferredSize(new Dimension(800, 375));
+    this.setPreferredSize(new Dimension(1000,1000));
     this.pack();
   }
 
@@ -84,8 +54,6 @@ class testGraphicsView extends JFrame {
 
   public void initialize() {
     this.setVisible(true);
-    this.notesPanel.setNotes();
-    this.notesPanel.setMeasureLength(4);
   }
 
   @Override

@@ -34,5 +34,11 @@ public interface IViewModel {
    */
   Note getHighestNote();
 
+  /**
+   * Gets the measure length for this piece.
+   * @return The measure length in beats.
+   */
+  int getMeasureLength();
+
 
 }

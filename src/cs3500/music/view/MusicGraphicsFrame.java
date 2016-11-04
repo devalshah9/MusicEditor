@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
+import cs3500.music.model.IViewModel;
 
 /**
  * A skeleton Frame (i.e., a window) in Swing.
@@ -16,15 +17,18 @@ public class MusicGraphicsFrame extends JFrame implements IMusicView {
 
   private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
   private final JPanel beatNumbers;
+  private final IViewModel viewModel;
+
   //private final JPanel noteLabels;
 
   /**
    * Creates new GuiView.
    */
 
-  public MusicGraphicsFrame() {
+  public MusicGraphicsFrame(IViewModel viewModel) {
     super();
-    this.notesPanel = new NotesPanel();
+    this.viewModel = viewModel;
+    this.notesPanel = new NotesPanel(viewModel);
     this.beatNumbers = new BeatsPanel();
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     this.getContentPane().add(notesPanel);
@@ -47,4 +51,5 @@ public class MusicGraphicsFrame extends JFrame implements IMusicView {
   public void renderSong(TreeMap<Integer, ArrayList<Note>> notes) throws IllegalArgumentException {
 
   }
+
 }
