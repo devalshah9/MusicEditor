@@ -163,7 +163,6 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     if (!(this.sheets.get(sheetIndex).getBeats().get(startBeat).contains(note))) {
       throw new IllegalArgumentException("This note isnt played at this beat.");
     }
-    int noteIndex = this.sheets.get(sheetIndex).getBeats().get(startBeat).indexOf(note);
     //The way this if statement works is the note can only be edited if it was a beginning note
     // and not a sustain. If the note was made shorter, it will add the note and then delete
     //the remainder after the new endBeat. If the note was made longer, it will add the note and

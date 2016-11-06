@@ -32,24 +32,30 @@ public class MusicEditor {
 
 
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    FileReader text = null;
+    FileReader fileName = null;
     try {
-      text = new FileReader(args[0]);
+      fileName = new FileReader(args[0]);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     MusicReader reader = new MusicReader();
     CompositionBuilder builder = new MusicBuilder();
-    reader.parseFile(text, builder);
+    reader.parseFile(fileName, builder);
     IMusicEditor editor = (cs3500.music.model.MusicEditor) builder.build();
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
-    IMusicView visualView = IMusicView.create(IMusicView.ViewType.VISUAL, model);
-    IMusicView audibleView = IMusicView.create(IMusicView.ViewType.AUDIBLE, model);
-    IMusicView textView = IMusicView.create(IMusicView.ViewType.TEXT, model);
-    visualView.initialize();
-    textView.renderSong(model, model.getTempo());
+    IMusicView view = null;
+    if (args[1].equals("console")) {
+      view = IMusicView.create(IMusicView.ViewType.TEXT, model);
+    } else if (args[1].equals("visual")) {
+      view = IMusicView.create(IMusicView.ViewType.VISUAL, model);
+    } else if (args[1].equals("midi")) {
+      view = IMusicView.create(IMusicView.ViewType.AUDIBLE, model);
+    } else {
+      throw new InvalidMidiDataException("Invalid input!");
+    }
     try {
-      audibleView.renderSong(model, model.getTempo());
+      view.initialize();
+      view.renderSong(model, model.getTempo());
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }

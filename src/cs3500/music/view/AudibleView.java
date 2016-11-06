@@ -90,7 +90,7 @@ public class AudibleView implements IMusicView {
   public void playNote(Note note, int duration, int tempo, int startBeat)
           throws InvalidMidiDataException {
     int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
-    int instrument = note.getInstrument();
+    int instrument = note.getInstrument() - 1;
     int volume = note.getVolume();
     int endBeat = startBeat + duration;
     startBeat = startBeat * tempo;
@@ -101,6 +101,11 @@ public class AudibleView implements IMusicView {
             volume);
     this.receiver.send(start, startBeat);
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + endBeat);
+    try {
+      Thread.sleep(15);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
