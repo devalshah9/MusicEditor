@@ -46,7 +46,7 @@ public class MusicEditor {
     IMusicView visualView = IMusicView.create(IMusicView.ViewType.VISUAL, model);
     IMusicView audibleView = IMusicView.create(IMusicView.ViewType.AUDIBLE, model);
     IMusicView textView = IMusicView.create(IMusicView.ViewType.TEXT, model);
-    //visualView.initialize();
+    visualView.initialize();
     textView.renderSong(model, model.getTempo());
     try {
       audibleView.renderSong(model, model.getTempo());

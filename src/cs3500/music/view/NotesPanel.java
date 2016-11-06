@@ -70,7 +70,7 @@ public class NotesPanel extends JPanel {
       double endDraw = (endBeat/measureLength + remainder) * boxWidth;
       gimg.drawLine(0, boxHeight * n, (int) endDraw , boxHeight * n);
     }
-    for (int n = 0; n < notes.size(); n++) {
+    for (int n = 0; n < endBeat; n++) {
       //fill rectangles for notes
       if (notes.containsKey(n)) {
         ArrayList<Note> currentNotes = notes.get(n);
