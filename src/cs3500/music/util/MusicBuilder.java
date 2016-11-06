@@ -5,20 +5,15 @@ import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.MusicEditor;
-import cs3500.music.model.ViewModel;
-import cs3500.music.model.IViewModel;
-import cs3500.music.util.CompositionBuilder;
 
 
-public class MusicBuilder implements CompositionBuilder<IViewModel> {
-
+public class MusicBuilder implements CompositionBuilder<IMusicEditor> {
   IMusicEditor editor = new MusicEditor();
   int bpm;
 
   @Override
-  public IViewModel build() {
-    IViewModel model = new ViewModel(this.editor, 0, 4);
-    return model;
+  public IMusicEditor build() {
+    return editor;
   }
 
   @Override

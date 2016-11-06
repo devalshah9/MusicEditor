@@ -15,14 +15,14 @@ import cs3500.music.view.IMusicView;
 public class MusicEditor {
 
   private static IViewModel viewModel;
-  private CompositionBuilder<IViewModel> builder;
+  private CompositionBuilder<IMusicEditor> builder;
   private IMusicEditor editor;
 
   public MusicEditor() {
     this.editor = new cs3500.music.model.MusicEditor();
     this.builder = new MusicBuilder();
-    builder.build();
-    this.viewModel = new ViewModel(editor, 0 , 4);
+    editor = builder.build();
+    MusicEditor.viewModel = new ViewModel(editor, 0 , 4);
   }
 
 
