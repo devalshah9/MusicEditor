@@ -3,6 +3,8 @@ package cs3500.music.view;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import javax.sound.midi.InvalidMidiDataException;
+
 import cs3500.music.commons.*;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
@@ -27,7 +29,8 @@ public interface IMusicView {;
    * @param model to get the state of.
    * @throws IllegalArgumentException If the index is out of bounds.
    */
-  void renderSong(IViewModel model) throws IllegalArgumentException;
+  void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException,
+  IllegalArgumentException;
 
   /**
    * Enumeration for the three types of views.
@@ -58,8 +61,8 @@ public interface IMusicView {;
     } else if (type.equals(ViewType.VISUAL)) {
       return new VisualView(model);
     } else {
-      //return new AudibleView(model);
-      return null;
+      return new AudibleView(model);
+
     }
   }
 }

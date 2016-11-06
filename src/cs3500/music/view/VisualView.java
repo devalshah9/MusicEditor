@@ -66,11 +66,13 @@ public class VisualView extends JFrame implements IMusicView {
   }
 
   @Override
-  public void renderSong(IViewModel model) throws IllegalArgumentException {
+  public void renderSong(IViewModel model, int tempo) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Invalid View Model!");
     }
-
+    else {
+      this.initialize();
+    }
   }
 
 }

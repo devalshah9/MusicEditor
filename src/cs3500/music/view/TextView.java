@@ -24,12 +24,13 @@ public class TextView implements IMusicView {
   }
 
   @Override
-  public void renderSong(IViewModel model) throws IllegalArgumentException {
+  public void renderSong(IViewModel model, int tempo) throws IllegalArgumentException {
+    System.out.println("Hi");
     if (model == null) {
       throw new IllegalArgumentException("Invalid View Model!");
     }
     String result = renderNotes(viewModel);
-    this.write(result);
+    System.out.println(this.renderNotes(model));
   }
 
   /**
@@ -50,7 +51,7 @@ public class TextView implements IMusicView {
         newNotes.add(new Note(pit, oct, false, 0, 0));
       }
     }
-    String result = "";
+    StringBuilder result = new StringBuilder("");
     if (viewModel.getEndBeat() == -1 || viewModel.getHighestNote() == null
             || viewModel.getLowestNote() == null) {
       return "No notes to present.";
@@ -60,52 +61,54 @@ public class TextView implements IMusicView {
     int endIndex = newNotes.indexOf(viewModel.getHighestNote());
     List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
     int columnLength = 5;
-    result = result + "\n";
+    result.append("\n");
     ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
     int beatNumberColumnLength = String.valueOf(viewModel.getEndBeat()).toString().length();
     for (int n = 0; n < beatNumberColumnLength; n++) {
-      result = result + " ";
+      result.append(" ");
     }
-    result = result + "  ";
+    result.append("  ");
     for (int n = 0; n < printNotes.size(); n++) {
-      result = result + printNotes.get(n).toString();
+      result.append(printNotes.get(n).toString());
       for (int i = printNotes.get(n).toString().length(); i < 5; i++) {
-        result = result + " ";
+        result.append(" ");
       }
     }
-    result = result + "\n";
+    result.append("\n");
     for (int n = 0; n < viewModel.getEndBeat(); n++) {
       beatNumbers.add(n);
     }
     for (int n = 0; n < beatNumbers.size(); n++) {
       Integer p = beatNumbers.get(n);
       for (int i = beatNumberColumnLength; i > p.toString().length(); i--) {
-        result = result + " ";
+        result.append(" ");
       }
-      result = result + (beatNumbers.get(n));
-      result = result + "  ";
+      result.append((beatNumbers.get(n)));
+      result.append("  ");
       if (!(viewModel.getNotes().containsKey(beatNumbers.get(n)))) {
         for (int j = 0; j < printNotes.size(); j++) {
-          result = result + "     ";
+          result.append("     ");
         }
       } else {
         for (int j = 0; j < printNotes.size(); j++) {
           if (viewModel.getNotes().get(beatNumbers.get(n)).contains(printNotes.get(j))) {
             int indexNote = viewModel.getNotes().get(beatNumbers.get(n)).indexOf(printNotes.get(j));
             if (viewModel.getNotes().get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
-              result = result + "X" + "    ";
+              result.append("X");
+              result.append("    ");
             } else {
-              result = result + "|" + "    ";
+              result.append("|") ;
+              result.append("    ");
             }
           } else {
-            result = result + "     ";
+            result.append("     ");
           }
         }
       }
-      result = result + "\n";
+      result.append("\n");
     }
 
-    return result;
+    return result.toString();
   }
 
   @Override

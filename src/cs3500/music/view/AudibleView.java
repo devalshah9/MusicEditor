@@ -68,7 +68,8 @@ public class AudibleView implements IMusicView {
    * </a>
    */
 
-  public void playSong(IViewModel model, int tempo) throws InvalidMidiDataException {
+  @Override
+  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
     for (int n = 0; n < endBeat; n++) {
@@ -115,12 +116,5 @@ public class AudibleView implements IMusicView {
 
   }
 
-  @Override
-  public void renderSong(IViewModel model) throws IllegalArgumentException {
-    if (model == null) {
-      throw new IllegalArgumentException("Invalid View Model!");
-    }
-
-  }
 }
 
