@@ -70,25 +70,7 @@ class testGraphicsView extends JFrame {
   }
 
   public static void main(String[] args) {
-    FileReader text = null;
-    try {
-      text = new FileReader(args[0]);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    MusicReader reader = new MusicReader();
-    CompositionBuilder builder = new MusicBuilder();
-    reader.parseFile(text, builder);
-    IMusicEditor editor = (MusicEditor) builder.build();
-    IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
-    VisualView visualView = new VisualView(model);
-    visualView.initialize();
-    AudibleView audio = new AudibleView(model);
-    try {
-      audio.playSong(model, model.getTempo());
-    } catch (InvalidMidiDataException e) {
-      e.printStackTrace();
-    }
+
   }
 
   public void initialize() {
