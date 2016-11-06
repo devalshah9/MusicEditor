@@ -63,6 +63,42 @@ public class ViewModel implements IViewModel {
     return currHighestNote;
   }
 
+  @Override
+  public int getNoteDuration(Note note, int startBeat) {
+    int length = 0;
+    int n = 1;
+    boolean noteNotOver = true;
+    if (note.getbeginningOfNote()) {
+      if (this.notes.get(startBeat).contains(note)) {
+        int index = notes.get(startBeat).indexOf(note);
+        if (!(this.notes.get(startBeat).get(index).getbeginningOfNote())) {
+          throw new IllegalArgumentException("Must be beginning of note.");
+        }
+        do {
+          if (this.notes.containsKey(startBeat + n)) {
+            if (this.notes.get(startBeat + n).contains(note)) {
+              index = notes.get(startBeat + n).indexOf(note);
+              if (this.notes.get(startBeat + n).get(index).getbeginningOfNote()) {
+                return n;
+              } else {
+                n++;
+                length++;
+              }
+            } else {
+              return n;
+            }
+          } else {
+            return n;
+          }
+        } while (noteNotOver);
+
+      } else {
+        return length;
+      }
+    }
+    throw new IllegalArgumentException("Must be a beginning of a note.");
+  }
+
   public int getMeasureLength() {
     return this.measureLength;
   }

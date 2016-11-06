@@ -40,5 +40,6 @@ public interface IViewModel {
    */
   int getMeasureLength();
 
+  int getNoteDuration(Note note, int startBeat);
 
 }
