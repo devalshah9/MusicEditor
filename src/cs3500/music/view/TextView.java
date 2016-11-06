@@ -25,6 +25,9 @@ public class TextView implements IMusicView {
 
   @Override
   public void renderSong(IViewModel model) throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Invalid View Model!");
+    }
     String result = renderNotes(viewModel);
     this.write(result);
   }
@@ -44,7 +47,7 @@ public class TextView implements IMusicView {
         if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
           break;
         }
-        newNotes.add(new Note(pit, oct, false, 0));
+        newNotes.add(new Note(pit, oct, false, 0, 0));
       }
     }
     String result = "";

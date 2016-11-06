@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
+import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 
 /**
@@ -15,9 +16,10 @@ import cs3500.music.model.IViewModel;
 
 public class VisualView extends JFrame implements IMusicView {
 
-  private final NotesPanel notesPanel; // You may want to refine this to a subtype of JPanel
-  private final BeatsPanel beatNumbers;
-  private final NoteLabelsPanel notesLabels;
+  private final NoteLabelsPanel noteLabelsPanel;
+  private final BeatsPanel beatsPanel;
+  private final NotesPanel notesPanel;
+  private JScrollPane scrollNotesPane;
   private final IViewModel viewModel;
   JPanel p;
 
@@ -30,12 +32,20 @@ public class VisualView extends JFrame implements IMusicView {
     this.p = new JPanel(new BorderLayout());
     this.viewModel = viewModel;
     this.notesPanel = new NotesPanel(viewModel);
-    this.beatNumbers = new BeatsPanel(viewModel);
-    this.notesLabels = new NoteLabelsPanel(viewModel);
+    this.beatsPanel = new BeatsPanel(viewModel);
+    this.noteLabelsPanel = new NoteLabelsPanel(viewModel);
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    this.getContentPane().add(notesPanel, BorderLayout.CENTER);
-    this.getContentPane().add(beatNumbers, BorderLayout.WEST);
-    this.getContentPane().add(notesLabels, BorderLayout.NORTH);
+    JPanel container = new JPanel();
+    container.setLayout(new BorderLayout());
+    container.add(this.notesPanel, BorderLayout.CENTER);
+    container.add(this.beatsPanel, BorderLayout.NORTH);
+    container.add(this.noteLabelsPanel,BorderLayout.WEST);
+    scrollNotesPane = new JScrollPane(container);
+    this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
+    this.notesPanel.setPreferredSize(new Dimension(800, 375));
+    this.beatsPanel.setPreferredSize(new Dimension(800, 25));
+    this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
+    this.setPreferredSize(new Dimension(1000,1000));
     this.pack();
   }
 
@@ -47,11 +57,14 @@ public class VisualView extends JFrame implements IMusicView {
 
   @Override
   public Dimension getPreferredSize(){
-    return new Dimension(100, 100);
+    return new Dimension(700, 700);
   }
 
   @Override
   public void renderSong(IViewModel model) throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Invalid View Model!");
+    }
 
   }
 

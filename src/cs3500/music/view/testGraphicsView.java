@@ -23,9 +23,9 @@ class testGraphicsView extends JFrame {
   private final NotesPanel notesPanel;
   private final IMusicEditor editor;
   private JScrollPane scrollNotesPane;
-  Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
-  Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6);
-  Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
+  Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6, 0);
+  Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6, 0);
+  Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6, 0);
   JPanel p;
 
   /**
@@ -65,9 +65,9 @@ class testGraphicsView extends JFrame {
 
     IMusicEditor editor = new MusicEditor();
     editor.createNewSheet();
-    Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6);
-    Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6);
-    Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6);
+    Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6, 0);
+    Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6, 0);
+    Note note3 = new Note(Pitch.C, Octave.FIVE, true, 6, 0);
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 2, 2);

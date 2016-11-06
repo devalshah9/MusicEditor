@@ -13,7 +13,7 @@ public class AudibleView implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
 
-  public AuidbleView(IViewModel viewModel) {
+  public AudibleView(IViewModel viewModel) {
     try {
       this.synth = MidiSystem.getSynthesizer();
       this.receiver = synth.getReceiver();
@@ -56,14 +56,29 @@ public class AudibleView implements IMusicView {
 
   public void playNote(Note note, int duration) throws InvalidMidiDataException {
 
-
   }
   public void playNote() throws InvalidMidiDataException {
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, 0, 60, 64);
     this.receiver.send(start, -1);
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + 200000);
+
+    // i think it is playing a note all the way till the stop time?
+
     this.receiver.close(); // Only call this once you're done playing *all* notes
+  }
+
+  @Override
+  public void initialize() {
+
+  }
+
+  @Override
+  public void renderSong(IViewModel model) throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Invalid View Model!");
+    }
+
   }
 }
 

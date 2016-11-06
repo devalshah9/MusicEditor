@@ -58,8 +58,7 @@ public interface IMusicView {;
     } else if (type.equals(ViewType.VISUAL)) {
       return new VisualView(model);
     } else {
-      //return new AudibleView(model);
+      return new AudibleView(model);
     }
-    return null;
   }
 }
