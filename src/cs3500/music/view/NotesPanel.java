@@ -40,7 +40,6 @@ public class NotesPanel extends JPanel {
     gimg.setColor(Color.BLACK);
 
     AffineTransform originalTransform = gimg.getTransform();
-    ;
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, -1);
 
@@ -52,12 +51,10 @@ public class NotesPanel extends JPanel {
 
 
     int height = (int) (this.getPreferredSize().getHeight() * 0.90);
-    int width = (int) this.getPreferredSize().getWidth();
     int widthScale = 30;
     int boxWidth =  measureLength * widthScale;
     int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int newRemainder = height % numberOfDistinctNotes;
     int boxHeight = height/numberOfDistinctNotes;
 
     //Draws the vertical lines

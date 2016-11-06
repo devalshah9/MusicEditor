@@ -14,13 +14,17 @@ public class AudibleView implements IMusicView {
   private final Receiver receiver;
 
   public AudibleView(IViewModel viewModel) {
+    Synthesizer tempSynth = null;
+    Receiver tempRec = null;
     try {
-      this.synth = MidiSystem.getSynthesizer();
-      this.receiver = synth.getReceiver();
-      this.synth.open();
+      tempSynth = MidiSystem.getSynthesizer();
+      tempRec = tempSynth.getReceiver();
+      tempSynth.open();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     }
+    this.synth = tempSynth;
+    this.receiver = tempRec;
   }
 
   /**
@@ -62,8 +66,6 @@ public class AudibleView implements IMusicView {
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, 0, 60, 64);
     this.receiver.send(start, -1);
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + 200000);
-
-    // i think it is playing a note all the way till the stop time?
 
     this.receiver.close(); // Only call this once you're done playing *all* notes
   }

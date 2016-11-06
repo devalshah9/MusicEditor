@@ -43,7 +43,6 @@ public class BeatsPanel extends JPanel {
     int endBeat = this.viewModel.getEndBeat();
 
 
-    int height = (int) (this.getPreferredSize().getHeight() * 0.90);
     int widthScale = 30;
     int boxWidth =  measureLength * widthScale;
     int remainder = endBeat % measureLength;

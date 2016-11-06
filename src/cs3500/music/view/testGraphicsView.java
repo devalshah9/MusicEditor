@@ -54,10 +54,11 @@ class testGraphicsView extends JFrame {
     container.add(this.noteLabelsPanel,BorderLayout.WEST);
     scrollNotesPane = new JScrollPane(container);
     this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
-    this.notesPanel.setPreferredSize(new Dimension(800, 375));
-    this.beatsPanel.setPreferredSize(new Dimension(800, 25));
-    this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
-    this.setPreferredSize(new Dimension(1000,1000));
+    //this.notesPanel.setPreferredSize(new Dimension(800, 375));
+    //this.beatsPanel.setPreferredSize(new Dimension(800, 25));
+    //this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
+    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    this.setUndecorated(true);
     this.pack();
   }
 
@@ -73,10 +74,12 @@ class testGraphicsView extends JFrame {
     editor.addSingleNote(0, note3, 2, 2);
     editor.addSingleNote(0, note1, 20, 4);
     IViewModel viewModel = new ViewModel(editor, 0, 4);
-    StringBuffer out = new StringBuffer();
-    TextView textView = new TextView(viewModel, out);
-    textView.renderSong(viewModel);
-    System.out.println(out.toString());
+//    StringBuffer out = new StringBuffer();
+//    TextView textView = new TextView(viewModel, out);
+//    textView.renderSong(viewModel);
+//    System.out.println(out.toString());
+    VisualView visualView = new VisualView(viewModel);
+    visualView.initialize();
   }
 
   public void initialize() {
