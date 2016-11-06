@@ -203,6 +203,14 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     return this.tempo;
   }
 
+  public String getSheetState(int index) {
+    if (index < 0 || index > this.sheets.size()) {
+      return this.getSheet(index).getSheetState();
+    }
+    else {
+      throw new IllegalArgumentException("Invalid index.");
+    }
+  }
 
 }
 

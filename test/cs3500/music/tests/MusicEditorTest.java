@@ -94,8 +94,8 @@ public class MusicEditorTest {
   public void musicEditorOverlaySheets() {
     editor.createNewSheet();
     editor.createNewSheet();
-    Note note4 = new Note(Pitch.D, Octave.FIVE, true);
-    Note note5 = new Note(Pitch.E, Octave.THREE, true);
+    Note note4 = new Note(Pitch.D, Octave.FIVE, true, 0, 1);
+    Note note5 = new Note(Pitch.E, Octave.THREE, true, 0, 1);
     editor.addSingleNote(0, note1, 4, 0); //Adds a single note to the first
     editor.addSingleNote(0, note2, 5, 1); //Adds a single note to the first
     editor.addSingleNote(0, note3, 3, 2); //Adds a single note to the first
@@ -133,8 +133,8 @@ public class MusicEditorTest {
   public void musicEditorConsecutiveSheets() {
     editor.createNewSheet();
     editor.createNewSheet();
-    Note note4 = new Note(Pitch.D, Octave.FIVE, true);
-    Note note5 = new Note(Pitch.E, Octave.THREE, true);
+    Note note4 = new Note(Pitch.D, Octave.FIVE, true, 0, 1);
+    Note note5 = new Note(Pitch.E, Octave.THREE, true, 0, 1);
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1); //furthest beat shown will thus be beat 6
     editor.addSingleNote(0, note3, 3, 2);
