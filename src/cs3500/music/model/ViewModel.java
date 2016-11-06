@@ -47,7 +47,9 @@ public class ViewModel implements IViewModel {
     return currLowestNote;
   }
 
-  public int getTempo() { return this.tempo;}
+  public int getTempo() {
+    return this.tempo;
+  }
 
   @Override
   public Note getHighestNote() {

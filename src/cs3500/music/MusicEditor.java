@@ -22,7 +22,7 @@ public class MusicEditor {
     this.editor = new cs3500.music.model.MusicEditor();
     this.builder = new MusicBuilder();
     editor = builder.build();
-    MusicEditor.viewModel = new ViewModel(editor, 0 , 4);
+    MusicEditor.viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
   }
 
 

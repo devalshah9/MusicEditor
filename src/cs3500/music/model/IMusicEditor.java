@@ -106,7 +106,7 @@ public interface IMusicEditor<MusicSheet> {
   void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
-  TreeMap<Integer, ArrayList<Note>>  getBeats(int index);
+  TreeMap<Integer, ArrayList<Note>> getBeats(int index);
 
   void setTempo(int tempo);
 

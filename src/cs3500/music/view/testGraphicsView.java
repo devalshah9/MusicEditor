@@ -50,7 +50,7 @@ class testGraphicsView extends JFrame {
     editor.addSingleNote(0, note3, 2, 2);
     editor.addSingleNote(0, note1, 20, 4);
 
-    IViewModel viewModel = new ViewModel(editor, 0, 4);
+    IViewModel viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
     this.notesPanel = new NotesPanel(viewModel);
     this.beatsPanel = new BeatsPanel(viewModel);
     this.noteLabelsPanel = new NoteLabelsPanel(viewModel);
@@ -80,12 +80,12 @@ class testGraphicsView extends JFrame {
     CompositionBuilder builder = new MusicBuilder();
     reader.parseFile(text, builder);
     IMusicEditor editor = (MusicEditor) builder.build();
-    IViewModel model = new ViewModel(editor, 0, 4);
+    IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     VisualView visualView = new VisualView(model);
     visualView.initialize();
     AudibleView audio = new AudibleView(model);
     try {
-      audio.playNote();
+      audio.playSong(model, model.getTempo());
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }

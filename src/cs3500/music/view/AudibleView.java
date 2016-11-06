@@ -71,13 +71,15 @@ public class AudibleView implements IMusicView {
   public void playSong(IViewModel model, int tempo) throws InvalidMidiDataException {
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
-    for (int n = 0; n < notes.size(); n++) {
-      ArrayList<Note> currNotes = notes.get(n);
-      for (int i = 0; i < currNotes.size(); i++) {
-        Note currNote = currNotes.get(i);
-        if (currNote.getbeginningOfNote()) {
-          int duration = model.getNoteDuration(currNote, n);
-          playNote(currNote, duration, tempo, n);
+    for (int n = 0; n < endBeat; n++) {
+      if (notes.containsKey(n)) {
+        ArrayList<Note> currNotes = notes.get(n);
+        for (int i = 0; i < currNotes.size(); i++) {
+          Note currNote = currNotes.get(i);
+          if (currNote.getbeginningOfNote()) {
+            int duration = model.getNoteDuration(currNote, n);
+            playNote(currNote, duration, tempo, n);
+          }
         }
       }
     }

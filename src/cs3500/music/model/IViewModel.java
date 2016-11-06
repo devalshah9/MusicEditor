@@ -42,4 +42,6 @@ public interface IViewModel {
 
   int getNoteDuration(Note note, int startBeat);
 
+  int getTempo();
+
 }
