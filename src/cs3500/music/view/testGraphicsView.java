@@ -1,9 +1,13 @@
 package cs3500.music.view;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
@@ -13,6 +17,9 @@ import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
 import cs3500.music.model.ViewModel;
+import cs3500.music.util.CompositionBuilder;
+import cs3500.music.util.MusicBuilder;
+import cs3500.music.util.MusicReader;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.NotesPanel;
 
@@ -63,23 +70,25 @@ class testGraphicsView extends JFrame {
   }
 
   public static void main(String[] args) {
-
-    IMusicEditor editor = new MusicEditor();
-    editor.createNewSheet();
-    Note note1 = new Note(Pitch.A, Octave.ONE, true, 6, 0);
-    Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6, 0);
-    Note note3 = new Note(Pitch.C, Octave.NINE, true, 6, 0);
-    editor.addSingleNote(0, note1, 4, 0);
-    editor.addSingleNote(0, note2, 5, 1);
-    editor.addSingleNote(0, note3, 2, 2);
-    editor.addSingleNote(0, note1, 60, 4);
-    IViewModel viewModel = new ViewModel(editor, 0, 4);
-//    StringBuffer out = new StringBuffer();
-//    TextView textView = new TextView(viewModel, out);
-//    textView.renderSong(viewModel);
-//    System.out.println(out.toString());
-    VisualView visualView = new VisualView(viewModel);
+    FileReader text = null;
+    try {
+      text = new FileReader(args[0]);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    MusicReader reader = new MusicReader();
+    CompositionBuilder builder = new MusicBuilder();
+    reader.parseFile(text, builder);
+    IMusicEditor editor = (MusicEditor) builder.build();
+    IViewModel model = new ViewModel(editor, 0, 4);
+    VisualView visualView = new VisualView(model);
     visualView.initialize();
+    AudibleView audio = new AudibleView(model);
+    try {
+      audio.playNote();
+    } catch (InvalidMidiDataException e) {
+      e.printStackTrace();
+    }
   }
 
   public void initialize() {

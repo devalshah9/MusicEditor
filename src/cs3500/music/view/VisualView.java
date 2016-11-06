@@ -46,9 +46,10 @@ public class VisualView extends JFrame implements IMusicView {
     Note lowestNote = this.viewModel.getLowestNote();
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
     int numberOfBeats = this.viewModel.getEndBeat();
-    this.notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37, numberOfDistinctNotes * 31));
+    this.notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37,
+            numberOfDistinctNotes * 31 + 20));
     this.beatsPanel.setPreferredSize(new Dimension(numberOfBeats * 37, 10));
-    this.noteLabelsPanel.setPreferredSize(new Dimension(30, numberOfDistinctNotes * 31));
+    this.noteLabelsPanel.setPreferredSize(new Dimension(30, numberOfDistinctNotes * 31 + 20));
     this.setPreferredSize(new Dimension(numberOfBeats * 37 + 50, numberOfDistinctNotes * 31 + 50));
     this.pack();
   }
