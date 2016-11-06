@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.*;
+import java.util.TreeMap;
 
 import javax.swing.*;
 
@@ -30,7 +31,7 @@ public class NoteLabelsPanel extends JPanel {
   public void paintComponent(Graphics g) {
     // Handle the default painting
     super.paintComponent(g);
-    ArrayList<Note> newNotes = new ArrayList<>();
+    ArrayList<Note> newNotes = new ArrayList<Note>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
         if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
@@ -48,6 +49,9 @@ public class NoteLabelsPanel extends JPanel {
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, 1);
 
+    TreeMap<Integer, ArrayList<Note>> notes = this.viewModel.getNotes();
+    int measureLength = this.viewModel.getMeasureLength();
+    int endBeat = this.viewModel.getEndBeat();
     Note highestNote = this.viewModel.getHighestNote();
     Note lowestNote = this.viewModel.getLowestNote();
     int lowestIndex = newNotes.indexOf(lowestNote);
@@ -56,11 +60,17 @@ public class NoteLabelsPanel extends JPanel {
 
 
     int height = (int) (this.getPreferredSize().getHeight() * 0.90);
+    int width = (int) this.getPreferredSize().getWidth();
+    int widthScale = 30;
+    int boxWidth =  120;
+    int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int boxHeight = height/numberOfDistinctNotes;
+    int newRemainder = height % numberOfDistinctNotes;
+    int boxHeight = 30;
 
     // draw the Notes Labels
     for (int n = 0; n <= numberOfDistinctNotes; n++) {
+      double endDraw = (endBeat/measureLength + remainder) * boxWidth;
       String currNote = newList.get(n).toString();
       gimg.drawString(currNote, 0, 0 - boxHeight * n - boxHeight / 2);
     }
