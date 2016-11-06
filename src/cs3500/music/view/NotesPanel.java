@@ -40,7 +40,6 @@ public class NotesPanel extends JPanel {
     gimg.setColor(Color.BLACK);
 
     AffineTransform originalTransform = gimg.getTransform();
-    ;
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, -1);
 
@@ -52,12 +51,9 @@ public class NotesPanel extends JPanel {
 
 
     int height = (int) (this.getPreferredSize().getHeight() * 0.90);
-    int width = (int) this.getPreferredSize().getWidth();
-    int widthScale = 30;
     int boxWidth =  120;
     int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int newRemainder = height % numberOfDistinctNotes;
     int boxHeight = 30;
 
     //Draws the vertical lines
@@ -79,7 +75,7 @@ public class NotesPanel extends JPanel {
           if (currNote.getbeginningOfNote()) {
             gimg.setColor(Color.BLACK);
           } else {
-            gimg.setColor(Color.GREEN);
+            gimg.setColor(Color.RED);
           }
           int leftCornerX = (boxWidth / measureLength) * n;
           int leftCornerY = boxHeight * (currNote.notesBetweenTwoNotes(lowestNote));

@@ -103,14 +103,6 @@ public class AudibleView implements IMusicView {
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + endBeat);
   }
 
-  public void playNote() throws InvalidMidiDataException {
-    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
-    MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, 0, 60, 64);
-    this.receiver.send(start, -1);
-    this.receiver.send(stop, this.synth.getMicrosecondPosition() + 200000);
-    this.receiver.close(); // Only call this once you're done playing *all* notes
-  }
-
   @Override
   public void initialize() {
 

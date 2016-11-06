@@ -25,11 +25,9 @@ public class TextView implements IMusicView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws IllegalArgumentException {
-    System.out.println("Hi");
     if (model == null) {
       throw new IllegalArgumentException("Invalid View Model!");
     }
-    String result = renderNotes(viewModel);
     System.out.println(this.renderNotes(model));
   }
 
@@ -60,7 +58,6 @@ public class TextView implements IMusicView {
     int beginIndex = newNotes.indexOf(viewModel.getLowestNote());
     int endIndex = newNotes.indexOf(viewModel.getHighestNote());
     List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
-    int columnLength = 5;
     result.append("\n");
     ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
     int beatNumberColumnLength = String.valueOf(viewModel.getEndBeat()).toString().length();
@@ -127,5 +124,4 @@ public class TextView implements IMusicView {
       e.printStackTrace();
     }
   }
-
 }
