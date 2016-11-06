@@ -66,13 +66,13 @@ class testGraphicsView extends JFrame {
 
     IMusicEditor editor = new MusicEditor();
     editor.createNewSheet();
-    Note note1 = new Note(Pitch.A, Octave.FIVE, true, 6, 0);
+    Note note1 = new Note(Pitch.A, Octave.ONE, true, 6, 0);
     Note note2 = new Note(Pitch.ASHARP, Octave.FIVE, true, 6, 0);
     Note note3 = new Note(Pitch.C, Octave.NINE, true, 6, 0);
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 2, 2);
-    editor.addSingleNote(0, note1, 16, 4);
+    editor.addSingleNote(0, note1, 60, 4);
     IViewModel viewModel = new ViewModel(editor, 0, 4);
 //    StringBuffer out = new StringBuffer();
 //    TextView textView = new TextView(viewModel, out);

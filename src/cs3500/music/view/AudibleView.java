@@ -1,5 +1,8 @@
 package cs3500.music.view;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import javax.sound.midi.*;
 
 import cs3500.music.commons.*;
@@ -58,8 +61,21 @@ public class AudibleView implements IMusicView {
    *   </a>
    */
 
-  public void playNote(Note note, int duration) throws InvalidMidiDataException {
+  public void playSong(IViewModel model) throws InvalidMidiDataException {
+    TreeMap<Integer, ArrayList<Note>> notes;
+  }
 
+  public void playNote(Note note, int duration) throws InvalidMidiDataException {
+    int frequency = note.getPitch().ordinal() + note.getOctave().ordinal();
+    int instrument = note.getInstrument();
+    int volume = note.getVolume();
+
+    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument,
+            frequency, volume);
+    MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, frequency,
+            volume);
+    this.receiver.send(start, -1);
+    this.receiver.send(stop, this.synth.getMicrosecondPosition() + 200000);
   }
   public void playNote() throws InvalidMidiDataException {
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
