@@ -61,9 +61,6 @@ class testGraphicsView extends JFrame {
     container.add(this.noteLabelsPanel,BorderLayout.WEST);
     scrollNotesPane = new JScrollPane(container);
     this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
-    //this.notesPanel.setPreferredSize(new Dimension(800, 375));
-    //this.beatsPanel.setPreferredSize(new Dimension(800, 25));
-    //this.noteLabelsPanel.setPreferredSize(new Dimension(30, 375));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setUndecorated(true);
     this.pack();
