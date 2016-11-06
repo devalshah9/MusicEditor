@@ -16,7 +16,7 @@ import cs3500.music.commons.*;
 public class MusicEditor implements IMusicEditor<MusicSheet> {
 
   ArrayList<MusicSheet> sheets;
-
+  int tempo;
   /**
    * Constructor that initializes the list of MusicSheet.
    */
@@ -195,6 +195,13 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
   }
 
 
+  public void setTempo(int tempo) {
+    this.tempo = tempo;
+  }
+
+  public int getTempo() {
+    return this.tempo;
+  }
 
 
 }

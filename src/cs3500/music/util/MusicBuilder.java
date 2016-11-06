@@ -9,7 +9,7 @@ import cs3500.music.model.MusicEditor;
 
 public class MusicBuilder implements CompositionBuilder<IMusicEditor> {
   IMusicEditor editor = new MusicEditor();
-  int bpm;
+  int tempo;
 
   @Override
   public IMusicEditor build() {
@@ -18,7 +18,8 @@ public class MusicBuilder implements CompositionBuilder<IMusicEditor> {
 
   @Override
   public CompositionBuilder setTempo(int tempo) {
-    this.bpm = 60000000/tempo;
+    this.tempo = tempo;
+    this.editor.setTempo(tempo);
     return this;
   }
 

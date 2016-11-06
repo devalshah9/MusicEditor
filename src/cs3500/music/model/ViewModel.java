@@ -11,11 +11,13 @@ import cs3500.music.commons.Note;
 public class ViewModel implements IViewModel {
   private final TreeMap<Integer, ArrayList<Note>> notes;
   private final int measureLength;
+  private int tempo;
 
   // use the model to get all these field values
-  public ViewModel(IMusicEditor editor, int index, int measureLength) {
+  public ViewModel(IMusicEditor editor, int index, int measureLength, int tempo) {
     notes = editor.getBeats(index);
     this.measureLength = measureLength;
+    this.tempo = editor.getTempo();
   }
 
   public TreeMap<Integer, ArrayList<Note>> getNotes() {
@@ -44,6 +46,8 @@ public class ViewModel implements IViewModel {
     }
     return currLowestNote;
   }
+
+  public int getTempo() { return this.tempo;}
 
   @Override
   public Note getHighestNote() {
@@ -98,6 +102,8 @@ public class ViewModel implements IViewModel {
     }
     throw new IllegalArgumentException("Must be a beginning of a note.");
   }
+
+
 
   public int getMeasureLength() {
     return this.measureLength;

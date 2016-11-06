@@ -108,6 +108,9 @@ public interface IMusicEditor<MusicSheet> {
 
   TreeMap<Integer, ArrayList<Note>>  getBeats(int index);
 
+  void setTempo(int tempo);
+
+  int getTempo();
 
 }
 
