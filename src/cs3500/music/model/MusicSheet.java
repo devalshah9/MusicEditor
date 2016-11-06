@@ -2,6 +2,7 @@ package cs3500.music.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
 import cs3500.music.commons.*;
@@ -317,6 +318,76 @@ public class MusicSheet {
    */
   public int amountOfBeats() {
     return this.beats.size();
+  }
+
+  public String getSheetState() {
+    ArrayList<Note> newNotes = new ArrayList<Note>();
+    for (Octave oct : Octave.values()) {
+      for (Pitch pit : Pitch.values()) {
+        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+          break;
+        }
+        newNotes.add(new Note(pit, oct, false, 0, 0));
+      }
+    }
+    StringBuilder result = new StringBuilder("");
+    if (this.getFurthestBeat() == -1 || this.getHighestNote() == null
+            || this.getLowestNote() == null) {
+      return "No notes to present.";
+    }
+
+    int beginIndex = newNotes.indexOf(this.getLowestNote());
+    int endIndex = newNotes.indexOf(this.getHighestNote());
+    List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
+    int columnLength = 5;
+    result.append("\n");
+    ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
+    int beatNumberColumnLength = String.valueOf(this.getFurthestBeat()).toString().length();
+    for (int n = 0; n < beatNumberColumnLength; n++) {
+      result.append(" ");
+    }
+    result.append("  ");
+    for (int n = 0; n < printNotes.size(); n++) {
+      result.append(printNotes.get(n).toString());
+      for (int i = printNotes.get(n).toString().length(); i < 5; i++) {
+        result.append(" ");
+      }
+    }
+    result.append("\n");
+    for (int n = 0; n < this.getFurthestBeat(); n++) {
+      beatNumbers.add(n);
+    }
+    for (int n = 0; n < beatNumbers.size(); n++) {
+      Integer p = beatNumbers.get(n);
+      for (int i = beatNumberColumnLength; i > p.toString().length(); i--) {
+        result.append(" ");
+      }
+      result.append((beatNumbers.get(n)));
+      result.append("  ");
+      if (!(this.getBeats().containsKey(beatNumbers.get(n)))) {
+        for (int j = 0; j < printNotes.size(); j++) {
+          result.append("     ");
+        }
+      } else {
+        for (int j = 0; j < printNotes.size(); j++) {
+          if (this.getBeats().get(beatNumbers.get(n)).contains(printNotes.get(j))) {
+            int indexNote = this.getBeats().get(beatNumbers.get(n)).indexOf(printNotes.get(j));
+            if (this.getBeats().get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
+              result.append("X");
+              result.append("    ");
+            } else {
+              result.append("|") ;
+              result.append("    ");
+            }
+          } else {
+            result.append("     ");
+          }
+        }
+      }
+      result.append("\n");
+    }
+
+    return result.toString();
   }
 
 }
