@@ -9,22 +9,20 @@ import javax.sound.midi.Receiver;
 public class MockMidiReceiver implements Receiver {
 
   private Appendable ap = null;
+  StringBuilder result = new StringBuilder("");
 
-  public MockMidiReceiver() {
-    ap = new StringBuffer();
+  public MockMidiReceiver(Appendable ap) {
+    this.ap = ap;
   }
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
+    result.append(message.toString());
     try {
-      this.ap.append(message.toString());
+      this.ap.append(result.toString());
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public String getResults() {
-    return this.ap.toString();
   }
 
   @Override

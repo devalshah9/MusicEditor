@@ -1,7 +1,6 @@
 package cs3500.music.model;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.Iterator;
 import java.util.TreeMap;
 

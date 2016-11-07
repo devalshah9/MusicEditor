@@ -3,11 +3,7 @@ package cs3500.music.view;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
-
-import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
-import cs3500.music.model.MusicSheet;
 import cs3500.music.commons.*;
 
 /**

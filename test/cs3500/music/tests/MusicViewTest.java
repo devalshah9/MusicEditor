@@ -14,26 +14,24 @@ import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.AudibleView;
-import cs3500.music.view.IMusicView;
 
 
 public class MusicViewTest {
-
-  MockMidiReceiver receiver = new MockMidiReceiver();
   File file =
           new File
                   ("mary-little-lamb.txt");
   MusicReader reader = new MusicReader();
   CompositionBuilder builder = new MusicBuilder();
 
-
   @Test
   public void testOutput() {
+    StringBuffer buffer = new StringBuffer();
+    MockMidiReceiver receiver = new MockMidiReceiver(buffer);
     FileReader read = null;
     try {
       read = new FileReader(file);
     } catch (Exception e) {
-      throw new IllegalArgumentException("IDEK");
+      throw new IllegalArgumentException("File incorrect!");
     }
     reader.parseFile(read, builder);
     IMusicEditor editor = (cs3500.music.model.MusicEditor) builder.build();
@@ -45,7 +43,7 @@ public class MusicViewTest {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
-    System.out.println(receiver.getResults());
+    System.out.println(buffer.toString());
   }
 
 }
