@@ -20,8 +20,8 @@ import cs3500.music.model.IViewModel;
  */
 
 public class AudibleView implements IMusicView {
-  private final Synthesizer synth;
-  private final Receiver receiver;
+  private Synthesizer synth;
+  private Receiver receiver;
 
   public AudibleView(IViewModel viewModel) {
     Synthesizer tempSynth = null;
@@ -113,6 +113,10 @@ public class AudibleView implements IMusicView {
   @Override
   public void initialize() {
 
+  }
+
+  public void setReceiver(Receiver rec) {
+    this.receiver = rec;
   }
 
 }

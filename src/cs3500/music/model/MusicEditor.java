@@ -176,11 +176,11 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
 
   public MusicSheet getSheet(int sheetIndex)
           throws IllegalArgumentException{
-    if (this.sheets.contains(sheetIndex)) {
-      return (this.sheets.get(sheetIndex));
+    if (this.sheets.size() > sheetIndex) {
+      return this.sheets.get(sheetIndex);
     }
     else {
-      throw new IllegalArgumentException("invalid index.");
+      return (this.sheets.get(sheetIndex));
     }
   }
   @Override
@@ -203,11 +203,12 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
   }
 
   public String getSheetState(int index) {
-    if (index < 0 || index > this.sheets.size()) {
-      return this.getSheet(index).getSheetState();
+    if (index < 0 || index > this.sheets.size() ) {
+      throw new IllegalArgumentException("Invalid index.");
     }
     else {
-      throw new IllegalArgumentException("Invalid index.");
+      this.getSheet(0);
+      return this.getSheet(index).getSheetState();
     }
   }
 
