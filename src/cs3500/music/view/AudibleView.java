@@ -72,6 +72,8 @@ public class AudibleView implements IMusicView {
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
+    double bpm = 60000000 / tempo;
+    long totalMs = (long) (endBeat / bpm * 60000);
     for (int n = 0; n < endBeat; n++) {
       if (notes.containsKey(n)) {
         ArrayList<Note> currNotes = notes.get(n);
@@ -84,15 +86,20 @@ public class AudibleView implements IMusicView {
         }
       }
     }
+    try {
+      Thread.sleep(totalMs);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
 
   public void playNote(Note note, int duration, int tempo, int startBeat)
           throws InvalidMidiDataException {
+    int endBeat = startBeat + duration;
     int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
     int instrument = note.getInstrument() - 1;
     int volume = note.getVolume();
-    int endBeat = startBeat + duration;
     startBeat = startBeat * tempo;
     endBeat = endBeat * tempo;
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument,
@@ -101,11 +108,6 @@ public class AudibleView implements IMusicView {
             volume);
     this.receiver.send(start, startBeat);
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + endBeat);
-    try {
-      Thread.sleep(15);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
   }
 
   @Override

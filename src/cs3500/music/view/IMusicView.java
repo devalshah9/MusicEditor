@@ -33,36 +33,19 @@ public interface IMusicView {;
   IllegalArgumentException;
 
   /**
-   * Enumeration for the three types of views.
-   */
-  public enum ViewType {
-    /**
-     * This view is for the textual representation of your song.
-     */
-    TEXT,
-    /**
-     * This view is for the visual representation of your song.
-     */
-    VISUAL,
-    /**
-     * This view is for the audible representation of your song.
-     */
-    AUDIBLE;
-  }
-
-  /**
    * Factory method to create a certain type of view for your song.
    * @param type the type of view
    * @return an object of the view
    */
-  static IMusicView create(ViewType type, IViewModel model) {
-    if (type.equals(ViewType.TEXT)) {
+  static IMusicView create(String type, IViewModel model) throws IllegalArgumentException {
+    if (type.equals("console")) {
       return new TextView(model, new StringBuffer());
-    } else if (type.equals(ViewType.VISUAL)) {
+    } else if (type.equals("visual")) {
       return new VisualView(model);
-    } else {
+    } else if (type.equals("midi")){
       return new AudibleView(model);
-
+    } else {
+      throw new IllegalArgumentException("Invalid view type!");
     }
   }
 }

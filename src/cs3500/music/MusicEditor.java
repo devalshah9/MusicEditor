@@ -45,11 +45,11 @@ public class MusicEditor {
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     IMusicView view = null;
     if (args[1].equals("console")) {
-      view = IMusicView.create(IMusicView.ViewType.TEXT, model);
+      view = IMusicView.create("console", model);
     } else if (args[1].equals("visual")) {
-      view = IMusicView.create(IMusicView.ViewType.VISUAL, model);
+      view = IMusicView.create("visual", model);
     } else if (args[1].equals("midi")) {
-      view = IMusicView.create(IMusicView.ViewType.AUDIBLE, model);
+      view = IMusicView.create("midi", model);
     } else {
       throw new InvalidMidiDataException("Invalid input!");
     }
