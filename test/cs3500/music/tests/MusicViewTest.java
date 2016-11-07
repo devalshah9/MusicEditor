@@ -22,8 +22,7 @@ public class MusicViewTest {
   MockMidiReceiver receiver = new MockMidiReceiver();
   File file =
           new File
-                  ("\"C:\\\\Users\\\\akati\\\\IdeaProjects\\\\"
-                         + "GitMusicEditor\\\\resources\\\\mary-little-lamb.txt\";\n");
+                  ("mary-little-lamb.txt");
   MusicReader reader = new MusicReader();
   CompositionBuilder builder = new MusicBuilder();
 

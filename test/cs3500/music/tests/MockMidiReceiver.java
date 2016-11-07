@@ -8,7 +8,11 @@ import javax.sound.midi.Receiver;
 
 public class MockMidiReceiver implements Receiver {
 
-  private Appendable ap;
+  private Appendable ap = null;
+
+  public MockMidiReceiver() {
+    ap = new StringBuffer();
+  }
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
