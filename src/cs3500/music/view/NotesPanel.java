@@ -8,11 +8,7 @@ import java.util.TreeMap;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
-import cs3500.music.commons.Octave;
-import cs3500.music.commons.Pitch;
-import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
-import cs3500.music.model.MusicEditor;
 
 /**
  * Inner panel displaying all notes rendered as rectangles and lines denoting beat number
@@ -23,6 +19,10 @@ public class NotesPanel extends JPanel {
   private IViewModel viewModel;
   JPanel p = new JPanel();
 
+  /**
+   * The constructor for the notes panel.
+   * @param viewModel the view model to work with
+   */
   public NotesPanel(IViewModel viewModel) {
     super();
     this.viewModel = viewModel;
@@ -50,7 +50,6 @@ public class NotesPanel extends JPanel {
     Note lowestNote = this.viewModel.getLowestNote();
 
 
-    int height = (int) (this.getPreferredSize().getHeight() * 0.90);
     int boxWidth =  120;
     int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);

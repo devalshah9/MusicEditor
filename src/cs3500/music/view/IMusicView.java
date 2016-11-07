@@ -1,12 +1,7 @@
 package cs3500.music.view;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
-
 import javax.sound.midi.InvalidMidiDataException;
 
-import cs3500.music.commons.*;
-import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 
 /**

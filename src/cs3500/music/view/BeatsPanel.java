@@ -2,13 +2,8 @@ package cs3500.music.view;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.TreeMap;
-
 import javax.swing.*;
 
-import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
 
 /**
@@ -19,6 +14,10 @@ public class BeatsPanel extends JPanel {
   private IViewModel viewModel;
   JPanel p = new JPanel();
 
+  /**
+   * Constructor for the beats panel.
+   * @param viewModel the view model to work with
+   */
   public BeatsPanel(IViewModel viewModel) {
     super();
     this.viewModel = viewModel;

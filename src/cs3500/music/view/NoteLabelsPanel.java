@@ -20,6 +20,10 @@ public class NoteLabelsPanel extends JPanel {
   private IViewModel viewModel;
   JPanel p = new JPanel();
 
+  /**
+   * The constructor for the notes labels panel.
+   * @param viewModel the view model to work with
+   */
   public NoteLabelsPanel(IViewModel viewModel) {
     super();
     this.viewModel = viewModel;
@@ -60,17 +64,13 @@ public class NoteLabelsPanel extends JPanel {
 
 
     int height = (int) (this.getPreferredSize().getHeight() * 0.90);
-    int width = (int) this.getPreferredSize().getWidth();
-    int widthScale = 30;
     int boxWidth =  120;
     int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int newRemainder = height % numberOfDistinctNotes;
     int boxHeight = 30;
 
     // draw the Notes Labels
     for (int n = 0; n <= numberOfDistinctNotes; n++) {
-      double endDraw = (endBeat/measureLength + remainder) * boxWidth;
       String currNote = newList.get(n).toString();
       gimg.drawString(currNote, 0, 0 - boxHeight * n - boxHeight / 2);
     }

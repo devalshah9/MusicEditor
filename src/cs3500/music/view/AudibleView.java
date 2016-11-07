@@ -23,6 +23,10 @@ public class AudibleView implements IMusicView {
   private Synthesizer synth;
   private Receiver receiver;
 
+  /**
+   * Constructor for an Audible view.
+   * @param viewModel the view model to work with
+   */
   public AudibleView(IViewModel viewModel) {
     Synthesizer tempSynth = null;
     Receiver tempRec = null;
@@ -93,7 +97,14 @@ public class AudibleView implements IMusicView {
     }
   }
 
-
+  /**
+   * Plays a single Note.
+   * @param note the note to be played
+   * @param duration the duration in beats it should be played for
+   * @param tempo the tempo of the song
+   * @param startBeat the starting beat of the note
+   * @throws InvalidMidiDataException
+   */
   public void playNote(Note note, int duration, int tempo, int startBeat)
           throws InvalidMidiDataException {
     int endBeat = startBeat + duration;
@@ -115,6 +126,10 @@ public class AudibleView implements IMusicView {
 
   }
 
+  /**
+   * To set the receiver for the MIDI.
+   * @param rec the receiver it should be set to
+   */
   public void setReceiver(Receiver rec) {
     this.receiver = rec;
   }
