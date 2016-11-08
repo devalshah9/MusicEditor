@@ -11,7 +11,9 @@ import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 
 /**
- * A skeleton Frame (i.e., a window) in Swing.
+ * A VisualView is an implementation of IMusicView that displays a Song in GUI form.
+ * It contains three different Panels that have the Note drawings and the labels for beats and
+ * notes with scroll bars around them, laid into a Frame.
  */
 
 public class VisualView extends JFrame implements IMusicView {
@@ -24,9 +26,11 @@ public class VisualView extends JFrame implements IMusicView {
   JPanel p;
 
   /**
-   * Creates new GuiView.
+   * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
+   * constructed song.
+   *
+   * @param viewModel The viewModel for the song that is being rendered.
    */
-
   public VisualView(IViewModel viewModel) {
     super();
     this.p = new JPanel(new BorderLayout());
@@ -45,7 +49,8 @@ public class VisualView extends JFrame implements IMusicView {
     Note highestNote = this.viewModel.getHighestNote();
     Note lowestNote = this.viewModel.getLowestNote();
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int numberOfBeats = this.viewModel.getEndBeat();
+    int numberOfBeats = this.viewModel.getEndBeat(); //Below are seemingly random numbers -
+    //they were chosen because they're the combination that bests renders our notes.
     this.notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37,
             numberOfDistinctNotes * 31 + 20));
     this.beatsPanel.setPreferredSize(new Dimension(numberOfBeats * 37, 10));

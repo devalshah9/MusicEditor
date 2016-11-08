@@ -7,12 +7,19 @@ import cs3500.music.model.IViewModel;
 import cs3500.music.commons.*;
 
 /**
- * A view for the text representation of a Song.
+ * A view for the text representation of a Song. A TextView can render songs and outputs them
+ * to an Appendable.
  */
 public class TextView implements IMusicView {
 
   private IViewModel viewModel;
   Appendable result;
+
+  /**
+   *
+   * @param viewModel
+   * @param ap
+   */
 
   public TextView(IViewModel viewModel, Appendable ap) {
     this.viewModel = viewModel;
@@ -107,17 +114,5 @@ public class TextView implements IMusicView {
   @Override
   public void initialize() {
     // does not need to initialize anything
-  }
-
-  public Appendable getResult() {
-    return this.result;
-  }
-
-  private void write(String s) {
-    try {
-      this.result.append(s);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 }

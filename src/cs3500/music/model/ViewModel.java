@@ -106,7 +106,6 @@ public class ViewModel implements IViewModel {
   }
 
 
-
   public int getMeasureLength() {
     return this.measureLength;
   }

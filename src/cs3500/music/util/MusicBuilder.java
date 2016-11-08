@@ -6,6 +6,11 @@ import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.MusicEditor;
 
+/**
+ * A MusicBuilder is an implementation of the CompositionBuilder interface. It is a Builder that
+ * adds notes to a IMusicEditor note by note and returns the completed sheet of music when issued
+ * the build command.
+ */
 
 public class MusicBuilder implements CompositionBuilder<IMusicEditor> {
   IMusicEditor editor = new MusicEditor();

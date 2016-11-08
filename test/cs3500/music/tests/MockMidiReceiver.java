@@ -17,6 +17,7 @@ public class MockMidiReceiver implements Receiver {
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
+    message.
     result.append(message.toString());
     try {
       this.ap.append(result.toString());
