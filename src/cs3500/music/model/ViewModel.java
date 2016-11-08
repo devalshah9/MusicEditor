@@ -13,13 +13,23 @@ public class ViewModel implements IViewModel {
   private final int measureLength;
   private int tempo;
 
-  // use the model to get all these field values
+  /**
+   * Constructor for a view model.
+   * @param editor the editor with which you want to get the values
+   * @param index the sheet number to get them from
+   * @param measureLength the length of the measure
+   * @param tempo the tempo of the song
+   */
   public ViewModel(IMusicEditor editor, int index, int measureLength, int tempo) {
     notes = editor.getBeats(index);
     this.measureLength = measureLength;
     this.tempo = editor.getTempo();
   }
 
+  /**
+   * To return all the notes in a song.
+   * @return the notes in the song
+   */
   public TreeMap<Integer, ArrayList<Note>> getNotes() {
     return notes;
   }
@@ -47,6 +57,10 @@ public class ViewModel implements IViewModel {
     return currLowestNote;
   }
 
+  /**
+   * To get the tempo of a song.
+   * @return the tempo of the song
+   */
   public int getTempo() {
     return this.tempo;
   }
@@ -105,7 +119,10 @@ public class ViewModel implements IViewModel {
     throw new IllegalArgumentException("Must be a beginning of a note.");
   }
 
-
+  /**
+   * To get the measure length of a song.
+   * @return the measure length of the song
+   */
   public int getMeasureLength() {
     return this.measureLength;
   }

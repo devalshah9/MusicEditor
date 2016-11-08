@@ -15,7 +15,9 @@ import cs3500.music.util.MusicBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.AudibleView;
 
-
+/**
+ * To test the MIDI music view.
+ */
 public class MusicViewTest {
   File file =
           new File

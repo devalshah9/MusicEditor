@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import cs3500.music.commons.*;
+import cs3500.music.commons.Note;
+
 
 /**
  * MusicEditor class that is an implementation of IMusicEditor. It holds
@@ -192,15 +193,27 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     }
   }
 
-
+  /**
+   * To set the tempo of the song.
+   * @param tempo the tempo to be set to
+   */
   public void setTempo(int tempo) {
     this.tempo = tempo;
   }
 
+  /**
+   * To get the tempo of the song.
+   * @return the tempo of the song
+   */
   public int getTempo() {
     return this.tempo;
   }
 
+  /**
+   * To get the state of the song's sheet.
+   * @param index the sheet at which to get the state
+   * @return the state of the sheet
+   */
   public String getSheetState(int index) {
     if (index < 0 || index > this.sheets.size() ) {
       throw new IllegalArgumentException("Invalid index.");
@@ -210,6 +223,5 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       return this.getSheet(index).getSheetState();
     }
   }
-
 }
 
