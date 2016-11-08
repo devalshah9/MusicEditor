@@ -74,6 +74,7 @@ public class MusicViewTest {
     int tempo = 200000;
     int durationOfFirstNoteInt = 7 * tempo;
     int instrumentOfFirstNote = 0;
+    System.out.println(buffer.toString());
     //These 4 tests check all the essentials: The total number of midi messages,
     //frequency of a note that is played first, the duration of that note, and the instrument
     //of that note (or channel).

@@ -40,7 +40,6 @@ public class MusicEditor {
   }
 
 
-
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     FileReader fileName = null;
     try {
