@@ -43,7 +43,7 @@ public class TextView implements IMusicView {
    * @return the string of notes
    */
   private String renderNotes(IViewModel viewModel) {
-    ArrayList<Note> newNotes = new ArrayList<Note>();
+    ArrayList<Note> newNotes = new ArrayList<>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
         if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
@@ -55,14 +55,15 @@ public class TextView implements IMusicView {
     StringBuilder result = new StringBuilder("");
     if (viewModel.getEndBeat() == -1 || viewModel.getHighestNote() == null
             || viewModel.getLowestNote() == null) {
-      return "No notes to present.";
+      result.append("No notes to present.");
+      return result.toString();
     }
 
     int beginIndex = newNotes.indexOf(viewModel.getLowestNote());
     int endIndex = newNotes.indexOf(viewModel.getHighestNote());
     List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
     result.append("\n");
-    ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
+    ArrayList<Integer> beatNumbers = new ArrayList<>();
     int beatNumberColumnLength = String.valueOf(viewModel.getEndBeat()).toString().length();
     for (int n = 0; n < beatNumberColumnLength; n++) {
       result.append(" ");
@@ -107,7 +108,6 @@ public class TextView implements IMusicView {
       }
       result.append("\n");
     }
-
     return result.toString();
   }
 

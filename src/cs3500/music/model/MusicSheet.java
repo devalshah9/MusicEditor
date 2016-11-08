@@ -332,7 +332,7 @@ public class MusicSheet {
   }
 
   public String getSheetState() {
-    ArrayList<Note> newNotes = new ArrayList<Note>();
+    ArrayList<Note> newNotes = new ArrayList<>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
         if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
@@ -351,7 +351,7 @@ public class MusicSheet {
     int endIndex = newNotes.indexOf(this.getHighestNote());
     List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
     result.append("\n");
-    ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
+    ArrayList<Integer> beatNumbers = new ArrayList<>();
     int beatNumberColumnLength = String.valueOf(this.getFurthestBeat()).toString().length();
     for (int n = 0; n < beatNumberColumnLength; n++) {
       result.append(" ");
