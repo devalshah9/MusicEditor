@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
+import javax.sound.midi.ShortMessage;
 
 public class MockMidiReceiver implements Receiver {
 
@@ -17,8 +18,8 @@ public class MockMidiReceiver implements Receiver {
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
-    message.
-    result.append(message.toString());
+    int info = ((ShortMessage) message).getData1();
+    result.append(info);
     try {
       this.ap.append(result.toString());
     } catch (IOException e) {
