@@ -1,15 +1,17 @@
 Anirudh Katipally
 
+                      ---------------------------------------------- MODEL ------------------------------------------------------------
 My MusicEditor model was made bottom up. It consists firstly of two enums, Pitch and Octave. I chose to represent Pitch as an enum with 12 different types,
 which were the pitches given to us in the assignment. Octave goes from 0 to 10. This enum classification allows me to protect my implementation from a user
 trying to give it bogus notes. From there, I made a Note class. A Note consists of a Pitch, Octave, and boolean. The Pitch and Octave use the enums
 to determine the note's characteristics, and the boolean indicates whether this note is a sustain or a beginning of a new note. This is important in determining how
 overlap, adding notes, and printing the state of a sheet of music. The note's fields are all private, with public methods that allow a note's respective
 fields' values to be returned. It also has an overriden definition of equals and compareTo, because notes should be compared only on their pitch and
-octave, and not the boolean indicating whether its a sustain or not.
+octave, and not the boolean indicating whether its a sustain or not. To adapt to the requirements of the view which is described below, notes now also
+have a volume and instrument field.
 
-From there, I have a MusicSheet class. A MusicSheet has one field, a HashMap that takes Integers as keys and maps those keys to ArrayLists of Notes.
-This is how I chose to represent a piece of music essentially. If a key is not present in the hashmap, then the entire beat is a rest. If the key is present,
+From there, I have a MusicSheet class. A MusicSheet has one field, a TreeMap that takes Integers as keys and maps those keys to ArrayLists of Notes.
+This is how I chose to represent a piece of music essentially. If a key is not present in the treemap, then the entire beat is a rest. If the key is present,
 then it will have the notes that are mapped to it readily available for manipulation. This representation makes the most sense to me, because a sheet of music
 does not have a finite length. In a case where a data structure has no finite length, it's a good idea to use a HashMap to easily place more values and retrieve
 a stored value with constant time access. Representing the values mapped to these keys as ArrayLists of Notes makes sense as well, as they do not require any special
@@ -42,7 +44,7 @@ A MusicSheet has a method that gets the duration of a note, given a note and the
 And finally, a MusicSheet can determine the amountOfBeats that it has overall.
 
 Above the MusicSheet, I have MusicEditor class. A MusicEditor has an ArrayList of MusicSheets, and can create a new sheet by calling the method for it
-which adds a new empty music sheet to the ArrayList of sheets.
+which adds a new empty music sheet to the ArrayList of sheets. To compromise with the requirements of the View, a MusicEditor also has a tempo field.
 
 A MusicEditor can also add notes, one at a time.
 
@@ -55,7 +57,29 @@ A MusicEditor can take a note and the beat it starts at, and edit the notes leng
 
 A MusicEditor can delete a note entirely.
 
+A MusicEditor can produce a list of all of the notes in one of its Sheets through getNotes.
+
 Finally, a MusicEditor can get the state of any of its sheets, printed as it is above.
 
 Above the MusicEditor, there is the interface IMusicEditor. All the methods described above are promised in the inteface, and there are 
 no other public facing methods in the MusicEditor class other than what is promised in IMusicEditor.
+
+                     ---------------------------------------------- VIEW ------------------------------------------------------------
+The View for this Project has three different options, a visual view, an audio view, and a console view. To get the information to render these views,
+there are the classes in the util module, MusicReader and MusicBuilder which implements CompositionBuilder. A MusicReader is able to take text files
+which are lists of notes that are rendered with the tempo at the top and each note below them, with their start beat, duration, instrument, frequency,
+and volume listed. The Builder takes this information and produces a ViewModel.
+
+A ViewModel is a class that acts as a barrier between the Model and View. This ViewModel carries much of the functionality of the MusicEditor,
+storing all of the notes in the piece as well as its tempo and has getter methods that allows the view to access this information without
+the ability to directly see the model.
+
+The View itself has three different classes that carry the functionalities of its three different views. The AudibleView uses the MIDI API from the Java
+sound library, and for each note in the piece sends a ShortMessage to a MidiReceiever which is able to play the sound directly on the computer.
+The VisualView has three different main components. The NotesPanel which draws the rectangles indicating where notes are and where they begin,
+the NotesLabelPanel which labels the notes on the left of the screen, and the BeatsPanel which labels beat number on the top of the screen. These are all put
+together in a Scrollable panel, which is itself placed in a frame and displayed directly on the screen. Finally, the TextView is a view that outputs
+to the console, rendering notes as they're rednered in the getSheetState method described in the Model.
+
+To run the view, there is a MusicEditor runtime class that has a main method, which takes in two arguments. The first argument is tha path to the text file
+containing the song information to play. The second argument is the kind of view to display, which is either 'midi', 'visual', or 'console'.

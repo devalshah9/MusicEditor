@@ -218,13 +218,13 @@ public class MusicSheetTest {
 
   @Test
   public void toStringTestNoNotes() {
-    assertEquals("No notes to present.", sheet.toString());
+    assertEquals("No notes to present.", sheet.getSheetState());
   }
 
   @Test
   public void toStringTest() {
     sheet.addNote(note1, 1, 0, false);
-    assertEquals(sheet.toString(), "\n   A5   \n1  X    \n");
+    assertEquals(sheet.getSheetState(), "\n   A5   \n0  X    \n");
   }
 
   @Test

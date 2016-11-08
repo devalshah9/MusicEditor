@@ -17,8 +17,8 @@ public class TextView implements IMusicView {
 
   /**
    *
-   * @param viewModel
-   * @param ap
+   * @param viewModel The ViewModel which contains all song information.
+   * @param ap The Appendable object that output is sent to.
    */
 
   public TextView(IViewModel viewModel, Appendable ap) {

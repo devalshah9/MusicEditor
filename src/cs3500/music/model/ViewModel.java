@@ -6,7 +6,10 @@ import java.util.TreeMap;
 import cs3500.music.commons.Note;
 
 /**
- * The implementation of the ViewModel interface.
+ * The implementation of the ViewModel interface. The purpose of this class is to be a barrier
+ * between the implementations of IMusicEditor and the IMusicView. To use this, a ViewModel
+ * needs to be passed the Editor, the index of the song to play, the measureLength to display
+ * and the tempo of the song.
  */
 public class ViewModel implements IViewModel {
   private final TreeMap<Integer, ArrayList<Note>> notes;

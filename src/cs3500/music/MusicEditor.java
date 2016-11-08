@@ -15,6 +15,12 @@ import cs3500.music.view.AudibleView;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.VisualView;
 
+/**
+ * This is the main runtime class of the entire editor. To use it, the main method must be run
+ * with the arguments of the path to the music file to play as well as the argument for what
+ * kind of view to use. The options are 'console', 'midi' and 'visual', which display console,
+ * audio, and graphical views respectively.
+ */
 
 public class MusicEditor {
 
@@ -22,6 +28,10 @@ public class MusicEditor {
   private CompositionBuilder<IMusicEditor> builder;
   private IMusicEditor editor;
 
+  /**
+   * The MusicEditor constructor creates the Editor, MusicBuilder, and ViewModel which are the
+   * necessary components to building a view.
+   */
   public MusicEditor() {
     this.editor = new cs3500.music.model.MusicEditor();
     this.builder = new MusicBuilder();
