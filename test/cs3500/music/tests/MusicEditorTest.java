@@ -2,10 +2,16 @@ package cs3500.music.tests;
 
 import org.junit.Test;
 
+import javax.sound.midi.InvalidMidiDataException;
+
+import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
+import cs3500.music.model.ViewModel;
+import cs3500.music.view.IMusicView;
+import cs3500.music.view.TextView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,11 +24,17 @@ public class MusicEditorTest {
   Note note2 = new Note(Pitch.B, Octave.FIVE, true, 0, 1);
   Note note3 = new Note(Pitch.C, Octave.FIVE, true, 0, 1);
   MusicEditor editor = new MusicEditor();
+  Appendable ap;
 
   @Test
   public void musicEditorCreateSheetTest() {
     editor.createNewSheet();
-    assertEquals(true, editor.getSheetState(0).equals("No notes to present."));
+    IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
+    StringBuffer out = new StringBuffer();
+    TextView view = new TextView(model, out);
+    view.renderSong(model, model.getTempo());
+    String result = out.toString();
+    assertEquals(true, result.equals("No notes to present."));
   }
 
   @Test
@@ -31,15 +43,19 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 3, 2);
-    String result = editor.getSheetState(0);
+    IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
+    StringBuffer out = new StringBuffer();
+    TextView view = new TextView(model, out);
+    view.renderSong(model, model.getTempo());
+    String result = out.toString();
     assertEquals(result, "\n"
           + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-          + "1                                               X              \n"
-          + "2                                               |         X    \n"
-          + "3  X                                            |         |    \n"
-          + "4  |                                            |         |    \n"
-          + "5  |                                                      |    \n"
-          + "6                                                         |    \n");
+          + "0                                               X              \n"
+          + "1                                               |         X    \n"
+          + "2  X                                            |         |    \n"
+          + "3  |                                            |         |    \n"
+          + "4  |                                                      |    \n"
+          + "5                                                         |    \n");
   }
 
   @Test
@@ -50,10 +66,10 @@ public class MusicEditorTest {
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
           +  "   A5   \n"
-          +  "1  X    \n"
-          +  "2  |    \n"
-          +  "3  X    \n"
-          +  "4  |    \n");
+          +  "0  X    \n"
+          +  "1  |    \n"
+          +  "2  X    \n"
+          +  "3  |    \n");
   }
 
   @Test
@@ -64,10 +80,10 @@ public class MusicEditorTest {
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
             +  "   A5   \n"
-            +  "1  X    \n"
-            +  "2  |    \n"
-            +  "3  X    \n"
-            +  "4  |    \n");
+            +  "0  X    \n"
+            +  "1  |    \n"
+            +  "2  X    \n"
+            +  "3  |    \n");
   }
 
 
@@ -106,15 +122,15 @@ public class MusicEditorTest {
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
            + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-           + "1                                               X         X    \n"
-           + "2            X                                  X         X    \n"
-           + "3  X         |                                  |         |    \n"
-           + "4  |         |                                  |         |    \n"
-           + "5  |                                            |         |    \n"
+           + "0                                               X         X    \n"
+           + "1            X                                  X         X    \n"
+           + "2  X         |                                  |         |    \n"
+           + "3  |         |                                  |         |    \n"
+           + "4  |                                            |         |    \n"
+           + "5                                               |         |    \n"
            + "6                                               |         |    \n"
-           + "7                                               |         |    \n"
-           + "8                                                         |    \n"
-           + "9                                                         |    \n");
+           + "7                                                         |    \n"
+           + "8                                                         |    \n");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -145,21 +161,21 @@ public class MusicEditorTest {
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
            + "    C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-           + " 1                                               X              \n"
-           + " 2                                               |         X    \n"
-           + " 3  X                                            |         |    \n"
-           + " 4  |                                            |         |    \n"
-           + " 5  |                                                      |    \n"
-           + " 6                                                         |    \n"
-           + " 7                                                         X    \n"
-           + " 8            X                                  X         |    \n"
+           + " 0                                               X              \n"
+           + " 1                                               |         X    \n"
+           + " 2  X                                            |         |    \n"
+           + " 3  |                                            |         |    \n"
+           + " 4  |                                                      |    \n"
+           + " 5                                                         |    \n"
+           + " 6                                                         X    \n"
+           + " 7            X                                  X         |    \n"
+           + " 8            |                                  |         |    \n"
            + " 9            |                                  |         |    \n"
-           + "10            |                                  |         |    \n"
+           + "10                                               |         |    \n"
            + "11                                               |         |    \n"
            + "12                                               |         |    \n"
-           + "13                                               |         |    \n"
-           + "14                                                         |    \n"
-           + "15                                                         |    \n");
+           + "13                                                         |    \n"
+           + "14                                                         |    \n");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -183,34 +199,34 @@ public class MusicEditorTest {
     editor.deleteNote(0, note3, 3);
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
-            + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1                                               X              \n"
-            + "2                                               |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4                                               |         |    \n"
-            + "5                                                         |    \n"
-            + "6                                                         |    \n");
+                   +  "   A5   A#5  B5   \n"
+                   + "0  X              \n"
+                   + "1  |         X    \n"
+                   + "2  |         |    \n"
+                   + "3  |         |    \n"
+                   + "4            |    \n"
+                   + "5            |    \n");
     editor.addSingleNote(0, note3, 3, 2);
     editor.addSingleNote(0, note3, 4, 0);
     result = editor.getSheetState(0);
     assertEquals(result, "\n"
             + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1  X                                            X              \n"
-            + "2  |                                            |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4  |                                            |         |    \n"
-            + "5  |                                                      |    \n"
-            + "6                                                         |    \n");
+            + "0  X                                            X              \n"
+            + "1  |                                            |         X    \n"
+            + "2  X                                            |         |    \n"
+            + "3  |                                            |         |    \n"
+            + "4  |                                                      |    \n"
+            + "5                                                         |    \n");
     editor.deleteNote(0, note3, 0);
     result = editor.getSheetState(0);
     assertEquals(result, "\n"
             + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1                                               X              \n"
-            + "2                                               |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4  |                                            |         |    \n"
-            + "5  |                                                      |    \n"
-            + "6                                                         |    \n");
+            + "0                                               X              \n"
+            + "1                                               |         X    \n"
+            + "2  X                                            |         |    \n"
+            + "3  |                                            |         |    \n"
+            + "4  |                                                      |    \n"
+            + "5                                                         |    \n");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -240,36 +256,35 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note1, 4, 0);
     editor.addSingleNote(0, note2, 5, 1);
     editor.addSingleNote(0, note3, 3, 2);
-    editor.deleteNote(0, note3, 3);
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
             + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1                                               X              \n"
-            + "2                                               |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4                                               |         |    \n"
-            + "5                                                         |    \n"
-            + "6                                                         |    \n");
+            + "0                                               X              \n"
+            + "1                                               |         X    \n"
+            + "2  X                                            |         |    \n"
+            + "3  |                                            |         |    \n"
+            + "4  |                                                      |    \n"
+            + "5                                                         |    \n");
     editor.editNote(0, note3, 2, 5);
     result = editor.getSheetState(0);
     assertEquals(result, "\n"
             + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1                                               X              \n"
-            + "2                                               |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4  |                                            |         |    \n"
-            + "5  |                                                      |    \n"
-            + "6  |                                                      |    \n");
+            + "0                                               X              \n"
+            + "1                                               |         X    \n"
+            + "2  X                                            |         |    \n"
+            + "3  |                                            |         |    \n"
+            + "4  |                                                      |    \n"
+            + "5  |                                                      |    \n");
     editor.editNote(0, note3, 2, 3);
     result = editor.getSheetState(0);
     assertEquals(result, "\n"
             + "   C5   C#5  D5   D#5  E5   F5   F#5  G5   G#5  A5   A#5  B5   \n"
-            + "1                                               X              \n"
-            + "2                                               |         X    \n"
-            + "3  X                                            |         |    \n"
-            + "4  |                                            |         |    \n"
-            + "5                                                         |    \n"
-            + "6                                                         |    \n");
+            + "0                                               X              \n"
+            + "1                                               |         X    \n"
+            + "2  X                                            |         |    \n"
+            + "3  |                                            |         |    \n"
+            + "4                                                         |    \n"
+            + "5                                                         |    \n");
   }
 
   @Test(expected =  IllegalArgumentException.class)
@@ -294,17 +309,16 @@ public class MusicEditorTest {
     String result = editor.getSheetState(0);
     assertEquals(result, "\n"
             +  "   A5   \n"
-            +  "1  X    \n"
+            +  "0  X    \n"
+            +  "1  |    \n"
             +  "2  |    \n"
-            +  "3  |    \n"
-            +  "4  |    \n");
+            +  "3  |    \n");
   }
 
-  @Test(expected =  IllegalArgumentException.class)
+  @Test(expected =  IndexOutOfBoundsException.class)
   public void invalidGetSheetStateIndex() {
     editor.createNewSheet();
     editor.getSheetState(1);
-
   }
 
 
