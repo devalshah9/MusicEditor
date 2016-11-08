@@ -1,12 +1,13 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
 import java.util.ArrayList;
 import java.util.TreeMap;
-
-import javax.swing.*;
-
 import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
 
@@ -56,13 +57,13 @@ public class NotesPanel extends JPanel {
     int boxHeight = 30;
 
     //Draws the vertical lines
-    for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
+    for (int n = 0; n <= endBeat / measureLength + remainder; n++) {
       gimg.setColor(Color.BLACK);
       gimg.drawLine((n * boxWidth), boxHeight * (numberOfDistinctNotes + 1), n * boxWidth, 0);
     }
     for (int n = 0; n <= numberOfDistinctNotes + 1; n++) {
       //horizontal lines
-      double endDraw = (endBeat/measureLength + remainder) * boxWidth;
+      double endDraw = (endBeat / measureLength + remainder) * boxWidth;
       gimg.drawLine(0, boxHeight * n, (int) endDraw , boxHeight * n);
     }
     for (int n = 0; n < endBeat; n++) {

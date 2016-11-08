@@ -17,6 +17,7 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
 
   ArrayList<MusicSheet> sheets;
   int tempo;
+
   /**
    * Constructor that initializes the list of MusicSheet.
    */
@@ -174,8 +175,13 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
 
   }
 
-  public MusicSheet getSheet(int sheetIndex)
-          throws IllegalArgumentException{
+  /**
+   * Gets a music sheet at an index.
+   * @param sheetIndex the index to get the sheet from
+   * @return the MusicSheet
+   * @throws IllegalArgumentException if it is an invalid index
+   */
+  public MusicSheet getSheet(int sheetIndex) throws IllegalArgumentException {
     if (this.sheets.size() > sheetIndex) {
       return this.sheets.get(sheetIndex);
     }
@@ -183,9 +189,10 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       return (this.sheets.get(sheetIndex));
     }
   }
+
   @Override
   public TreeMap<Integer, ArrayList<Note>> getBeats(int index) {
-    if(this.sheets.size() < 0 || this.sheets.size() > index) {
+    if (this.sheets.size() < 0 || this.sheets.size() > index) {
       return this.sheets.get(index).getBeats();
     }
     else {

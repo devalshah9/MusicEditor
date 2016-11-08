@@ -1,8 +1,11 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
 
 import cs3500.music.model.IViewModel;
 
@@ -47,7 +50,7 @@ public class BeatsPanel extends JPanel {
     int remainder = endBeat % measureLength;
 
     // Draws the text of beat numbers
-    for (int n = 0; n <= endBeat/measureLength + remainder; n++) {
+    for (int n = 0; n <= endBeat / measureLength + remainder; n++) {
       gimg.drawString(Integer.toString(n * measureLength), (n * boxWidth + 25), 0);
     }
 

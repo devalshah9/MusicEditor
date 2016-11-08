@@ -112,8 +112,7 @@ public class MusicSheet {
    * @throws IllegalArgumentException If the note does not exist at this beat, or the beginningBeat
    *                                  is not a valid beat in the sheet.
    */
-  public void deleteEntireNote(Note note, int beginningBeat) throws
-  IllegalArgumentException {
+  public void deleteEntireNote(Note note, int beginningBeat) throws IllegalArgumentException {
     if (!(this.beats.containsKey(beginningBeat))) {
       throw new IllegalArgumentException("This beat has no notes.");
     }
@@ -123,7 +122,7 @@ public class MusicSheet {
     else {
       int index = this.beats.get(beginningBeat).indexOf(note);
       Note thisNote = this.beats.get(beginningBeat).get(index);
-      if(!thisNote.getbeginningOfNote()) {
+      if (!thisNote.getbeginningOfNote()) {
         deleteEntireNote(note, beginningBeat - 1);
         return;
       }
@@ -256,6 +255,13 @@ public class MusicSheet {
     return this.beats;
   }
 
+  /**
+   * To get the beginning beat of a note.
+   * @param note the note to work with
+   * @param beat the beat at which it is
+   * @return the beginning beat of the note
+   * @throws IllegalArgumentException if the beat given is invalid
+   */
   public int getBeginningOfNote(Note note, int beat) throws  IllegalArgumentException {
     if (!(this.beats.containsKey(beat))) {
       throw new IllegalArgumentException("This beat has no notes.");
@@ -266,7 +272,7 @@ public class MusicSheet {
     else {
       int index = this.beats.get(beat).indexOf(note);
       Note thisNote = this.beats.get(beat).get(index);
-      if(!thisNote.getbeginningOfNote()) {
+      if (!thisNote.getbeginningOfNote()) {
         getBeginningOfNote(note, beat - 1);
       }
       else {
@@ -331,11 +337,15 @@ public class MusicSheet {
     return this.beats.size();
   }
 
+  /**
+   * To get the sheet's state.
+   * @return the sheet's state
+   */
   public String getSheetState() {
     ArrayList<Note> newNotes = new ArrayList<>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
-        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
           break;
         }
         newNotes.add(new Note(pit, oct, false, 0, 0));

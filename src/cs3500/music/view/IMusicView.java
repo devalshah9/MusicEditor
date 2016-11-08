@@ -7,7 +7,7 @@ import cs3500.music.model.IViewModel;
 /**
  * The View interface for all different types of views.
  */
-public interface IMusicView {;
+public interface IMusicView {
 
   /**
    * To initialize certain values that may be needed in your view implementations.
@@ -25,7 +25,7 @@ public interface IMusicView {;
    * @throws IllegalArgumentException If the index is out of bounds.
    */
   void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException,
-  IllegalArgumentException;
+          IllegalArgumentException;
 
   /**
    * Factory method to create a certain type of view for your song.
@@ -37,7 +37,7 @@ public interface IMusicView {;
       return new TextView(model, new StringBuffer());
     } else if (type.equals("visual")) {
       return new VisualView(model);
-    } else if (type.equals("midi")){
+    } else if (type.equals("midi")) {
       return new AudibleView(model);
     } else {
       throw new IllegalArgumentException("Invalid view type!");

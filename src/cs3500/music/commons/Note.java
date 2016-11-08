@@ -30,7 +30,7 @@ public class Note implements Comparable<Note> {
    */
   public Note(Pitch pitch, Octave octave, boolean beginning, int instrument, int volume) {
     if (octave.equals(Octave.TEN)) {
-      if(pitch.compareTo(Pitch.G) > 0) {
+      if (pitch.compareTo(Pitch.G) > 0) {
         throw new IllegalArgumentException("That note is too high.");
       }
     }
@@ -72,14 +72,18 @@ public class Note implements Comparable<Note> {
     return this.beginningOfNote;
   }
 
-  public int getInstrument() { return this.instrument; }
+  public int getInstrument() {
+    return this.instrument;
+  }
 
-  public int getVolume() { return this.volume; }
+  public int getVolume() {
+    return this.volume;
+  }
 
 
   public int notesBetweenTwoNotes(Note other) {
-    return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12) +
-    this.getPitch().ordinal() - other.getPitch().ordinal());
+    return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12)
+    + this.getPitch().ordinal() - other.getPitch().ordinal());
   }
 
   @Override

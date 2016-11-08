@@ -4,14 +4,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
-
 import javax.sound.midi.InvalidMidiDataException;
-
-import cs3500.music.commons.Note;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 import cs3500.music.model.ViewModel;
@@ -26,9 +20,7 @@ import static org.junit.Assert.assertEquals;
  * To test the MIDI music view.
  */
 public class MusicViewTest {
-  File file =
-          new File
-                  ("mary-little-lamb.txt");
+  File file = new File("mary-little-lamb.txt");
   MusicReader reader = new MusicReader();
   CompositionBuilder builder = new MusicBuilder();
 
@@ -54,9 +46,8 @@ public class MusicViewTest {
       e.printStackTrace();
     }
     int i = 0;
-    System.out.println(buffer.toString());
     for (int n = 0; n < buffer.toString().length(); n++) {
-      if(buffer.toString().charAt(n) == '\n') {
+      if (buffer.toString().charAt(n) == '\n') {
         i++;
       }
     }
@@ -67,14 +58,12 @@ public class MusicViewTest {
     scan.next();
     int durationOfFirstNote = scan.nextInt();
     int instrument = scan.nextInt();
-    System.out.println(i);
     int numberOfNotesInMaryHadALittleLamb = 34;
     int totalNumberOfExpectedMidiMessages = numberOfNotesInMaryHadALittleLamb * 2;
     int firstNoteOfMaryHadALittleLambFrequencyThatIsPlayed = 55;
     int tempo = 200000;
     int durationOfFirstNoteInt = 7 * tempo;
     int instrumentOfFirstNote = 0;
-    System.out.println(buffer.toString());
     //These 4 tests check all the essentials: The total number of midi messages,
     //frequency of a note that is played first, the duration of that note, and the instrument
     //of that note (or channel).

@@ -16,7 +16,7 @@ import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
 
 /**
- * A skeleton for MIDI playback
+ * The MIDI implementation of View.
  */
 
 public class AudibleView implements IMusicView {
@@ -103,7 +103,7 @@ public class AudibleView implements IMusicView {
    * @param duration the duration in beats it should be played for
    * @param tempo the tempo of the song
    * @param startBeat the starting beat of the note
-   * @throws InvalidMidiDataException
+   * @throws InvalidMidiDataException if the MIDI data is invalid
    */
   public void playNote(Note note, int duration, int tempo, int startBeat)
           throws InvalidMidiDataException {
@@ -123,7 +123,7 @@ public class AudibleView implements IMusicView {
 
   @Override
   public void initialize() {
-
+    // does not do anything for MIDI
   }
 
   /**

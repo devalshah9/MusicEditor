@@ -1,11 +1,13 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.util.*;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
 
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
@@ -35,10 +37,10 @@ public class NoteLabelsPanel extends JPanel {
   public void paintComponent(Graphics g) {
     // Handle the default painting
     super.paintComponent(g);
-    ArrayList<Note> newNotes = new ArrayList<Note>();
+    ArrayList<Note> newNotes = new ArrayList<>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
-        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
           break;
         }
         newNotes.add(new Note(pit, oct, false, 0, 0));
@@ -52,20 +54,11 @@ public class NoteLabelsPanel extends JPanel {
     AffineTransform originalTransform = gimg.getTransform();
     gimg.translate(0, this.getPreferredSize().getHeight());
     gimg.scale(1, 1);
-
-    TreeMap<Integer, ArrayList<Note>> notes = this.viewModel.getNotes();
-    int measureLength = this.viewModel.getMeasureLength();
-    int endBeat = this.viewModel.getEndBeat();
     Note highestNote = this.viewModel.getHighestNote();
     Note lowestNote = this.viewModel.getLowestNote();
     int lowestIndex = newNotes.indexOf(lowestNote);
     int highestIndex = newNotes.indexOf(highestNote);
     java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
-
-
-    int height = (int) (this.getPreferredSize().getHeight() * 0.90);
-    int boxWidth =  120;
-    int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
     int boxHeight = 30;
 

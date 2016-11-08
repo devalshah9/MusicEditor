@@ -4,25 +4,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import cs3500.music.model.IViewModel;
-import cs3500.music.commons.*;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
+import cs3500.music.commons.Note;
 
 /**
  * A view for the text representation of a Song. A TextView can render songs and outputs them
  * to an Appendable.
  */
 public class TextView implements IMusicView {
-
-  private IViewModel viewModel;
   Appendable result;
 
   /**
    *
-   * @param viewModel The ViewModel which contains all song information.
+   * @param viewModelIn The ViewModel which contains all song information.
    * @param ap The Appendable object that output is sent to.
    */
 
-  public TextView(IViewModel viewModel, Appendable ap) {
-    this.viewModel = viewModel;
+  public TextView(IViewModel viewModelIn, Appendable ap) {
+    IViewModel viewModel = viewModelIn;
     this.result = ap;
   }
 
@@ -46,7 +46,7 @@ public class TextView implements IMusicView {
     ArrayList<Note> newNotes = new ArrayList<>();
     for (Octave oct : Octave.values()) {
       for (Pitch pit : Pitch.values()) {
-        if(oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
           break;
         }
         newNotes.add(new Note(pit, oct, false, 0, 0));
@@ -76,7 +76,8 @@ public class TextView implements IMusicView {
       }
     }
     result.append("\n");
-    for (int n = 0; n < viewModel.getEndBeat(); n++) {
+    int k = viewModel.getEndBeat();
+    for (int n = 0; n <= viewModel.getEndBeat(); n++) {
       beatNumbers.add(n);
     }
     for (int n = 0; n < beatNumbers.size(); n++) {
@@ -107,6 +108,11 @@ public class TextView implements IMusicView {
         }
       }
       result.append("\n");
+    }
+    try {
+      this.result.append(result.toString());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     return result.toString();
   }

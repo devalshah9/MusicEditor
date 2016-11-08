@@ -11,9 +11,7 @@ import cs3500.music.model.ViewModel;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicBuilder;
 import cs3500.music.util.MusicReader;
-import cs3500.music.view.AudibleView;
 import cs3500.music.view.IMusicView;
-import cs3500.music.view.VisualView;
 
 /**
  * This is the main runtime class of the entire editor. To use it, the main method must be run
@@ -25,21 +23,26 @@ import cs3500.music.view.VisualView;
 public class MusicEditor {
 
   private static IViewModel viewModel;
-  private CompositionBuilder<IMusicEditor> builder;
-  private IMusicEditor editor;
 
   /**
    * The MusicEditor constructor creates the Editor, MusicBuilder, and ViewModel which are the
    * necessary components to building a view.
    */
   public MusicEditor() {
-    this.editor = new cs3500.music.model.MusicEditor();
-    this.builder = new MusicBuilder();
+    CompositionBuilder<IMusicEditor> builder;
+    IMusicEditor editor;
+    editor = new cs3500.music.model.MusicEditor();
+    builder = new MusicBuilder();
     editor = builder.build();
     MusicEditor.viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
   }
 
-
+  /**
+   * The main method for running our program.
+   * @param args the arguments given to the program
+   * @throws IOException if invalid input or output
+   * @throws InvalidMidiDataException if invalid MIDI data
+   */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     FileReader fileName = null;
     try {
