@@ -30,6 +30,7 @@ public class MusicViewTest {
     StringBuffer buffer = new StringBuffer();
     MockMidiReceiver receiver = new MockMidiReceiver(buffer);
     FileReader read = null;
+    File file = new File("mary-little-lamb.txt");
     try {
       read = new FileReader(file);
     } catch (Exception e) {
@@ -45,7 +46,6 @@ public class MusicViewTest {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
-    System.out.println(buffer.toString());
   }
 
 }

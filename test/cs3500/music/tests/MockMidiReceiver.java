@@ -20,6 +20,9 @@ public class MockMidiReceiver implements Receiver {
   public void send(MidiMessage message, long timeStamp) {
     int info = ((ShortMessage) message).getData1();
     result.append(info);
+    result.append(" " );
+    result.append(timeStamp);
+    result.append("\n");
     try {
       this.ap.append(result.toString());
     } catch (IOException e) {
