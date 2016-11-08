@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
-import cs3500.music.commons.*;
+import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 
 
 public class MusicSheet {
@@ -21,7 +23,7 @@ public class MusicSheet {
    * Constructor that initializes the fields of a music sheet.
    */
   public MusicSheet() {
-    this.beats = new TreeMap<Integer, ArrayList<Note>>();
+    this.beats = new TreeMap<>();
   }
 
   /**
@@ -131,6 +133,12 @@ public class MusicSheet {
     }
   }
 
+  /**
+   * To remove a note from a song.
+   * @param note the note to be removed
+   * @param beginningBeat the starting beat to remove the note from
+   * @throws IllegalArgumentException if you cannot remove the note given or no note exists
+   */
   public void removeNote(Note note, int beginningBeat)
           throws IllegalArgumentException {
     if (!(this.beats.containsKey(beginningBeat))) {
@@ -143,8 +151,9 @@ public class MusicSheet {
       do {
         ArrayList<Note> newBeats = this.beats.get(beginningBeat);
         int index = newBeats.indexOf(note);
-        newBeats.remove(index); //The method keeps removing notes and iterating beginningNote
-        //until a begin note of this pitch and octave or rest occurs.
+        newBeats.remove(index);
+        // The method keeps removing notes and iterating beginningNote
+        // until a begin note of this pitch and octave or rest occurs.
         if (this.beats.containsKey(beginningBeat + 1)) {
           if (this.beats.get(beginningBeat + 1).contains(note)) {
             int nextIndex = this.beats.get(beginningBeat + 1).indexOf(note);
@@ -233,7 +242,9 @@ public class MusicSheet {
     return furthestBeat + 1;
   }
 
-  //Sorts a list of notes based on their pitch and octave, lowest to highest.
+  /**
+   * Sorts a list of notes based on their pitch and octave, lowest to highest.
+   */
   public void sortListOfNotes(ArrayList<Note> notes) {
     Collections.sort(notes);
   }
@@ -339,7 +350,6 @@ public class MusicSheet {
     int beginIndex = newNotes.indexOf(this.getLowestNote());
     int endIndex = newNotes.indexOf(this.getHighestNote());
     List<Note> printNotes = newNotes.subList(beginIndex, endIndex + 1);
-    int columnLength = 5;
     result.append("\n");
     ArrayList<Integer> beatNumbers = new ArrayList<Integer>();
     int beatNumberColumnLength = String.valueOf(this.getFurthestBeat()).toString().length();
@@ -386,8 +396,6 @@ public class MusicSheet {
       }
       result.append("\n");
     }
-
     return result.toString();
   }
-
 }

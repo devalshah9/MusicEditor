@@ -3,7 +3,8 @@ package cs3500.music.model;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import cs3500.music.commons.*;
+import cs3500.music.commons.Note;
+
 
 /**
  * This is the interface for a MusicEditor model. It's parameterized over
@@ -106,10 +107,23 @@ public interface IMusicEditor<MusicSheet> {
   void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
+  /**
+   * Gets all the beats in a song.
+   * @param index the sheet at which to get the beats
+   * @return the treemap of all the beats
+   */
   TreeMap<Integer, ArrayList<Note>> getBeats(int index);
 
+  /**
+   * To set the tempo of the song.
+   * @param tempo the tempo to be set to
+   */
   void setTempo(int tempo);
 
+  /**
+   * To get the tempo of the song.
+   * @return the tempo of the song
+   */
   int getTempo();
 
 }

@@ -40,8 +40,18 @@ public interface IViewModel {
    */
   int getMeasureLength();
 
+  /**
+   * To get the note's duration.
+   * @param note the note whose duration you want
+   * @param startBeat the starting beat of that note
+   * @return the duration of the note
+   */
   int getNoteDuration(Note note, int startBeat);
 
+  /**
+   * To get the tempo of the song.
+   * @return the tempo of the song
+   */
   int getTempo();
 
 }
