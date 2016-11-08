@@ -25,11 +25,11 @@ public class VisualView extends JFrame implements IMusicView {
    */
   public VisualView(IViewModel viewModelIn) {
     super();
-    final NoteLabelsPanel noteLabelsPanel;
-    final BeatsPanel beatsPanel;
-    final NotesPanel notesPanel;
+    NoteLabelsPanel noteLabelsPanel;
+    BeatsPanel beatsPanel;
+    NotesPanel notesPanel;
     JScrollPane scrollNotesPane;
-    final IViewModel viewModel = viewModelIn;
+    IViewModel viewModel = viewModelIn;
     this.p = new JPanel(new BorderLayout());
     notesPanel = new NotesPanel(viewModel);
     beatsPanel = new BeatsPanel(viewModel);

@@ -83,7 +83,7 @@ public class Note implements Comparable<Note> {
 
   public int notesBetweenTwoNotes(Note other) {
     return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12)
-    + this.getPitch().ordinal() - other.getPitch().ordinal());
+            + this.getPitch().ordinal() - other.getPitch().ordinal());
   }
 
   @Override
