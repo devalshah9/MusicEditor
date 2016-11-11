@@ -6,4 +6,5 @@ package cs3500.music.view;
  */
 public interface IGuiView extends IMusicView {
 
+
 }
