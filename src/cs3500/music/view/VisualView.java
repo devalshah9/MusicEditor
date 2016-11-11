@@ -14,7 +14,7 @@ import cs3500.music.model.IViewModel;
  * notes with scroll bars around them, laid into a Frame.
  */
 
-public class VisualView extends JFrame implements IMusicView {
+public class VisualView extends JFrame implements IGuiView {
   JPanel p;
 
   /**

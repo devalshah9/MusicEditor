@@ -34,7 +34,7 @@ public interface IMusicView {
    */
   static IMusicView create(String type, IViewModel model) throws IllegalArgumentException {
     if (type.equals("console")) {
-      return new TextView(model, new StringBuffer());
+      return new ConsoleView(model, new StringBuffer());
     } else if (type.equals("visual")) {
       return new VisualView(model);
     } else if (type.equals("midi")) {

@@ -9,10 +9,10 @@ import cs3500.music.commons.Pitch;
 import cs3500.music.commons.Note;
 
 /**
- * A view for the text representation of a Song. A TextView can render songs and outputs them
+ * A view for the text representation of a Song. A ConsoleView can render songs and outputs them
  * to an Appendable.
  */
-public class TextView implements IMusicView {
+public class ConsoleView implements IMusicView {
   Appendable result;
 
   /**
@@ -21,7 +21,7 @@ public class TextView implements IMusicView {
    * @param ap The Appendable object that output is sent to.
    */
 
-  public TextView(IViewModel viewModelIn, Appendable ap) {
+  public ConsoleView(IViewModel viewModelIn, Appendable ap) {
     IViewModel viewModel = viewModelIn;
     this.result = ap;
   }

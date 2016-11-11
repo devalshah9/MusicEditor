@@ -8,7 +8,7 @@ import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
 import cs3500.music.model.ViewModel;
-import cs3500.music.view.TextView;
+import cs3500.music.view.ConsoleView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,7 +30,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note3, 3, 2);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -50,7 +50,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note1, 3, 0);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -68,7 +68,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note1, 2, 2);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -112,7 +112,7 @@ public class MusicEditorTest {
     editor.overlayTwoSheets(0, 1); //overlay second on first
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -155,7 +155,7 @@ public class MusicEditorTest {
     editor.playSheetsConsecutively(0, 1); //overlay second on first
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -198,7 +198,7 @@ public class MusicEditorTest {
     editor.deleteNote(0, note3, 3);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -213,7 +213,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note3, 4, 0);
     IViewModel model2 = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out2 = new StringBuffer();
-    TextView view2 = new TextView(model2, out2);
+    ConsoleView view2 = new ConsoleView(model2, out2);
     view2.renderSong(model2, model2.getTempo());
     String result2 = out2.toString();
     assertEquals(result2, "\n"
@@ -227,7 +227,7 @@ public class MusicEditorTest {
     editor.deleteNote(0, note3, 0);
     IViewModel model3 = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out3 = new StringBuffer();
-    TextView view3 = new TextView(model3, out3);
+    ConsoleView view3 = new ConsoleView(model3, out3);
     view3.renderSong(model3, model3.getTempo());
     String result3 = out3.toString();
     assertEquals(result3, "\n"
@@ -269,7 +269,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note3, 3, 2);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
@@ -283,7 +283,7 @@ public class MusicEditorTest {
     editor.editNote(0, note3, 2, 5);
     IViewModel model2 = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out2 = new StringBuffer();
-    TextView view2 = new TextView(model2, out2);
+    ConsoleView view2 = new ConsoleView(model2, out2);
     view2.renderSong(model2, model2.getTempo());
     String result2 = out2.toString();
     assertEquals(result2, "\n"
@@ -297,7 +297,7 @@ public class MusicEditorTest {
     editor.editNote(0, note3, 2, 3);
     IViewModel model3 = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out3 = new StringBuffer();
-    TextView view3 = new TextView(model3, out3);
+    ConsoleView view3 = new ConsoleView(model3, out3);
     view3.renderSong(model3, model3.getTempo());
     String result3 = out3.toString();
     assertEquals(result3, "\n"
@@ -331,7 +331,7 @@ public class MusicEditorTest {
     editor.addSingleNote(0, note1, 4, 0);
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     StringBuffer out = new StringBuffer();
-    TextView view = new TextView(model, out);
+    ConsoleView view = new ConsoleView(model, out);
     view.renderSong(model, model.getTempo());
     String result = out.toString();
     assertEquals(result, "\n"
