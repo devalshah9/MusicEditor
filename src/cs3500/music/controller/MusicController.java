@@ -21,11 +21,6 @@ public class MusicController implements IMusicController, ActionListener {
   }
 
   @Override
-  public void renderSong() {
-
-  }
-
-  @Override
   public void createKeyboardHandler(Map<Integer, Runnable> keyTyped, Map<Integer,
           Runnable> keyPressed, Map<Integer, Runnable> keyReleased) {
     KeyboardHandler keyboardHandler = new KeyboardHandler(keyTyped, keyPressed, keyReleased);

@@ -7,8 +7,6 @@ import java.util.Map;
  */
 public interface IMusicController {
 
-  void renderSong();
-
   void createKeyboardHandler(Map<Integer, Runnable> keyTyped, Map<Integer,
           Runnable> keyPressed, Map<Integer, Runnable> keyReleased);
 
