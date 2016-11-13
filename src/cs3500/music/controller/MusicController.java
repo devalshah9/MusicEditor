@@ -35,13 +35,17 @@ public class MusicController implements IMusicController, ActionListener {
 //    }
 //  };
 
-  Runnable goBeg = () -> {
+  Runnable goBeg = () -> view.goBeginSong();
 
-  }
+  Runnable goEnd = () -> view.goEndSong();
 
-  Runnable goEnd = () -> {
+  Runnable scrollRight = () -> view.scrollRight();
 
-  }
+  Runnable scrollLeft = () -> view.scrollLeft();
+
+  Runnable scrollUp = () -> view.scrollUp();
+
+  Runnable scrollDown = () -> view.scrollDown();
 
   @Override
   public void createKeyboardHandler() {
@@ -52,6 +56,22 @@ public class MusicController implements IMusicController, ActionListener {
 
     // to jump to the end of the song, type P since there is no End button
     keyboardHandler.installRunnable(KeyEvent.VK_P, goEnd, KeyboardHandler.ActionType.TYPED);
+
+    // to scroll right, type the right arrow key
+    keyboardHandler.installRunnable(KeyEvent.VK_RIGHT, scrollRight,
+            KeyboardHandler.ActionType.TYPED);
+
+    // to scroll left, type the left arrow key
+    keyboardHandler.installRunnable(KeyEvent.VK_LEFT, scrollLeft,
+            KeyboardHandler.ActionType.TYPED);
+
+    // to scroll up, type the up arrow key
+    keyboardHandler.installRunnable(KeyEvent.VK_UP, scrollUp,
+            KeyboardHandler.ActionType.TYPED);
+
+    // to scroll down, type the down arrow key
+    keyboardHandler.installRunnable(KeyEvent.VK_DOWN, scrollDown,
+            KeyboardHandler.ActionType.TYPED);
 
   }
 

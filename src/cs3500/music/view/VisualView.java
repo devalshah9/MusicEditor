@@ -1,6 +1,8 @@
 package cs3500.music.view;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -73,30 +75,41 @@ public class VisualView extends JFrame implements IGuiView {
     }
   }
 
+  @Override
+  public void setListeners(ActionListener clicks, KeyListener keys) {
+
+  }
+
+  @Override
   public void goBeginSong() {
     scrollNotesPane.getHorizontalScrollBar().setValue(0);
   }
 
+  @Override
   public void goEndSong() {
     int end = scrollNotesPane.getHorizontalScrollBar().getMaximum();
     scrollNotesPane.getHorizontalScrollBar().setValue(end);
   }
 
+  @Override
   public void scrollRight() {
     int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
     scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 100);
   }
 
+  @Override
   public void scrollLeft() {
     int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
     scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition - 100);
   }
 
+  @Override
   public void scrollUp() {
     int currentPosition = scrollNotesPane.getVerticalScrollBar().getValue();
     scrollNotesPane.getVerticalScrollBar().setValue(currentPosition + 100);
   }
 
+  @Override
   public void scrollDown() {
     int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
     scrollNotesPane.getVerticalScrollBar().setValue(currentPosition - 100);

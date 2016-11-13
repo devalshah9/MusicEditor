@@ -11,7 +11,17 @@ public interface IGuiView extends IMusicView {
 
   void setListeners(ActionListener clicks, KeyListener keys);
 
+  void goBeginSong();
 
+  void goEndSong();
+
+  void scrollRight();
+
+  void scrollLeft();
+
+  void scrollUp();
+
+  void scrollDown();
 
 
 }
