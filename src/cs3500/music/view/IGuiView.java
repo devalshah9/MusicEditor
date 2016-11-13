@@ -5,6 +5,5 @@ package cs3500.music.view;
  * such as methods for dealing with keyboard and mouse.
  */
 public interface IGuiView extends IMusicView {
-
-
+  
 }

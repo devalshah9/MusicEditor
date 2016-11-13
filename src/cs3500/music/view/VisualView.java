@@ -1,10 +1,9 @@
 package cs3500.music.view;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
+import java.awt.*;
+
+import javax.swing.*;
+
 import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
 
@@ -16,6 +15,10 @@ import cs3500.music.model.IViewModel;
 
 public class VisualView extends JFrame implements IGuiView {
   JPanel p;
+  NoteLabelsPanel noteLabelsPanel;
+  BeatsPanel beatsPanel;
+  NotesPanel notesPanel;
+  JScrollPane scrollNotesPane;
 
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
@@ -25,10 +28,6 @@ public class VisualView extends JFrame implements IGuiView {
    */
   public VisualView(IViewModel viewModelIn) {
     super();
-    NoteLabelsPanel noteLabelsPanel;
-    BeatsPanel beatsPanel;
-    NotesPanel notesPanel;
-    JScrollPane scrollNotesPane;
     IViewModel viewModel = viewModelIn;
     this.p = new JPanel(new BorderLayout());
     notesPanel = new NotesPanel(viewModel);
@@ -39,7 +38,7 @@ public class VisualView extends JFrame implements IGuiView {
     container.setLayout(new BorderLayout());
     container.add(notesPanel, BorderLayout.CENTER);
     container.add(beatsPanel, BorderLayout.NORTH);
-    container.add(noteLabelsPanel,BorderLayout.WEST);
+    container.add(noteLabelsPanel, BorderLayout.WEST);
     scrollNotesPane = new JScrollPane(container);
     this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
     Note highestNote = viewModel.getHighestNote();
@@ -69,10 +68,17 @@ public class VisualView extends JFrame implements IGuiView {
   public void renderSong(IViewModel model, int tempo) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Invalid View Model!");
-    }
-    else {
+    } else {
       this.initialize();
     }
   }
 
+  public void goBeginSong() {
+    scrollNotesPane.getHorizontalScrollBar().setValue(0);
+  }
+
+  public void goEndSong() {
+    int end = scrollNotesPane.getHorizontalScrollBar().getMaximum();
+    scrollNotesPane.getHorizontalScrollBar().setValue(end);
+  }
 }
