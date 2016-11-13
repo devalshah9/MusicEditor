@@ -81,4 +81,25 @@ public class VisualView extends JFrame implements IGuiView {
     int end = scrollNotesPane.getHorizontalScrollBar().getMaximum();
     scrollNotesPane.getHorizontalScrollBar().setValue(end);
   }
+
+  public void scrollRight() {
+    int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+    scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 100);
+  }
+
+  public void scrollLeft() {
+    int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+    scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition - 100);
+  }
+
+  public void scrollUp() {
+    int currentPosition = scrollNotesPane.getVerticalScrollBar().getValue();
+    scrollNotesPane.getVerticalScrollBar().setValue(currentPosition + 100);
+  }
+
+  public void scrollDown() {
+    int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+    scrollNotesPane.getVerticalScrollBar().setValue(currentPosition - 100);
+  }
+
 }
