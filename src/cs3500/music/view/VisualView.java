@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+
 import javax.swing.JPanel;
 import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
@@ -75,4 +78,8 @@ public class VisualView extends JFrame implements IGuiView {
     }
   }
 
+  @Override
+  public void setListeners(ActionListener clicks, KeyListener keys) {
+
+  }
 }

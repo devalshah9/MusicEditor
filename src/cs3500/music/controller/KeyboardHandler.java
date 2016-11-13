@@ -12,11 +12,8 @@ public class KeyboardHandler implements KeyListener {
   Map<Integer, Runnable> keyPressed;
   Map<Integer, Runnable> keyReleased;
 
-  public KeyboardHandler(Map<Integer, Runnable> keyTyped, Map<Integer,
-          Runnable> keyPressed, Map<Integer, Runnable> keyReleased) {
-    this.keyTyped = keyTyped;
-    this.keyPressed = keyPressed;
-    this.keyReleased = keyReleased;
+  public KeyboardHandler() {
+
   }
 
   @Override
@@ -41,22 +38,22 @@ public class KeyboardHandler implements KeyListener {
   }
 
   /**
-   * Allow clients of your class (such as your cs3500.music.controller) to install Runnables
+   * Allow clients of your class (such as your cs3500.music.controller) to install Runnables.
    * for the various key events that are of interest.
-   * @param e the key event to put it at
-   * @param r the runnable
-   * @param a the type of action to work with
+   * @param i the integer value in the map to put it at
+   * @param r the runnable to add at the event
+   * @param a the type of keyboard action to work with
    */
-  public void installRunnable(KeyEvent e, Runnable r, ActionType a) {
+  public void installRunnable(Integer i, Runnable r, ActionType a) {
     switch (a) {
       case TYPED:
-        keyTyped.put(e.getKeyCode(), r);
+        keyTyped.put(i, r);
         break;
       case PRESSED:
-        keyPressed.put(e.getKeyCode(), r);
+        keyPressed.put(i, r);
         break;
       case RELEASED:
-        keyReleased.put(e.getKeyCode(), r);
+        keyReleased.put(i, r);
         break;
       default:
         break;
