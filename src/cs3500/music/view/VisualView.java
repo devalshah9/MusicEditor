@@ -22,6 +22,7 @@ public class VisualView extends JFrame implements IGuiView {
   NotesPanel notesPanel;
   JScrollPane scrollNotesPane;
 
+
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
    * constructed song.
