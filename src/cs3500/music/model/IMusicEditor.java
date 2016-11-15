@@ -107,12 +107,17 @@ public interface IMusicEditor<MusicSheet> {
   void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
+  void toggleNote(int sheetIndex, Note note, int beat)
+    throws IllegalArgumentException;
+
   /**
    * Gets all the beats in a song.
    * @param index the sheet at which to get the beats
    * @return the treemap of all the beats
    */
   TreeMap<Integer, ArrayList<Note>> getBeats(int index);
+
+  void addRest();
 
   /**
    * To set the tempo of the song.

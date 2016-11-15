@@ -1,9 +1,11 @@
 package cs3500.music.controller;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 
@@ -20,11 +22,15 @@ public class MusicController implements IMusicController, ActionListener {
   KeyListener keyboardHandler;
   MouseListener mouseHandler;
   boolean isInAddMode = false;
+  int clickLocation;
 
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
     this.view = view;
-    // view.setListeners();
+    this.clickLocation = 0;
+    this.createMouseHandler();
+    this.createKeyboardHandler();
+    view.setListeners(mouseHandler, keyboardHandler);
   }
 
   //Runnable addNoteStart = () -> isInAddMode = true;
@@ -46,6 +52,10 @@ public class MusicController implements IMusicController, ActionListener {
   Runnable scrollUp = () -> view.scrollUp();
 
   Runnable scrollDown = () -> view.scrollDown();
+
+  Runnable addRest = () -> editor.addRest();
+
+  Runnable toggleNote = () -> editor.toggleNote(0, );
 
   @Override
   public void createKeyboardHandler() {
@@ -73,15 +83,26 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler.installRunnable(KeyEvent.VK_DOWN, scrollDown,
             KeyboardHandler.ActionType.TYPED);
 
+    keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
+            KeyboardHandler.ActionType.TYPED);
   }
 
   @Override
   public void createMouseHandler() {
+
     MouseHandler mouseHandler = new MouseHandler();
+
+    mouseHandler.installRunnable(MouseEvent.MOUSE_CLICKED);
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    if() {
+
+    }
+  }
+
+  private int getClickLocation() {
 
   }
 

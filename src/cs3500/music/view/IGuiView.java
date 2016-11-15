@@ -2,6 +2,7 @@ package cs3500.music.view;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 /**
  * Interface for GUI-specific methods that make no sense for the other view types,
@@ -9,7 +10,7 @@ import java.awt.event.KeyListener;
  */
 public interface IGuiView extends IMusicView {
 
-  void setListeners(ActionListener clicks, KeyListener keys);
+  void setListeners(MouseListener clicks, KeyListener keys);
 
   void goBeginSong();
 

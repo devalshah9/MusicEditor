@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -21,7 +22,8 @@ public class VisualView extends JFrame implements IGuiView {
   BeatsPanel beatsPanel;
   NotesPanel notesPanel;
   JScrollPane scrollNotesPane;
-
+  MouseListener mouse;
+  KeyListener keys;
 
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
@@ -77,9 +79,11 @@ public class VisualView extends JFrame implements IGuiView {
   }
 
   @Override
-  public void setListeners(ActionListener clicks, KeyListener keys) {
-
+  public void setListeners(MouseListener clicks, KeyListener keys) {
+    this.keys = keys;
+    this.mouse = clicks;
   }
+
 
   @Override
   public void goBeginSong() {
@@ -91,6 +95,7 @@ public class VisualView extends JFrame implements IGuiView {
     int end = scrollNotesPane.getHorizontalScrollBar().getMaximum();
     scrollNotesPane.getHorizontalScrollBar().setValue(end);
   }
+
 
   @Override
   public void scrollRight() {

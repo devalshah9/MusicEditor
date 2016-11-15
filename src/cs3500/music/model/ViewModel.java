@@ -15,6 +15,7 @@ public class ViewModel implements IViewModel {
   private final TreeMap<Integer, ArrayList<Note>> notes;
   private final int measureLength;
   private int tempo;
+  private int sheetPadding;
 
   /**
    * Constructor for a view model.
@@ -129,4 +130,5 @@ public class ViewModel implements IViewModel {
   public int getMeasureLength() {
     return this.measureLength;
   }
+
 }

@@ -151,6 +151,36 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
   }
 
   @Override
+  public void toggleNote(int sheetIndex, Note note, int beat) {
+    if (sheetIndex > this.sheets.size() - 1 || sheetIndex < 0) {
+      throw new IllegalArgumentException("Sheet index is invalid.");
+    } else {
+      if (!(this.sheets.get(sheetIndex).getBeats().containsKey(beat))) {
+        throw new IllegalArgumentException("This beat does not exist.");
+      }
+      else {
+        if (!(this.sheets.get(sheetIndex).getBeats().get(beat).contains(note))) {
+          if(this.sheets.get(sheetIndex).getBeats().containsKey(beat - 1)) {
+            if(this.sheets.get(sheetIndex).getBeats().get(beat - 1).contains(note)) {
+              this.sheets.get(sheetIndex).addNote(note, 1, beat, true);
+            }
+            else {
+              this.sheets.get(sheetIndex).addNote(note, 1, beat, false);
+            }
+          }
+          else {
+            this.sheets.get(sheetIndex).addNote(note, 1, beat, false);
+          }
+        }
+        else {
+          int beginBeat = this.sheets.get(sheetIndex).getBeginningOfNote(note, beat);
+          this.sheets.get(sheetIndex).deleteEntireNote(note, beginBeat);
+        }
+      }
+    }
+  }
+
+  @Override
   public void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException {
     if (sheetIndex < 0 || sheetIndex > this.sheets.size() - 1) {

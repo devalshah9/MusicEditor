@@ -255,6 +255,10 @@ public class MusicSheet {
     return this.beats;
   }
 
+  public void addRest() {
+    this.beats.put(this.getFurthestBeat() + 1, new ArrayList<>());
+  }
+
   /**
    * To get the beginning beat of a note.
    * @param note the note to work with
