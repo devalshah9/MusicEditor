@@ -30,6 +30,7 @@ public class VisualView extends JFrame implements IGuiView {
   MouseListener mouse;
   KeyListener keys;
   IViewModel viewModel;
+  private int time;
 
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
@@ -136,5 +137,8 @@ public class VisualView extends JFrame implements IGuiView {
     return this.getPreferredSize().getHeight();
   }
 
+  public void getTime(int time) {
+    this.time = time;
+  }
 
 }

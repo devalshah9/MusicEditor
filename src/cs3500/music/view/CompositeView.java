@@ -3,6 +3,7 @@ package cs3500.music.view;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.Timer;
 
 import javax.sound.midi.InvalidMidiDataException;
 
@@ -17,10 +18,12 @@ import cs3500.music.model.IViewModel;
 public class CompositeView implements IGuiView {
   IGuiView visualView;
   IMusicView audibleView;
+  Timer timer;
 
   public CompositeView(IGuiView visualView, IMusicView audibleView) {
     this.visualView = visualView;
     this.audibleView = audibleView;
+    this.timer = new Timer();
   }
 
 
@@ -68,6 +71,7 @@ public class CompositeView implements IGuiView {
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
     visualView.renderSong(model, tempo);
     audibleView.renderSong(model, tempo);
+
   }
 
   @Override

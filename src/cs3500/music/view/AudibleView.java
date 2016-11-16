@@ -22,7 +22,7 @@ import cs3500.music.model.IViewModel;
 public class AudibleView implements IMusicView {
   private Synthesizer synth;
   private Receiver receiver;
-
+  private int time;
   /**
    * Constructor for an Audible view.
    * @param viewModel the view model to work with
@@ -132,6 +132,10 @@ public class AudibleView implements IMusicView {
    */
   public void setReceiver(Receiver rec) {
     this.receiver = rec;
+  }
+
+  public void getTime(int time) {
+    this.time = time;
   }
 
 }
