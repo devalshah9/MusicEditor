@@ -185,6 +185,8 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     }
   }
 
+
+
   @Override
   public void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException {

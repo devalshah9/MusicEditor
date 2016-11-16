@@ -63,7 +63,7 @@ public class MusicController implements IMusicController, ActionListener {
 
   Runnable addRest = () -> editor.addRest();
 
-  Runnable toggleNote = () -> editor.toggleNote(0, );
+  Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
 
   @Override
   public void createKeyboardHandler() {
@@ -94,12 +94,16 @@ public class MusicController implements IMusicController, ActionListener {
     // to add an empty measure to the end of the piece, type M
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.TYPED);
+
+    mouseHandler.installRunnable("Click", toggleNote,
+            MouseHandler.ActionType.CLICKED);
   }
 
   @Override
   public void createMouseHandler() {
     MouseHandler mouseHandler = new MouseHandler();
   }
+
 
   private int getClickX() {
     int x = this.mouseHandler.getX();
@@ -116,6 +120,8 @@ public class MusicController implements IMusicController, ActionListener {
     Pitch pitchClicked;
     Octave octaveClicked;
     int beatClicked;
+    double viewDimensionX = this.view.getDimensionX();
+    double viewDimensionY = this.view.getDimensionY();
 
     // convert the x and y into a frequency and beat number to create a note
 
@@ -134,27 +140,37 @@ public class MusicController implements IMusicController, ActionListener {
     Note lowestNote = viewModel.getLowestNote();
     int lowestIndex = newNotes.indexOf(lowestNote);
     int highestIndex = newNotes.indexOf(highestNote);
+    int measureLength = viewModel.getMeasureLength();
+    int endBeat = viewModel.getEndBeat();
     java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
     int boxHeight = 30;
+    int boxWidth = 120;
 
     pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
     octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
 
-
-    // BEAT NUMBER
-
-    int measureLength = viewModel.getMeasureLength();
-    int endBeat = viewModel.getEndBeat();
     int widthScale = 30;
-    int boxWidth = measureLength * widthScale;
 
     beatClicked = x - x % boxWidth / boxWidth + 1;
 
     // check whether where you clicked is a note or empty by iterating through all the notes in song
-    for (Note n : (List<Note>) (editor.allNotes())) {
-      // if note - check if its a head, then remove, or if its a sustain - make it a head
-      if (n.getOctave() == octaveClicked && n.getPitch() == pitchClicked && beatAtNote == beatClicked) {
-
+//    for (Note n : (List<Note>) (editor.allNotes())) {
+//      // if note - check if its a head, then remove, or if its a sustain - make it a head
+//      if (n.getOctave() == octaveClicked && n.getPitch() == pitchClicked && beatAtNote == beatClicked) {
+//
+//      }
+//    }
+    Note currNote = new Note(pitchClicked, octaveClicked, false, 0, 0);
+    if (viewModel.getNotes().containsKey(beatClicked)) {
+      if (viewModel.getNotes().get(beatClicked).contains(currNote)) {
+        int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
+        Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
+        if(prevNote.getbeginningOfNote()) {
+          editor.deleteNote(0, prevNote, beatClicked);
+        }
+        else {
+          prevNote.toggleNote();
+        }
       }
     }
 
@@ -180,6 +196,7 @@ public class MusicController implements IMusicController, ActionListener {
   private void removeNote(Note note, int beat) {
     editor.deleteNote(0, note, beat);
   }
+
 
   @Override
   public void actionPerformed(ActionEvent e) {

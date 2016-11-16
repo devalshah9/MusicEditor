@@ -2,7 +2,14 @@ package cs3500.music.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.SwingUtilities;
+
+import static cs3500.music.controller.MouseHandler.ActionType.CLICKED;
+import static cs3500.music.controller.MouseHandler.ActionType.PRESSED;
+import static cs3500.music.controller.MouseHandler.ActionType.RELEASED;
 
 /**
  * Class to handle mouse actions.
@@ -14,9 +21,12 @@ public class MouseHandler implements MouseListener {
   // the y coordinate of the click
   private int y;
 
+  Map<String, Runnable> mouseClicks;
+
   public void MouseHandler() {
     this.x = -1;
     this.y = -1;
+    mouseClicks = new HashMap<String,Runnable>();
   }
 
   @Override
@@ -25,6 +35,7 @@ public class MouseHandler implements MouseListener {
     if (SwingUtilities.isLeftMouseButton(e)) {
       x = e.getX();
       y = e.getY();
+      this.mouseClicks.get("Click").run();
     }
   }
 
@@ -48,11 +59,36 @@ public class MouseHandler implements MouseListener {
 
   }
 
+  public void installRunnable(String i, Runnable r, MouseHandler.ActionType a) {
+    switch (a) {
+      case CLICKED:
+        mouseClicks.put(i, r);
+        break;
+      case PRESSED:
+        mouseClicks.put(i, r);
+        break;
+      case RELEASED:
+        mouseClicks.put(i, r);
+        break;
+      case ENTERED:
+        mouseClicks.put(i, r);
+        break;
+      case EXITED:
+        mouseClicks.put(i, r);
+      default:
+        break;
+    }
+  }
+
   public int getX() {
     return this.x;
   }
 
   public int getY() {
     return this.y;
+  }
+
+  public enum ActionType {
+    CLICKED, PRESSED, RELEASED, ENTERED, EXITED;
   }
 }

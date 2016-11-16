@@ -120,4 +120,13 @@ public class Note implements Comparable<Note> {
     return hash;
   }
 
+  public void toggleNote() {
+    if(this.getbeginningOfNote()) {
+      this.beginningOfNote = false;
+    }
+    else {
+      this.beginningOfNote = true;
+    }
+  }
+
 }
