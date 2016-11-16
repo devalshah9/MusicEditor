@@ -1,6 +1,5 @@
 package cs3500.music.controller;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,7 +20,7 @@ public class MusicController implements IMusicController, ActionListener {
   IGuiView view;
   KeyListener keyboardHandler;
   MouseListener mouseHandler;
-  boolean isInAddMode = false;
+  //boolean isInAddMode = false;
   int clickLocation;
 
   public MusicController(IMusicEditor editor, IGuiView view) {
@@ -83,16 +82,15 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler.installRunnable(KeyEvent.VK_DOWN, scrollDown,
             KeyboardHandler.ActionType.TYPED);
 
+    // to add an empty measure to the end of the piece, type M
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.TYPED);
   }
 
   @Override
   public void createMouseHandler() {
-
     MouseHandler mouseHandler = new MouseHandler();
 
-    mouseHandler.installRunnable(MouseEvent.MOUSE_CLICKED);
   }
 
   @Override
@@ -101,10 +99,4 @@ public class MusicController implements IMusicController, ActionListener {
 
     }
   }
-
-  private int getClickLocation() {
-
-  }
-
-
 }

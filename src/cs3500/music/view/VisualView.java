@@ -4,11 +4,16 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 import cs3500.music.model.IViewModel;
+import cs3500.music.model.ViewModel;
 
 /**
  * A VisualView is an implementation of IMusicView that displays a Song in GUI form.
@@ -24,6 +29,7 @@ public class VisualView extends JFrame implements IGuiView {
   JScrollPane scrollNotesPane;
   MouseListener mouse;
   KeyListener keys;
+  IViewModel viewModel;
 
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
@@ -33,7 +39,7 @@ public class VisualView extends JFrame implements IGuiView {
    */
   public VisualView(IViewModel viewModelIn) {
     super();
-    IViewModel viewModel = viewModelIn;
+    viewModel = viewModelIn;
     this.p = new JPanel(new BorderLayout());
     notesPanel = new NotesPanel(viewModel);
     beatsPanel = new BeatsPanel(viewModel);
@@ -82,6 +88,8 @@ public class VisualView extends JFrame implements IGuiView {
   public void setListeners(MouseListener clicks, KeyListener keys) {
     this.keys = keys;
     this.mouse = clicks;
+    notesPanel.addMouseListener(clicks);
+    notesPanel.addKeyListener(keys);
   }
 
 
@@ -95,7 +103,6 @@ public class VisualView extends JFrame implements IGuiView {
     int end = scrollNotesPane.getHorizontalScrollBar().getMaximum();
     scrollNotesPane.getHorizontalScrollBar().setValue(end);
   }
-
 
   @Override
   public void scrollRight() {
@@ -119,6 +126,61 @@ public class VisualView extends JFrame implements IGuiView {
   public void scrollDown() {
     int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
     scrollNotesPane.getVerticalScrollBar().setValue(currentPosition - 100);
+  }
+
+  @Override
+  public void addNote(int x, int y) {
+    Note noteClicked;
+    Pitch pitchClicked;
+    Octave octaveClicked;
+    int beatClicked;
+
+    // convert the x and y into a frequency and beat number to create a note
+
+    // FREQUENCY
+
+    ArrayList<Note> newNotes = new ArrayList<>();
+    for (Octave oct : Octave.values()) {
+      for (Pitch pit : Pitch.values()) {
+        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+          break;
+        }
+        newNotes.add(new Note(pit, oct, false, 0, 0));
+      }
+    }
+    Note highestNote = viewModel.getHighestNote();
+    Note lowestNote = viewModel.getLowestNote();
+    int lowestIndex = newNotes.indexOf(lowestNote);
+    int highestIndex = newNotes.indexOf(highestNote);
+    java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
+    int boxHeight = 30;
+
+    pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
+    octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
+
+
+    // BEAT NUMBER
+
+    int measureLength = viewModel.getMeasureLength();
+    int endBeat = viewModel.getEndBeat();
+    int widthScale = 30;
+    int boxWidth =  measureLength * widthScale;
+
+    beatClicked = x - x % boxWidth / boxWidth + 1;
+
+
+
+    // create the note - NEED TO KNOW WHETHER HEAD OR SUSTAIN
+    noteClicked = new Note(pitchClicked, octaveClicked, true, 0, 0);
+
+    // need to add that note at the beat calculated with addNote method
+
+
+  }
+
+  @Override
+  public void removeNote(int x, int y) {
+
   }
 
 }

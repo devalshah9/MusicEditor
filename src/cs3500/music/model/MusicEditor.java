@@ -161,17 +161,21 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       else {
         if (!(this.sheets.get(sheetIndex).getBeats().get(beat).contains(note))) {
           if(this.sheets.get(sheetIndex).getBeats().containsKey(beat - 1)) {
+            // if there is any part of a note at the beat before this spot, add a sustain
             if(this.sheets.get(sheetIndex).getBeats().get(beat - 1).contains(note)) {
               this.sheets.get(sheetIndex).addNote(note, 1, beat, true);
             }
+            // if there is no note before, add not a sustain, but a head
             else {
               this.sheets.get(sheetIndex).addNote(note, 1, beat, false);
             }
           }
+          // if there is no beat before this spot, add a note head
           else {
             this.sheets.get(sheetIndex).addNote(note, 1, beat, false);
           }
         }
+        // delete the note if there is a note there
         else {
           int beginBeat = this.sheets.get(sheetIndex).getBeginningOfNote(note, beat);
           this.sheets.get(sheetIndex).deleteEntireNote(note, beginBeat);

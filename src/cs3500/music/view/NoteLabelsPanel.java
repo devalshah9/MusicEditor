@@ -67,6 +67,7 @@ public class NoteLabelsPanel extends JPanel {
       String currNote = newList.get(n).toString();
       gimg.drawString(currNote, 0, 0 - boxHeight * n - boxHeight / 2);
     }
+
     gimg.setTransform(originalTransform);
   }
 }

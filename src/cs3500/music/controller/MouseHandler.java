@@ -2,19 +2,24 @@ package cs3500.music.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Map;
+import javax.swing.SwingUtilities;
 
 /**
  * Class to handle mouse actions.
  */
 public class MouseHandler implements MouseListener {
 
-  Map<Integer, Runnable> mouseClick;
+  // the x coordinate of the click
+  int x;
+  // the y coordinate of the click
+  int y;
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    if (mouseClick.containsKey(e)) {
-
+    // check if left click
+    if (SwingUtilities.isLeftMouseButton(e)) {
+      x = e.getX();
+      y = e.getY();
     }
   }
 
@@ -38,23 +43,4 @@ public class MouseHandler implements MouseListener {
 
   }
 
-  public void installRunnable(Integer i, Runnable r, MouseHandler.ActionType a) {
-    switch (a) {
-      case CLICKED:
-        mouseClick.put(i, r);
-        break;
-      default:
-        break;
-    }
-  }
-
-  public void getClickLocation(MouseEvent e) {
-    int x = e.getX();
-    int y = e.getY();
-
-  }
-
-  public enum ActionType {
-    CLICKED;
-  }
 }
