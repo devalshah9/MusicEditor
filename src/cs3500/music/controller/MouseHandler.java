@@ -10,9 +10,14 @@ import javax.swing.SwingUtilities;
 public class MouseHandler implements MouseListener {
 
   // the x coordinate of the click
-  int x;
+  private int x;
   // the y coordinate of the click
-  int y;
+  private int y;
+
+  public void MouseHandler() {
+    this.x = -1;
+    this.y = -1;
+  }
 
   @Override
   public void mouseClicked(MouseEvent e) {
@@ -43,4 +48,11 @@ public class MouseHandler implements MouseListener {
 
   }
 
+  public int getX() {
+    return this.x;
+  }
+
+  public int getY() {
+    return this.y;
+  }
 }

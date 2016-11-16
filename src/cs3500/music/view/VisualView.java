@@ -129,58 +129,6 @@ public class VisualView extends JFrame implements IGuiView {
   }
 
   @Override
-  public void addNote(int x, int y) {
-    Note noteClicked;
-    Pitch pitchClicked;
-    Octave octaveClicked;
-    int beatClicked;
 
-    // convert the x and y into a frequency and beat number to create a note
-
-    // FREQUENCY
-
-    ArrayList<Note> newNotes = new ArrayList<>();
-    for (Octave oct : Octave.values()) {
-      for (Pitch pit : Pitch.values()) {
-        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
-          break;
-        }
-        newNotes.add(new Note(pit, oct, false, 0, 0));
-      }
-    }
-    Note highestNote = viewModel.getHighestNote();
-    Note lowestNote = viewModel.getLowestNote();
-    int lowestIndex = newNotes.indexOf(lowestNote);
-    int highestIndex = newNotes.indexOf(highestNote);
-    java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
-    int boxHeight = 30;
-
-    pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
-    octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
-
-
-    // BEAT NUMBER
-
-    int measureLength = viewModel.getMeasureLength();
-    int endBeat = viewModel.getEndBeat();
-    int widthScale = 30;
-    int boxWidth =  measureLength * widthScale;
-
-    beatClicked = x - x % boxWidth / boxWidth + 1;
-
-
-
-    // create the note - NEED TO KNOW WHETHER HEAD OR SUSTAIN
-    noteClicked = new Note(pitchClicked, octaveClicked, true, 0, 0);
-
-    // need to add that note at the beat calculated with addNote method
-
-
-  }
-
-  @Override
-  public void removeNote(int x, int y) {
-
-  }
 
 }
