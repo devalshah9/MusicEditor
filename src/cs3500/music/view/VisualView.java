@@ -128,7 +128,4 @@ public class VisualView extends JFrame implements IGuiView {
     scrollNotesPane.getVerticalScrollBar().setValue(currentPosition - 100);
   }
 
-  @Override
-
-
 }

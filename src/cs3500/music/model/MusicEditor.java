@@ -2,6 +2,7 @@ package cs3500.music.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 
 import cs3500.music.commons.Note;
@@ -234,6 +235,11 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     }
   }
 
+  @Override
+  public void addRest() {
+
+  }
+
   /**
    * To set the tempo of the song.
    * @param tempo the tempo to be set to
@@ -263,6 +269,16 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       this.getSheet(0);
       return this.getSheet(index).getSheetState();
     }
+  }
+
+  public List<Note> allNotes() {
+    List<Note> notes = new ArrayList<Note>();
+    for (int i = 0; i < this.sheets.get(0).getFurthestBeat(); i++) {
+      if (this.getBeats(0).containsKey(i)) {
+        notes.addAll(this.getBeats(0).get(i));
+      }
+    }
+    return notes;
   }
 }
 

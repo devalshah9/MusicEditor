@@ -7,12 +7,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
 import cs3500.music.commons.Pitch;
 import cs3500.music.model.IMusicEditor;
+import cs3500.music.model.IViewModel;
+import cs3500.music.model.ViewModel;
 import cs3500.music.view.IGuiView;
 
 /**
@@ -26,6 +29,7 @@ public class MusicController implements IMusicController, ActionListener {
   MouseHandler mouseHandler;
   //boolean isInAddMode = false;
   int clickLocation;
+  IViewModel viewModel;
 
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
@@ -34,6 +38,7 @@ public class MusicController implements IMusicController, ActionListener {
     this.createMouseHandler();
     this.createKeyboardHandler();
     view.setListeners(mouseHandler, keyboardHandler);
+    this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
   }
 
   //Runnable addNoteStart = () -> isInAddMode = true;
@@ -106,7 +111,7 @@ public class MusicController implements IMusicController, ActionListener {
     return y;
   }
 
-  private void addNote(int x, int y) {
+  public void onClick(int x, int y) {
     Note noteClicked;
     Pitch pitchClicked;
     Octave octaveClicked;
@@ -141,24 +146,41 @@ public class MusicController implements IMusicController, ActionListener {
     int measureLength = viewModel.getMeasureLength();
     int endBeat = viewModel.getEndBeat();
     int widthScale = 30;
-    int boxWidth =  measureLength * widthScale;
+    int boxWidth = measureLength * widthScale;
 
     beatClicked = x - x % boxWidth / boxWidth + 1;
 
+    // check whether where you clicked is a note or empty by iterating through all the notes in song
+    for (Note n : (List<Note>) (editor.allNotes())) {
+      // if note - check if its a head, then remove, or if its a sustain - make it a head
+      if (n.getOctave() == octaveClicked && n.getPitch() == pitchClicked && beatAtNote == beatClicked) {
 
+      }
+    }
 
-    // create the note - NEED TO KNOW WHETHER HEAD OR SUSTAIN
-    noteClicked = new Note(pitchClicked, octaveClicked, true, 0, 0);
-
-    // need to add that note at the beat calculated with addNote method
-
-
+    // if empty - check if note should be added as head or sustain by checking if there is a
+    // note on previous beat
+    for (Note n : (List<Note>) (editor.getBeats(0).get(beatClicked - 1))) {
+      if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
+        addSustain(pitchClicked, octaveClicked, beatClicked);
+      } else {
+        addHead(pitchClicked, octaveClicked, beatClicked);
+      }
+    }
   }
 
-  @Override
-  public void removeNote(int x, int y) {
-
+  private void addHead(Pitch pitch, Octave octave, int beat) {
+    editor.addSingleNote(0, new Note(pitch, octave, true, 0, 0), 1, beat);
   }
+
+  private void addSustain(Pitch pitch, Octave octave, int beat) {
+    editor.addSingleNote(0, new Note(pitch, octave, false, 0, 0), 1, beat);
+  }
+
+  private void removeNote(Note note, int beat) {
+    editor.deleteNote(0, note, beat);
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
   }

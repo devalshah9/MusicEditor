@@ -23,7 +23,4 @@ public interface IGuiView extends IMusicView {
 
   void scrollDown();
 
-  void addNote(int x, int y);
-
-  void removeNote(int x, int y);
 }

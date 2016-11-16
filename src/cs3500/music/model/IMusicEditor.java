@@ -1,6 +1,7 @@
 package cs3500.music.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import cs3500.music.commons.Note;
@@ -130,6 +131,8 @@ public interface IMusicEditor<MusicSheet> {
    * @return the tempo of the song
    */
   int getTempo();
+
+  List<Note> allNotes();
 
 }
 
