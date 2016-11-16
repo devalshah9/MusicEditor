@@ -66,6 +66,17 @@ public class CompositeView implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+    visualView.renderSong(model, tempo);
+    audibleView.renderSong(model, tempo);
+  }
 
+  @Override
+  public double getDimensionX() {
+    return visualView.getDimensionX();
+  }
+
+  @Override
+  public double getDimensionY() {
+    return visualView.getDimensionY();
   }
 }

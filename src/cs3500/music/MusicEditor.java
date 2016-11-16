@@ -62,7 +62,9 @@ public class MusicEditor {
       view = IMusicView.create("visual", model);
     } else if (args[1].equals("midi")) {
       view = IMusicView.create("midi", model);
-    } else {
+    } else if (args[1].equals("composite")) {
+      view = IMusicView.create("composite", model);
+    }else {
       throw new InvalidMidiDataException("Invalid input!");
     }
     try {

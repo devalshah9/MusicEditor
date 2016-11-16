@@ -39,6 +39,10 @@ public interface IMusicView {
       return new VisualView(model);
     } else if (type.equals("midi")) {
       return new AudibleView(model);
+    } else if (type.equals("composite")) {
+      VisualView visual = new VisualView(model);
+      AudibleView audible = new AudibleView(model);
+      return new CompositeView(visual, audible);
     } else {
       throw new IllegalArgumentException("Invalid view type!");
     }
