@@ -18,15 +18,17 @@ import cs3500.music.model.IViewModel;
 
 public class NotesPanel extends JPanel {
   private IViewModel viewModel;
+  private int time;
   JPanel p = new JPanel();
 
   /**
    * The constructor for the notes panel.
    * @param viewModel the view model to work with
    */
-  public NotesPanel(IViewModel viewModel) {
+  public NotesPanel(IViewModel viewModel, int time) {
     super();
     this.viewModel = viewModel;
+    this.time = time;
     p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
   }
 

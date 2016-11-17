@@ -1,6 +1,8 @@
 package cs3500.music.view;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -9,6 +11,7 @@ import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
+import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
 
@@ -22,7 +25,6 @@ import cs3500.music.model.IViewModel;
 public class AudibleView implements IMusicView {
   private Synthesizer synth;
   private Receiver receiver;
-  private int time;
   /**
    * Constructor for an Audible view.
    * @param viewModel the view model to work with
@@ -74,6 +76,7 @@ public class AudibleView implements IMusicView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
+
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
     double bpm = 60000000 / tempo;
@@ -90,10 +93,11 @@ public class AudibleView implements IMusicView {
         }
       }
     }
-    try {
-      Thread.sleep(totalMs);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+  }
+
+  class TimeTask extends TimerTask {
+    public void run() {
+      System.exit(0);
     }
   }
 
@@ -134,8 +138,8 @@ public class AudibleView implements IMusicView {
     this.receiver = rec;
   }
 
-  public void getTime(int time) {
-    this.time = time;
+  public long getTime() {
+    return this.synth.getMicrosecondPosition();
   }
 
 }

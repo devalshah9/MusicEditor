@@ -42,7 +42,7 @@ public class VisualView extends JFrame implements IGuiView {
     super();
     viewModel = viewModelIn;
     this.p = new JPanel(new BorderLayout());
-    notesPanel = new NotesPanel(viewModel);
+    notesPanel = new NotesPanel(viewModel, time);
     beatsPanel = new BeatsPanel(viewModel);
     noteLabelsPanel = new NoteLabelsPanel(viewModel);
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,8 +137,13 @@ public class VisualView extends JFrame implements IGuiView {
     return this.getPreferredSize().getHeight();
   }
 
-  public void getTime(int time) {
+  public void setTime(int time) {
     this.time = time;
+  }
+
+
+  public void refresh() {
+    this.repaint();
   }
 
 }
