@@ -141,7 +141,7 @@ public class VisualView extends JFrame implements IGuiView {
     this.time = time;
   }
 
-
+  @Override
   public void refresh() {
     this.repaint();
   }

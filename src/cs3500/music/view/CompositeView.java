@@ -3,8 +3,6 @@ package cs3500.music.view;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.sound.midi.InvalidMidiDataException;
 
@@ -19,12 +17,10 @@ import cs3500.music.model.IViewModel;
 public class CompositeView implements IGuiView {
   IGuiView visualView;
   IMusicView audibleView;
-  javax.swing.Timer timer;
 
   public CompositeView(IGuiView visualView, IMusicView audibleView) {
     this.visualView = visualView;
     this.audibleView = audibleView;
-    this.timer = new javax.swing.Timer()
   }
 
 
@@ -75,11 +71,6 @@ public class CompositeView implements IGuiView {
 
   }
 
-  class TimingTask extends TimerTask{
-    public void run() {
-    }
-  }
-
   @Override
   public double getDimensionX() {
     return visualView.getDimensionX();
@@ -88,5 +79,10 @@ public class CompositeView implements IGuiView {
   @Override
   public double getDimensionY() {
     return visualView.getDimensionY();
+  }
+
+  @Override
+  public void refresh() {
+
   }
 }

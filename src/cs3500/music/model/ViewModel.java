@@ -16,6 +16,7 @@ public class ViewModel implements IViewModel {
   private final int measureLength;
   private int tempo;
   private int sheetPadding;
+  private int currBeat;
 
   /**
    * Constructor for a view model.
@@ -28,6 +29,7 @@ public class ViewModel implements IViewModel {
     notes = editor.getBeats(index);
     this.measureLength = measureLength;
     this.tempo = editor.getTempo();
+    this.currBeat = 0;
   }
 
   /**
@@ -61,12 +63,24 @@ public class ViewModel implements IViewModel {
     return currLowestNote;
   }
 
-  /**
-   * To get the tempo of a song.
-   * @return the tempo of the song
-   */
+  @Override
   public int getTempo() {
     return this.tempo;
+  }
+
+  @Override
+  public int getCurrBeat() {
+    return this.currBeat;
+  }
+
+  @Override
+  public void incrementBeat() {
+    this.currBeat += 1;
+  }
+
+  @Override
+  public void decrementBeat() {
+    this.currBeat -= 1;
   }
 
   @Override

@@ -3,12 +3,11 @@ package cs3500.music.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
@@ -28,17 +27,26 @@ public class MusicController implements IMusicController, ActionListener {
   KeyboardHandler keyboardHandler;
   MouseHandler mouseHandler;
   //boolean isInAddMode = false;
-  int clickLocation;
+  int clickLocation = 0;
   IViewModel viewModel;
+  Timer timer = new Timer();
 
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
     this.view = view;
-    this.clickLocation = 0;
     this.createMouseHandler();
     this.createKeyboardHandler();
     view.setListeners(mouseHandler, keyboardHandler);
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
+
+    class TimingTask extends TimerTask {
+      public void run() {
+        viewModel.incrementBeat();
+        view.refresh();
+      }
+    }
+
+    timer.scheduleAtFixedRate(new TimingTask(), viewModel.getTempo(), viewModel.getCurrBeat());
   }
 
   //Runnable addNoteStart = () -> isInAddMode = true;
@@ -166,7 +174,7 @@ public class MusicController implements IMusicController, ActionListener {
         int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
         Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
         if(prevNote.getbeginningOfNote()) {
-          editor.deleteNote(0, prevNote, beatClicked);
+          removeNote(prevNote, beatClicked);
         }
         else {
           prevNote.toggleNote();
@@ -185,14 +193,31 @@ public class MusicController implements IMusicController, ActionListener {
     }
   }
 
+  /**
+   * To add a note head.
+   * @param pitch the pitch of the note
+   * @param octave the octave of the note
+   * @param beat the beat that its at
+   */
   private void addHead(Pitch pitch, Octave octave, int beat) {
     editor.addSingleNote(0, new Note(pitch, octave, true, 0, 0), 1, beat);
   }
 
+  /**
+   * To add a note sustain.
+   * @param pitch the pitch of the note
+   * @param octave the octave of the note
+   * @param beat the beat that its at
+   */
   private void addSustain(Pitch pitch, Octave octave, int beat) {
     editor.addSingleNote(0, new Note(pitch, octave, false, 0, 0), 1, beat);
   }
 
+  /**
+   * To remove a note.
+   * @param note the note to be removed
+   * @param beat the beat that its at
+   */
   private void removeNote(Note note, int beat) {
     editor.deleteNote(0, note, beat);
   }

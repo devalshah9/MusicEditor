@@ -54,4 +54,20 @@ public interface IViewModel {
    */
   int getTempo();
 
+  /**
+   * To get the current beat playing.
+   * @return the current beat
+   */
+  int getCurrBeat();
+
+  /**
+   * To increment the beat by 1.
+   */
+  void incrementBeat();
+
+  /**
+   * To decrement the beat by 1.
+   */
+  void decrementBeat();
+
 }
