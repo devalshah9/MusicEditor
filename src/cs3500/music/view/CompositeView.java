@@ -41,36 +41,34 @@ public class CompositeView implements IGuiView {
     this.audibleView.acceptMetaListener(listener);
   }
 
-
-
   @Override
   public void goBeginSong() {
-
+    this.visualView.goBeginSong();
   }
 
   @Override
   public void goEndSong() {
-
+    this.visualView.goEndSong();
   }
 
   @Override
   public void scrollRight() {
-
+    this.visualView.scrollRight();
   }
 
   @Override
   public void scrollLeft() {
-
+    this.visualView.scrollLeft();
   }
 
   @Override
   public void scrollUp() {
-
+    this.visualView.scrollUp();
   }
 
   @Override
   public void scrollDown() {
-
+    this.visualView.scrollDown();
   }
 
   @Override

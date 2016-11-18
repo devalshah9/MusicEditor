@@ -1,8 +1,6 @@
 package cs3500.music.view;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -72,9 +70,11 @@ public class NotesPanel extends JPanel {
     for (int n = 0; n <= endBeat; n++) {
       if (n == this.beat) {
         gimg.setColor(Color.RED);
+        gimg.setStroke(new BasicStroke(2));
         gimg.drawLine((n * boxWidth / measureLength),
                 boxHeight * (numberOfDistinctNotes + 1), n * boxWidth / measureLength, 0);
       }
+      gimg.setStroke(new BasicStroke(1));
       redLinePos = (n * boxWidth / measureLength);
       //System.out.println(redLinePos);
     }
