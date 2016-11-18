@@ -81,7 +81,6 @@ public class CompositeView implements IGuiView {
     visualView.renderSong(model, tempo);
     tempo = tempo * 4;
     audibleView.renderSong(model, tempo);
-
   }
 
   @Override
@@ -113,7 +112,4 @@ public class CompositeView implements IGuiView {
   public AudibleView getAudible() {
     return this.audibleView;
   }
-
-
-
 }

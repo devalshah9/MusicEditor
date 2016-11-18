@@ -20,6 +20,8 @@ public class NotesPanel extends JPanel {
   private IViewModel viewModel;
   private int beat;
   JPanel p = new JPanel();
+  int redLinePos;
+  int boxWidth =  120;
 
   /**
    * The constructor for the notes panel.
@@ -53,23 +55,25 @@ public class NotesPanel extends JPanel {
     Note lowestNote = this.viewModel.getLowestNote();
 
 
-    int boxWidth =  120;
+
     int remainder = endBeat % measureLength;
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
     int boxHeight = 30;
 
-    //Draws the vertical lines
+    // Draws the vertical lines
     for (int n = 0; n <= endBeat / measureLength + remainder; n++) {
       gimg.setColor(Color.BLACK);
       gimg.drawLine((n * boxWidth), boxHeight * (numberOfDistinctNotes + 1), n * boxWidth, 0);
     }
 
+    // draws the red line
     for (int n = 0; n <= endBeat; n++) {
       if (n == this.beat) {
         gimg.setColor(Color.RED);
-        gimg.drawLine((n * boxWidth/measureLength),
-                boxHeight * (numberOfDistinctNotes + 1), n * boxWidth/measureLength, 0);
+        gimg.drawLine((n * boxWidth / measureLength),
+                boxHeight * (numberOfDistinctNotes + 1), n * boxWidth / measureLength, 0);
       }
+      redLinePos = (n * boxWidth / measureLength);
     }
 
     gimg.setColor(Color.BLACK);
@@ -96,6 +100,10 @@ public class NotesPanel extends JPanel {
       }
     }
     gimg.setTransform(originalTransform);
+  }
+
+  public int getRedLinePos() {
+    return redLinePos;
   }
 
   public void setBeat(int beat) {

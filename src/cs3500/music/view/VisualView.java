@@ -57,14 +57,14 @@ public class VisualView extends JFrame implements IGuiView {
     Note highestNote = viewModel.getHighestNote();
     Note lowestNote = viewModel.getLowestNote();
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    int numberOfBeats = viewModel.getEndBeat(); //Below are seemingly random numbers -
-    //they were chosen because they're the combination that bests renders our notes.
-    notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37,
-            numberOfDistinctNotes * 31 + 20));
+    int numberOfBeats = viewModel.getEndBeat();
+    this.pack();
+    // Below are seemingly random numbers -
+    // they were chosen because they're the combination that bests renders our notes.
+    notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37, numberOfDistinctNotes * 31 + 20));
     beatsPanel.setPreferredSize(new Dimension(numberOfBeats * 37, 10));
     noteLabelsPanel.setPreferredSize(new Dimension(30, numberOfDistinctNotes * 31 + 20));
-    this.setPreferredSize(new Dimension(numberOfBeats * 37 + 50, numberOfDistinctNotes * 31 + 50));
-    this.pack();
+    this.setSize(new Dimension(numberOfBeats * 37 + 50, numberOfDistinctNotes * 31 + 75));
   }
 
   @Override
@@ -85,8 +85,6 @@ public class VisualView extends JFrame implements IGuiView {
       this.initialize();
     }
   }
-
-
 
   @Override
   public void goBeginSong() {
@@ -132,6 +130,7 @@ public class VisualView extends JFrame implements IGuiView {
   }
 
   public void setBeat() {
+
   }
 
   @Override
@@ -141,7 +140,11 @@ public class VisualView extends JFrame implements IGuiView {
     this.beat = viewModel.getCurrBeat();
     this.notesPanel.repaint();
     this.repaint();
-
+    // scroll the bar when red line reaches end of panel
+    if (notesPanel.redLinePos % (10 * notesPanel.boxWidth) == 0) {
+      int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+      scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + notesPanel.boxWidth * 10);
+    }
   }
 
   @Override
