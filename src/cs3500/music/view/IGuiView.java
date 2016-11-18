@@ -38,13 +38,15 @@ public interface IGuiView extends IMusicView {
 
   double getDimensionY();
 
-  void refresh();
+  void refresh(boolean paused);
 
   void setBeat();
 
   VisualView getVisual();
 
   AudibleView getAudible();
+
+  boolean getPaused();
 
 
 

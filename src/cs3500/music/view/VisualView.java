@@ -123,7 +123,6 @@ public class VisualView extends JFrame implements IGuiView {
 
   @Override
   public void pausePlay() {
-
   }
 
   public double getDimensionX() {
@@ -139,8 +138,10 @@ public class VisualView extends JFrame implements IGuiView {
   }
 
   @Override
-  public void refresh() {
-    this.viewModel.incrementBeat();
+  public void refresh(boolean paused) {
+    if(!paused) {
+      this.viewModel.incrementBeat();
+    }
     this.notesPanel.setBeat(viewModel.getCurrBeat());
     this.beat = viewModel.getCurrBeat();
     this.notesPanel.repaint();
@@ -152,6 +153,8 @@ public class VisualView extends JFrame implements IGuiView {
     }
     System.out.println(notesPanel.redLinePos + " refresh");
   }
+
+
 
   @Override
   public VisualView getVisual() {
@@ -172,12 +175,18 @@ public class VisualView extends JFrame implements IGuiView {
   @Override
   public void setKeyboardListener(KeyListener keys) {
     this.keys = keys;
+    this.addKeyListener(keys);
     this.notesPanel.addKeyListener(keys);
   }
 
   @Override
   public void setMetaListener(MetaEventListener listener) {
 
+  }
+
+  @Override
+  public boolean getPaused() {
+    throw new IllegalArgumentException("You can't do that!");
   }
 
 }

@@ -86,39 +86,41 @@ public class MusicController implements IMusicController, ActionListener {
 
   Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
 
-  Runnable refreshView = () -> view.refresh();
+  Runnable refreshView = () -> view.refresh(view.getPaused());
 
   @Override
   public void createKeyboardHandler() {
     keyboardHandler = new KeyboardHandler();
 
     // to jump to the beginning of the song, type Q since there is no Home button
-    keyboardHandler.installRunnable(KeyEvent.VK_Q, goBeg, KeyboardHandler.ActionType.TYPED);
+    keyboardHandler.installRunnable(KeyEvent.VK_Q, goBeg, KeyboardHandler.ActionType.PRESSED);
 
     // to jump to the end of the song, type P since there is no End button
-    keyboardHandler.installRunnable(KeyEvent.VK_P, goEnd, KeyboardHandler.ActionType.TYPED);
+    keyboardHandler.installRunnable(KeyEvent.VK_P, goEnd, KeyboardHandler.ActionType.PRESSED);
 
     // to scroll right, type the right arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_RIGHT, scrollRight,
-            KeyboardHandler.ActionType.TYPED);
+            KeyboardHandler.ActionType.PRESSED);
 
     // to scroll left, type the left arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_LEFT, scrollLeft,
-            KeyboardHandler.ActionType.TYPED);
+            KeyboardHandler.ActionType.PRESSED);
 
     // to scroll up, type the up arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_UP, scrollUp,
-            KeyboardHandler.ActionType.TYPED);
+            KeyboardHandler.ActionType.PRESSED);
 
     // to scroll down, type the down arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_DOWN, scrollDown,
-            KeyboardHandler.ActionType.TYPED);
+            KeyboardHandler.ActionType.PRESSED);
 
     // to add an empty measure to the end of the piece, type M
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
-            KeyboardHandler.ActionType.TYPED);
+            KeyboardHandler.ActionType.PRESSED);
 
     keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.TYPED);
+
+    keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.PRESSED);
   }
 
   @Override
@@ -210,6 +212,7 @@ public class MusicController implements IMusicController, ActionListener {
         addHead(pitchClicked, octaveClicked, beatClicked);
       }
     }
+    view.refresh(view.getPaused());
   }
 
   /**

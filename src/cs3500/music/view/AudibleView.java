@@ -38,6 +38,9 @@ public class AudibleView implements IMusicView {
   private Sequence sequence;
   private Track track;
   private MetaEventListener listener;
+  private boolean isPlaying;
+  private int tempo;
+  private long time;
 
   /**
    * Constructor for an Audible view.
@@ -121,9 +124,11 @@ public class AudibleView implements IMusicView {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
+    this.tempo = tempo;
     sequencer.setTempoInMPQ(tempo);
     sequencer.setMicrosecondPosition(0);
     sequencer.start();
+    isPlaying = true;
     timer.schedule(new TimeTask(), totalMs);
   }
 
@@ -187,6 +192,34 @@ public class AudibleView implements IMusicView {
     // does not do anything for MIDI
   }
 
+  public void pausePlay() {
+    if(isPlaying) {
+      sequencer.stop();
+      try {
+        sequencer.setSequence(sequence);
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
+      sequencer.setTempoInMPQ(tempo);
+      isPlaying = false;
+      time = sequencer.getMicrosecondPosition();
+      return;
+    }
+    if(!isPlaying) {
+      try {
+        sequencer.setSequence(sequence);
+      } catch(InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
+      sequencer.setMicrosecondPosition(time);
+      sequencer.setTempoInMPQ(tempo);
+      sequencer.start();
+      isPlaying = true;
+      return;
+    }
+  }
+
+
   /**
    * To set the receiver for the MIDI.
    * @param rec the receiver it should be set to
@@ -198,8 +231,13 @@ public class AudibleView implements IMusicView {
   public void acceptMetaListener(MetaEventListener meta) {
     this.sequencer.addMetaEventListener(meta);
   }
+
   public long getBeat() {
     return this.sequencer.getMicrosecondPosition()/100;
+  }
+
+  public boolean getPaused() {
+    return (!this.isPlaying);
   }
 }
 

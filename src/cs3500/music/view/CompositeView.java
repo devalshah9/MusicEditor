@@ -41,6 +41,8 @@ public class CompositeView implements IGuiView {
     this.audibleView.acceptMetaListener(listener);
   }
 
+
+
   @Override
   public void goBeginSong() {
 
@@ -73,7 +75,7 @@ public class CompositeView implements IGuiView {
 
   @Override
   public void pausePlay() {
-
+    this.audibleView.pausePlay();
   }
 
   @Override
@@ -99,8 +101,8 @@ public class CompositeView implements IGuiView {
   }
 
   @Override
-  public void refresh() {
-    this.visualView.refresh();
+  public void refresh(boolean paused) {
+    this.visualView.refresh(paused);
   }
 
   @Override
@@ -116,5 +118,9 @@ public class CompositeView implements IGuiView {
   @Override
   public AudibleView getAudible() {
     return this.audibleView;
+  }
+
+  @Override public boolean getPaused() {
+    return (this.audibleView.getPaused());
   }
 }
