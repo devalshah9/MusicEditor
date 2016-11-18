@@ -72,6 +72,11 @@ public class CompositeView implements IGuiView {
   }
 
   @Override
+  public void pausePlay() {
+
+  }
+
+  @Override
   public void initialize() {
 
   }

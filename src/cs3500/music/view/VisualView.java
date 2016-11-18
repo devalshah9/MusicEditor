@@ -121,6 +121,11 @@ public class VisualView extends JFrame implements IGuiView {
     scrollNotesPane.getVerticalScrollBar().setValue(currentPosition - 100);
   }
 
+  @Override
+  public void pausePlay() {
+
+  }
+
   public double getDimensionX() {
     return this.getPreferredSize().getWidth();
   }
@@ -141,10 +146,11 @@ public class VisualView extends JFrame implements IGuiView {
     this.notesPanel.repaint();
     this.repaint();
     // scroll the bar when red line reaches end of panel
-    if (notesPanel.redLinePos % (10 * notesPanel.boxWidth) == 0) {
-      int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
-      scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + notesPanel.boxWidth * 10);
-    }
+//    if (notesPanel.redLinePos % (30) == 0) {
+//      int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+//      scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 30);
+//    }
+//    System.out.println(notesPanel.redLinePos + " refresh");
   }
 
   @Override
@@ -160,11 +166,13 @@ public class VisualView extends JFrame implements IGuiView {
   @Override
   public void setMouseListener(MouseListener mouse) {
     this.mouse = mouse;
+    this.notesPanel.addMouseListener(mouse);
   }
 
   @Override
   public void setKeyboardListener(KeyListener keys) {
     this.keys = keys;
+    this.notesPanel.addKeyListener(keys);
   }
 
   @Override

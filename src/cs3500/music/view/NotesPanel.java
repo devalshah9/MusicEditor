@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import cs3500.music.commons.Note;
@@ -74,6 +76,7 @@ public class NotesPanel extends JPanel {
                 boxHeight * (numberOfDistinctNotes + 1), n * boxWidth / measureLength, 0);
       }
       redLinePos = (n * boxWidth / measureLength);
+      //System.out.println(redLinePos);
     }
 
     gimg.setColor(Color.BLACK);
@@ -100,10 +103,6 @@ public class NotesPanel extends JPanel {
       }
     }
     gimg.setTransform(originalTransform);
-  }
-
-  public int getRedLinePos() {
-    return redLinePos;
   }
 
   public void setBeat(int beat) {

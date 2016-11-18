@@ -80,6 +80,8 @@ public class MusicController implements IMusicController, ActionListener {
 
   Runnable scrollDown = () -> view.scrollDown();
 
+  Runnable pausePlay = () -> view.pausePlay();
+
   Runnable addRest = () -> editor.addRest();
 
   Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
@@ -116,8 +118,7 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.TYPED);
 
-    this.keyboardHandler = keyboardHandler;
-
+    keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.TYPED);
   }
 
   @Override
@@ -129,8 +130,7 @@ public class MusicController implements IMusicController, ActionListener {
   @Override
   public void createMouseHandler() {
     mouseHandler = new MouseHandler();
-    mouseHandler.installRunnable("Click", toggleNote,
-            MouseHandler.ActionType.CLICKED);
+    mouseHandler.installRunnable(toggleNote);
   }
 
 
@@ -144,6 +144,7 @@ public class MusicController implements IMusicController, ActionListener {
     return y;
   }
 
+  @Override
   public void onClick(int x, int y) {
     Note noteClicked;
     Pitch pitchClicked;
@@ -175,6 +176,9 @@ public class MusicController implements IMusicController, ActionListener {
     int boxHeight = 30;
     int boxWidth = 120;
 
+    x = x / 30 - 1;
+    y = (newList.size() * 30 - y) / 30;
+
     pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
     octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
 
@@ -183,12 +187,6 @@ public class MusicController implements IMusicController, ActionListener {
     beatClicked = x - x % boxWidth / boxWidth + 1;
 
     // check whether where you clicked is a note or empty by iterating through all the notes in song
-//    for (Note n : (List<Note>) (editor.allNotes())) {
-//      // if note - check if its a head, then remove, or if its a sustain - make it a head
-//      if (n.getOctave() == octaveClicked && n.getPitch() == pitchClicked && beatAtNote == beatClicked) {
-//
-//      }
-//    }
     Note currNote = new Note(pitchClicked, octaveClicked, false, 0, 0);
     if (viewModel.getNotes().containsKey(beatClicked)) {
       if (viewModel.getNotes().get(beatClicked).contains(currNote)) {

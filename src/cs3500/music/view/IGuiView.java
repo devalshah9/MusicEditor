@@ -32,6 +32,8 @@ public interface IGuiView extends IMusicView {
 
   void scrollDown();
 
+  void pausePlay();
+
   double getDimensionX();
 
   double getDimensionY();
