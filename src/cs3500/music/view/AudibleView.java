@@ -41,6 +41,7 @@ public class AudibleView implements IMusicView {
   private boolean isPlaying;
   private int tempo;
   private long time;
+  private IViewModel model;
 
   /**
    * Constructor for an Audible view.
@@ -95,6 +96,7 @@ public class AudibleView implements IMusicView {
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
     Timer timer = new Timer();
+    this.model = model;
     track = sequence.createTrack();
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
@@ -130,6 +132,58 @@ public class AudibleView implements IMusicView {
     sequencer.start();
     isPlaying = true;
     timer.schedule(new TimeTask(), totalMs);
+  }
+
+  public void refresh(boolean paused)
+          throws InvalidMidiDataException {
+    time = sequencer.getMicrosecondPosition();
+    int currTempo = tempo;
+    Sequencer tempSequencer = null;
+    Sequence tempSequence = null;
+
+
+    try {
+      tempSequencer = MidiSystem.getSequencer();
+      tempSequence = new Sequence(Sequence.PPQ, 4);
+      tempSequencer.open();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    this.sequencer = tempSequencer;
+    this.sequence = tempSequence;
+    Timer timer = new Timer();
+    track = sequence.createTrack();
+    TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
+    int endBeat = model.getEndBeat();
+    double bpm = 60000000 / tempo;
+    long totalMs = (long) (endBeat / bpm * 60000);
+    for (int n = 0; n < endBeat; n++) {
+      if (notes.containsKey(n)) {
+        ArrayList<Note> currNotes = notes.get(n);
+        for (int i = 0; i < currNotes.size(); i++) {
+          Note currNote = currNotes.get(i);
+          if (currNote.getbeginningOfNote()) {
+            int duration = model.getNoteDuration(currNote, n);
+            track.add(this.createStartNote(currNote, duration, tempo, n));
+            track.add(this.createEndNote(currNote, duration, tempo, n));
+          }
+        }
+      }
+    }
+    for (int n = 0; n < model.getEndBeat(); n++) {
+      byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
+      MidiEvent midiEvent = new MidiEvent(
+              new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);
+      track.add(midiEvent);
+    }
+    try {
+      sequencer.setSequence(sequence);
+    } catch (InvalidMidiDataException e) {
+      e.printStackTrace();
+    }
+    this.tempo = tempo;
+    sequencer.setTempoInMPQ(tempo);
+    sequencer.setMicrosecondPosition(time);
   }
 
   class TimeTask extends TimerTask {

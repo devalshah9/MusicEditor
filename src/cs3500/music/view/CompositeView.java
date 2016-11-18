@@ -103,6 +103,13 @@ public class CompositeView implements IGuiView {
   @Override
   public void refresh(boolean paused) {
     this.visualView.refresh(paused);
+    if(paused) {
+      try {
+        this.audibleView.refresh(paused);
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   @Override

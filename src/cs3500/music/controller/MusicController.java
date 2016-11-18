@@ -148,71 +148,73 @@ public class MusicController implements IMusicController, ActionListener {
 
   @Override
   public void onClick(int x, int y) {
-    Note noteClicked;
-    Pitch pitchClicked;
-    Octave octaveClicked;
-    int beatClicked;
-    double viewDimensionX = this.view.getDimensionX();
-    double viewDimensionY = this.view.getDimensionY();
+    if(this.view.getPaused()) {
+      Note noteClicked;
+      Pitch pitchClicked;
+      Octave octaveClicked;
+      int beatClicked;
+      double viewDimensionX = this.view.getDimensionX();
+      double viewDimensionY = this.view.getDimensionY();
 
-    // convert the x and y into a frequency and beat number to create a note
+      // convert the x and y into a frequency and beat number to create a note
 
-    // FREQUENCY
+      // FREQUENCY
 
-    ArrayList<Note> newNotes = new ArrayList<>();
-    for (Octave oct : Octave.values()) {
-      for (Pitch pit : Pitch.values()) {
-        if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
-          break;
-        }
-        newNotes.add(new Note(pit, oct, false, 0, 0));
-      }
-    }
-    Note highestNote = viewModel.getHighestNote();
-    Note lowestNote = viewModel.getLowestNote();
-    int lowestIndex = newNotes.indexOf(lowestNote);
-    int highestIndex = newNotes.indexOf(highestNote);
-    int measureLength = viewModel.getMeasureLength();
-    int endBeat = viewModel.getEndBeat();
-    java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
-    int boxHeight = 30;
-    int boxWidth = 120;
-
-    x = x / 30 - 1;
-    y = (newList.size() * 30 - y) / 30;
-
-    pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
-    octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
-
-    int widthScale = 30;
-
-    beatClicked = x - x % boxWidth / boxWidth + 1;
-
-    // check whether where you clicked is a note or empty by iterating through all the notes in song
-    Note currNote = new Note(pitchClicked, octaveClicked, false, 0, 0);
-    if (viewModel.getNotes().containsKey(beatClicked)) {
-      if (viewModel.getNotes().get(beatClicked).contains(currNote)) {
-        int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
-        Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
-        if(prevNote.getbeginningOfNote()) {
-          removeNote(prevNote, beatClicked);
-        }
-        else {
-          prevNote.toggleNote();
+      ArrayList<Note> newNotes = new ArrayList<>();
+      for (Octave oct : Octave.values()) {
+        for (Pitch pit : Pitch.values()) {
+          if (oct.equals(Octave.TEN) && pit.equals(Pitch.G)) {
+            break;
+          }
+          newNotes.add(new Note(pit, oct, false, 0, 0));
         }
       }
-    }
+      Note highestNote = viewModel.getHighestNote();
+      Note lowestNote = viewModel.getLowestNote();
+      int lowestIndex = newNotes.indexOf(lowestNote);
+      int highestIndex = newNotes.indexOf(highestNote);
+      int measureLength = viewModel.getMeasureLength();
+      int endBeat = viewModel.getEndBeat();
+      java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
+      int boxHeight = 30;
+      int boxWidth = 120;
 
-    // if empty - check if note should be added as head or sustain by checking if there is a
-    // note on previous beat
-    for (Note n : (List<Note>) (editor.getBeats(0).get(beatClicked - 1))) {
-      if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
-        addSustain(pitchClicked, octaveClicked, beatClicked);
-      } else {
-        addHead(pitchClicked, octaveClicked, beatClicked);
+      x = x / 30 - 1;
+      y = (newList.size() * 30 - y) / 30;
+
+      pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
+      octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
+
+      int widthScale = 30;
+
+      beatClicked = x - x % boxWidth / boxWidth + 1;
+
+      // check whether where you clicked is a note or empty by iterating through all the notes in song
+      Note currNote = new Note(pitchClicked, octaveClicked, false, 1, 0);
+      if (viewModel.getNotes().containsKey(beatClicked)) {
+        if (viewModel.getNotes().get(beatClicked).contains(currNote)) {
+          int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
+          Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
+          if (prevNote.getbeginningOfNote()) {
+            removeNote(prevNote, beatClicked);
+          } else {
+            prevNote.toggleNote();
+          }
+        }
       }
+
+      // if empty - check if note should be added as head or sustain by checking if there is a
+      // note on previous beat
+      for (Note n : (List<Note>) (editor.getBeats(0).get(beatClicked - 1))) {
+        if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
+          addSustain(pitchClicked, octaveClicked, beatClicked);
+        } else {
+          addHead(pitchClicked, octaveClicked, beatClicked);
+        }
+      }
+      view.refresh(view.getPaused());
+      view.setMetaListener(this.metaEventHandler);
     }
-    view.refresh(view.getPaused());
   }
 
   /**
@@ -222,7 +224,7 @@ public class MusicController implements IMusicController, ActionListener {
    * @param beat the beat that its at
    */
   private void addHead(Pitch pitch, Octave octave, int beat) {
-    editor.addSingleNote(0, new Note(pitch, octave, true, 0, 0), 1, beat);
+    editor.addSingleNote(0, new Note(pitch, octave, true, 1, 0), 1, beat);
   }
 
   /**
@@ -232,7 +234,7 @@ public class MusicController implements IMusicController, ActionListener {
    * @param beat the beat that its at
    */
   private void addSustain(Pitch pitch, Octave octave, int beat) {
-    editor.addSingleNote(0, new Note(pitch, octave, false, 0, 0), 1, beat);
+    editor.addSingleNote(0, new Note(pitch, octave, false, 1, 0), 1, beat);
   }
 
   /**

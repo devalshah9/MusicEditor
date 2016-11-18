@@ -32,6 +32,7 @@ public class VisualView extends JFrame implements IGuiView {
   KeyListener keys;
   IViewModel viewModel;
   private int beat;
+  private boolean paused;
 
   /**
    * Constructor for a GUI view that takes in the ViewModel that holds in all information of the
@@ -182,6 +183,10 @@ public class VisualView extends JFrame implements IGuiView {
   @Override
   public void setMetaListener(MetaEventListener listener) {
 
+  }
+
+  public void setPaused(boolean paused) {
+    this.paused = paused;
   }
 
   @Override
