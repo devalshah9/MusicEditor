@@ -146,11 +146,11 @@ public class VisualView extends JFrame implements IGuiView {
     this.notesPanel.repaint();
     this.repaint();
     // scroll the bar when red line reaches end of panel
-//    if (notesPanel.redLinePos % (30) == 0) {
-//      int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
-//      scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 30);
-//    }
-//    System.out.println(notesPanel.redLinePos + " refresh");
+    if (notesPanel.redLinePos % (30) == 0) {
+      int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
+      scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 30);
+    }
+    System.out.println(notesPanel.redLinePos + " refresh");
   }
 
   @Override

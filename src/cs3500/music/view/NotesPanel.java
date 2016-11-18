@@ -94,7 +94,7 @@ public class NotesPanel extends JPanel {
           if (currNote.getbeginningOfNote()) {
             gimg.setColor(Color.BLACK);
           } else {
-            gimg.setColor(Color.RED);
+            gimg.setColor(Color.GREEN);
           }
           int leftCornerX = (boxWidth / measureLength) * n;
           int leftCornerY = boxHeight * (currNote.notesBetweenTwoNotes(lowestNote));
