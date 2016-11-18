@@ -81,9 +81,6 @@ public class CompositeView implements IGuiView {
     visualView.renderSong(model, tempo);
     tempo = tempo * 4;
     audibleView.renderSong(model, tempo);
-    while(true) {
-      System.out.println(audibleView.getBeat());
-    }
 
   }
 

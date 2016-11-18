@@ -113,8 +113,7 @@ public class AudibleView implements IMusicView {
     for (int n = 0; n < model.getEndBeat(); n++) {
       byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
       MidiEvent midiEvent = new MidiEvent(
-              new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(),
-                      bytes.length), n);
+              new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);
       track.add(midiEvent);
     }
     try {
