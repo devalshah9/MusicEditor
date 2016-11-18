@@ -18,17 +18,17 @@ import cs3500.music.model.IViewModel;
 
 public class NotesPanel extends JPanel {
   private IViewModel viewModel;
-  private int time;
+  private int beat;
   JPanel p = new JPanel();
 
   /**
    * The constructor for the notes panel.
    * @param viewModel the view model to work with
    */
-  public NotesPanel(IViewModel viewModel, int time) {
+  public NotesPanel(IViewModel viewModel, int beat) {
     super();
     this.viewModel = viewModel;
-    this.time = time;
+    this.beat = beat;
     p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
   }
 
@@ -63,6 +63,16 @@ public class NotesPanel extends JPanel {
       gimg.setColor(Color.BLACK);
       gimg.drawLine((n * boxWidth), boxHeight * (numberOfDistinctNotes + 1), n * boxWidth, 0);
     }
+
+    for (int n = 0; n <= endBeat; n++) {
+      if (n == this.beat) {
+        gimg.setColor(Color.RED);
+        gimg.drawLine((n * boxWidth/measureLength),
+                boxHeight * (numberOfDistinctNotes + 1), n * boxWidth/measureLength, 0);
+      }
+    }
+
+    gimg.setColor(Color.BLACK);
     for (int n = 0; n <= numberOfDistinctNotes + 1; n++) {
       //horizontal lines
       double endDraw = (endBeat / measureLength + remainder) * boxWidth;
@@ -86,6 +96,10 @@ public class NotesPanel extends JPanel {
       }
     }
     gimg.setTransform(originalTransform);
+  }
+
+  public void setBeat(int beat) {
+    this.beat = beat;
   }
 }
 

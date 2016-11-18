@@ -4,14 +4,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
+import javax.swing.*;
 
+import cs3500.music.controller.MusicController;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 import cs3500.music.model.ViewModel;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicBuilder;
 import cs3500.music.util.MusicReader;
+import cs3500.music.view.AudibleView;
+import cs3500.music.view.CompositeView;
+import cs3500.music.view.IGuiView;
 import cs3500.music.view.IMusicView;
+import cs3500.music.view.VisualView;
 
 /**
  * This is the main runtime class of the entire editor. To use it, the main method must be run
@@ -63,15 +69,26 @@ public class MusicEditor {
     } else if (args[1].equals("midi")) {
       view = IMusicView.create("midi", model);
     } else if (args[1].equals("composite")) {
-      view = IMusicView.create("composite", model);
+      IGuiView visual = new VisualView(model);
+      AudibleView audio = new AudibleView(model);
+      IGuiView newview = new CompositeView(visual, audio);
+      MusicController controller = new MusicController(editor, newview);
+      try {
+        newview.initialize();
+        newview.renderSong(model, model.getTempo());
+      } catch(InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
     }else {
       throw new InvalidMidiDataException("Invalid input!");
     }
-    try {
-      view.initialize();
-      view.renderSong(model, model.getTempo());
-    } catch (InvalidMidiDataException e) {
-      e.printStackTrace();
+    if (!args[1].equals("composite")) {
+      try {
+        view.initialize();
+        view.renderSong(model, model.getTempo());
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
     }
   }
 }

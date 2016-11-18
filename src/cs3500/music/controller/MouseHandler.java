@@ -23,7 +23,7 @@ public class MouseHandler implements MouseListener {
 
   Map<String, Runnable> mouseClicks;
 
-  public void MouseHandler() {
+  public MouseHandler() {
     this.x = -1;
     this.y = -1;
     mouseClicks = new HashMap<String,Runnable>();

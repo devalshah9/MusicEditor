@@ -26,6 +26,7 @@ public class MusicController implements IMusicController, ActionListener {
   IGuiView view;
   KeyboardHandler keyboardHandler;
   MouseHandler mouseHandler;
+  MetaEventHandler metaEventHandler;
   //boolean isInAddMode = false;
   int clickLocation = 0;
   IViewModel viewModel;
@@ -34,19 +35,27 @@ public class MusicController implements IMusicController, ActionListener {
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
     this.view = view;
-    this.createMouseHandler();
     this.createKeyboardHandler();
+    this.createMouseHandler();
+    this.createMetaHandler();
     view.setListeners(mouseHandler, keyboardHandler);
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
 
-    class TimingTask extends TimerTask {
-      public void run() {
-        viewModel.incrementBeat();
-        view.refresh();
-      }
-    }
-
-    timer.scheduleAtFixedRate(new TimingTask(), viewModel.getTempo(), viewModel.getCurrBeat());
+//    class TimingTask extends TimerTask {
+//      public void run() {
+//        viewModel.incrementBeat();
+//        view.setBeat();
+//        view.refresh();
+//      }
+//    }
+//    int endBeat = viewModel.getEndBeat();
+//    int tempo = viewModel.getTempo();
+//    double bpm = 60000000 / tempo;
+//    long totalMs = (long) (endBeat / bpm * 60000);
+//    long msPerStep = (long) (totalMs/endBeat * 0.99);
+//    int a = viewModel.getTempo();
+//    int b = viewModel.getCurrBeat();
+//    timer.scheduleAtFixedRate(new TimingTask(), 0, msPerStep);
   }
 
   //Runnable addNoteStart = () -> isInAddMode = true;
@@ -73,9 +82,11 @@ public class MusicController implements IMusicController, ActionListener {
 
   Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
 
+  Runnable refreshView = () -> view.refresh();
+
   @Override
   public void createKeyboardHandler() {
-    KeyboardHandler keyboardHandler = new KeyboardHandler();
+    keyboardHandler = new KeyboardHandler();
 
     // to jump to the beginning of the song, type Q since there is no Home button
     keyboardHandler.installRunnable(KeyEvent.VK_Q, goBeg, KeyboardHandler.ActionType.TYPED);
@@ -103,13 +114,21 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.TYPED);
 
-    mouseHandler.installRunnable("Click", toggleNote,
-            MouseHandler.ActionType.CLICKED);
+    this.keyboardHandler = keyboardHandler;
+
+  }
+
+  @Override
+  public void createMetaHandler() {
+    metaEventHandler = new MetaEventHandler(view.getVisual(), view.getAudible());
+    metaEventHandler.installRunnable(refreshView);
   }
 
   @Override
   public void createMouseHandler() {
-    MouseHandler mouseHandler = new MouseHandler();
+    mouseHandler = new MouseHandler();
+    mouseHandler.installRunnable("Click", toggleNote,
+            MouseHandler.ActionType.CLICKED);
   }
 
 

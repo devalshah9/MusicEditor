@@ -1,21 +1,29 @@
 package cs3500.music.view;
 
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaEventListener;
+import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
+import javax.sound.midi.Track;
 
 import cs3500.music.commons.Note;
+import cs3500.music.controller.MetaEventHandler;
 import cs3500.music.model.IViewModel;
 
 /**
@@ -25,22 +33,29 @@ import cs3500.music.model.IViewModel;
 public class AudibleView implements IMusicView {
   private Synthesizer synth;
   private Receiver receiver;
+
+  private Sequencer sequencer;
+  private Sequence sequence;
+  private Track track;
+  private MetaEventListener listener;
+
   /**
    * Constructor for an Audible view.
    * @param viewModel the view model to work with
    */
   public AudibleView(IViewModel viewModel) {
-    Synthesizer tempSynth = null;
-    Receiver tempRec = null;
+    Sequencer tempSequencer = null;
+    Sequence tempSequence = null;
+
     try {
-      tempSynth = MidiSystem.getSynthesizer();
-      tempRec = tempSynth.getReceiver();
-      tempSynth.open();
-    } catch (MidiUnavailableException e) {
+      tempSequencer = MidiSystem.getSequencer();
+      tempSequence = new Sequence(Sequence.PPQ, 4);
+      tempSequencer.open();
+    } catch (Exception e) {
       e.printStackTrace();
     }
-    this.synth = tempSynth;
-    this.receiver = tempRec;
+    this.sequencer = tempSequencer;
+    this.sequence = tempSequence;
   }
 
   /**
@@ -76,7 +91,8 @@ public class AudibleView implements IMusicView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
-
+    Timer timer = new Timer();
+    track = sequence.createTrack();
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
     int endBeat = model.getEndBeat();
     double bpm = 60000000 / tempo;
@@ -88,11 +104,28 @@ public class AudibleView implements IMusicView {
           Note currNote = currNotes.get(i);
           if (currNote.getbeginningOfNote()) {
             int duration = model.getNoteDuration(currNote, n);
-            playNote(currNote, duration, tempo, n);
+            track.add(this.createStartNote(currNote, duration, tempo, n));
+            track.add(this.createEndNote(currNote, duration, tempo, n));
           }
         }
       }
     }
+    for (int n = 0; n < model.getEndBeat(); n++) {
+      byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
+      MidiEvent midiEvent = new MidiEvent(
+              new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(),
+                      bytes.length), n);
+      track.add(midiEvent);
+    }
+    try {
+      sequencer.setSequence(sequence);
+    } catch (InvalidMidiDataException e) {
+      e.printStackTrace();
+    }
+    sequencer.setTempoInMPQ(tempo);
+    sequencer.setMicrosecondPosition(0);
+    sequencer.start();
+    timer.schedule(new TimeTask(), totalMs);
   }
 
   class TimeTask extends TimerTask {
@@ -109,7 +142,7 @@ public class AudibleView implements IMusicView {
    * @param startBeat the starting beat of the note
    * @throws InvalidMidiDataException if the MIDI data is invalid
    */
-  public void playNote(Note note, int duration, int tempo, int startBeat)
+  private void createNote(Note note, int duration, int tempo, int startBeat)
           throws InvalidMidiDataException {
     int endBeat = startBeat + duration;
     int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
@@ -125,6 +158,31 @@ public class AudibleView implements IMusicView {
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + endBeat);
   }
 
+  private MidiEvent createStartNote(Note note, int duration, int tempo, int startBeat)
+          throws InvalidMidiDataException {
+    int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
+    int instrument = note.getInstrument() - 1;
+    int volume = note.getVolume();
+    //startBeat = startBeat * tempo;
+    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument,
+            frequency, volume);
+    return new MidiEvent(start, startBeat);
+  }
+
+  private MidiEvent createEndNote(Note note, int duration, int tempo, int startBeat)
+  throws InvalidMidiDataException {
+    int endBeat = (startBeat + duration);
+    int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
+    int instrument = note.getInstrument() - 1;
+    int volume = note.getVolume();
+    startBeat = startBeat * tempo;
+    MidiMessage start = new ShortMessage(ShortMessage.NOTE_OFF, instrument,
+            frequency, volume);
+    return new MidiEvent(start, endBeat);
+
+  }
+
+
   @Override
   public void initialize() {
     // does not do anything for MIDI
@@ -138,9 +196,11 @@ public class AudibleView implements IMusicView {
     this.receiver = rec;
   }
 
-  public long getTime() {
-    return this.synth.getMicrosecondPosition();
+  public void acceptMetaListener(MetaEventHandler meta) {
+    this.listener = meta;
   }
-
+  public long getBeat() {
+    return this.sequencer.getMicrosecondPosition()/100;
+  }
 }
 

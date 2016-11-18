@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 
 import javax.sound.midi.InvalidMidiDataException;
 
+import cs3500.music.controller.MetaEventHandler;
 import cs3500.music.model.IViewModel;
 
 /**
@@ -16,16 +17,16 @@ import cs3500.music.model.IViewModel;
  */
 public class CompositeView implements IGuiView {
   IGuiView visualView;
-  IMusicView audibleView;
+  AudibleView audibleView;
 
-  public CompositeView(IGuiView visualView, IMusicView audibleView) {
+  public CompositeView(IGuiView visualView, AudibleView audibleView) {
     this.visualView = visualView;
     this.audibleView = audibleView;
   }
 
 
   @Override
-  public void setListeners(MouseListener clicks, KeyListener keys) {
+  public void setListeners(MouseListener clicks, KeyListener keys, MetaEventHandler meta) {
 
   }
 
@@ -67,7 +68,11 @@ public class CompositeView implements IGuiView {
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
     visualView.renderSong(model, tempo);
+    tempo = tempo * 4;
     audibleView.renderSong(model, tempo);
+    while(true) {
+      System.out.println(audibleView.getBeat());
+    }
 
   }
 
@@ -83,6 +88,24 @@ public class CompositeView implements IGuiView {
 
   @Override
   public void refresh() {
-
+    this.visualView.refresh();
   }
+
+  @Override
+  public void setBeat() {
+    this.visualView.setBeat();
+  }
+
+  @Override
+  public VisualView getVisual() {
+    return (VisualView) this.visualView;
+  }
+
+  @Override
+  public AudibleView getAudible() {
+    return this.audibleView;
+  }
+
+
+
 }

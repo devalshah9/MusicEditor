@@ -11,6 +11,8 @@ public interface IMusicController {
 
   void createMouseHandler();
 
+  void createMetaHandler();
+
   void onClick(int x, int y);
 
 
