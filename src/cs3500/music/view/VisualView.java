@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import javax.sound.midi.MetaEventListener;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
@@ -85,13 +86,6 @@ public class VisualView extends JFrame implements IGuiView {
     }
   }
 
-  @Override
-  public void setListeners(MouseListener clicks, KeyListener keys) {
-    this.keys = keys;
-    this.mouse = clicks;
-    notesPanel.addMouseListener(clicks);
-    notesPanel.addKeyListener(keys);
-  }
 
 
   @Override
@@ -158,6 +152,21 @@ public class VisualView extends JFrame implements IGuiView {
   @Override
   public AudibleView getAudible() {
     throw new IllegalArgumentException("No view here.");
+  }
+
+  @Override
+  public void setMouseListener(MouseListener mouse) {
+    this.mouse = mouse;
+  }
+
+  @Override
+  public void setKeyboardListener(KeyListener keys) {
+    this.keys = keys;
+  }
+
+  @Override
+  public void setMetaListener(MetaEventListener listener) {
+
   }
 
 }

@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaEventListener;
 
 import cs3500.music.controller.MetaEventHandler;
 import cs3500.music.model.IViewModel;
@@ -26,8 +27,18 @@ public class CompositeView implements IGuiView {
 
 
   @Override
-  public void setListeners(MouseListener clicks, KeyListener keys, MetaEventHandler meta) {
+  public void setMouseListener(MouseListener mouse) {
+    this.visualView.setMouseListener(mouse);
+  }
 
+  @Override
+  public void setKeyboardListener(KeyListener keys) {
+    this.visualView.setKeyboardListener(keys);
+  }
+
+  @Override
+  public void setMetaListener(MetaEventListener listener) {
+    this.audibleView.acceptMetaListener(listener);
   }
 
   @Override

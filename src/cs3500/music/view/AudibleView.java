@@ -196,8 +196,8 @@ public class AudibleView implements IMusicView {
     this.receiver = rec;
   }
 
-  public void acceptMetaListener(MetaEventHandler meta) {
-    this.listener = meta;
+  public void acceptMetaListener(MetaEventListener meta) {
+    this.sequencer.addMetaEventListener(meta);
   }
   public long getBeat() {
     return this.sequencer.getMicrosecondPosition()/100;

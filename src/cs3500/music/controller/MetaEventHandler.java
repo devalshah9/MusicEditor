@@ -27,6 +27,6 @@ public class MetaEventHandler implements MetaEventListener {
   }
 
   public void installRunnable(Runnable r) {
-    this.runnable = runnable;
+    this.runnable = r;
   }
 }

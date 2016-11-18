@@ -38,7 +38,9 @@ public class MusicController implements IMusicController, ActionListener {
     this.createKeyboardHandler();
     this.createMouseHandler();
     this.createMetaHandler();
-    view.setListeners(mouseHandler, keyboardHandler);
+    view.setKeyboardListener(keyboardHandler);
+    view.setMouseListener(mouseHandler);
+    view.setMetaListener(metaEventHandler);
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
 
 //    class TimingTask extends TimerTask {
