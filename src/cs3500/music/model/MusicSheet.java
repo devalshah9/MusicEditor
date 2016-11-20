@@ -73,20 +73,20 @@ public class MusicSheet {
       if (beats.containsKey(beat + n)) {
         if (beats.get(beat + n).contains(note)) {
           int oldIndex = beats.get(beat + n).indexOf(note);
-          if (note.getbeginningOfNote() && beats.get(beat + n).get(oldIndex).getbeginningOfNote()) {
+          if (note.isBeginningOfNote() && beats.get(beat + n).get(oldIndex).isBeginningOfNote()) {
             continue; //This is the case of this being a begin note and a begin note existing here.
           }
-          if (note.getbeginningOfNote()
-                  && !(beats.get(beat + n).get(oldIndex).getbeginningOfNote())) {
+          if (note.isBeginningOfNote()
+                  && !(beats.get(beat + n).get(oldIndex).isBeginningOfNote())) {
             beats.get(beat + n).set(oldIndex, note);
             continue; //This is the case of a begin note starting where there was a sustain.
           }
-          if (!note.getbeginningOfNote()
-                  && beats.get(beat + n).get(oldIndex).getbeginningOfNote()) {
+          if (!note.isBeginningOfNote()
+                  && beats.get(beat + n).get(oldIndex).isBeginningOfNote()) {
             break; //This is the case of a sustain reaching a begin note and terminating the add.
           }
-          if (!note.getbeginningOfNote()
-                  && !(beats.get(beat + n).get(oldIndex).getbeginningOfNote())) {
+          if (!note.isBeginningOfNote()
+                  && !(beats.get(beat + n).get(oldIndex).isBeginningOfNote())) {
             continue; //This is the case of a sustain being put on a sustain.
           }
 
@@ -122,7 +122,7 @@ public class MusicSheet {
     else {
       int index = this.beats.get(beginningBeat).indexOf(note);
       Note thisNote = this.beats.get(beginningBeat).get(index);
-      if (!thisNote.getbeginningOfNote()) {
+      if (!thisNote.isBeginningOfNote()) {
         deleteEntireNote(note, beginningBeat - 1);
         return;
       }
@@ -156,7 +156,7 @@ public class MusicSheet {
         if (this.beats.containsKey(beginningBeat + 1)) {
           if (this.beats.get(beginningBeat + 1).contains(note)) {
             int nextIndex = this.beats.get(beginningBeat + 1).indexOf(note);
-            if (!(this.beats.get(beginningBeat + 1).get(nextIndex).getbeginningOfNote())) {
+            if (!(this.beats.get(beginningBeat + 1).get(nextIndex).isBeginningOfNote())) {
               beginningBeat++;
             } else {
               noteNotOver = false;
@@ -276,7 +276,7 @@ public class MusicSheet {
     else {
       int index = this.beats.get(beat).indexOf(note);
       Note thisNote = this.beats.get(beat).get(index);
-      if (!thisNote.getbeginningOfNote()) {
+      if (!thisNote.isBeginningOfNote()) {
         getBeginningOfNote(note, beat - 1);
       }
       else {
@@ -301,17 +301,17 @@ public class MusicSheet {
     int length = 0;
     int n = 1;
     boolean noteNotOver = true;
-    if (note.getbeginningOfNote()) {
+    if (note.isBeginningOfNote()) {
       if (this.beats.get(beat).contains(note)) {
         int index = beats.get(beat).indexOf(note);
-        if (!(this.beats.get(beat).get(index).getbeginningOfNote())) {
+        if (!(this.beats.get(beat).get(index).isBeginningOfNote())) {
           throw new IllegalArgumentException("Must be beginning of note.");
         }
         do {
           if (this.beats.containsKey(beat + n)) {
             if (this.beats.get(beat + n).contains(note)) {
               index = beats.get(beat + n).indexOf(note);
-              if (this.beats.get(beat + n).get(index).getbeginningOfNote()) {
+              if (this.beats.get(beat + n).get(index).isBeginningOfNote()) {
                 return n;
               } else {
                 n++;
@@ -396,7 +396,7 @@ public class MusicSheet {
         for (int j = 0; j < printNotes.size(); j++) {
           if (this.getBeats().get(beatNumbers.get(n)).contains(printNotes.get(j))) {
             int indexNote = this.getBeats().get(beatNumbers.get(n)).indexOf(printNotes.get(j));
-            if (this.getBeats().get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
+            if (this.getBeats().get(beatNumbers.get(n)).get(indexNote).isBeginningOfNote()) {
               result.append("X");
               result.append("    ");
             } else {

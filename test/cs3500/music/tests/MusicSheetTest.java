@@ -57,7 +57,7 @@ public class MusicSheetTest {
       assertEquals(true, info.get(n).contains(note3));
     }
     int indexOfStart = info.get(3).indexOf(note3);
-    assertEquals(true, info.get(3).get(indexOfStart).getbeginningOfNote());
+    assertEquals(true, info.get(3).get(indexOfStart).isBeginningOfNote());
   }
 
   @Test
@@ -66,7 +66,7 @@ public class MusicSheetTest {
     sheet.addNote(note3, 1, 3, true);
     TreeMap<Integer, ArrayList<Note>> info = sheet.getBeats();
     int indexOfStart = info.get(3).indexOf(note3);
-    assertEquals(false, info.get(3).get(indexOfStart).getbeginningOfNote());
+    assertEquals(false, info.get(3).get(indexOfStart).isBeginningOfNote());
 
   }
 
@@ -81,10 +81,10 @@ public class MusicSheetTest {
     }
     int indexOfStart = info.get(4).indexOf(note3);
     int indexOfPrev = info.get(3).indexOf(note3);
-    assertEquals(true, info.get(4).get(indexOfStart).getbeginningOfNote());
-    assertEquals(false, info.get(3).get(indexOfPrev).getbeginningOfNote());
+    assertEquals(true, info.get(4).get(indexOfStart).isBeginningOfNote());
+    assertEquals(false, info.get(3).get(indexOfPrev).isBeginningOfNote());
     //There is only note. It will be indexed the same place.
-    assertEquals(false, info.get(6).get(indexOfStart).getbeginningOfNote());
+    assertEquals(false, info.get(6).get(indexOfStart).isBeginningOfNote());
   }
 
   @Test

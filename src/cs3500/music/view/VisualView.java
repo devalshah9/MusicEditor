@@ -153,7 +153,6 @@ public class VisualView extends JFrame implements IGuiView {
       int currentPosition = scrollNotesPane.getHorizontalScrollBar().getValue();
       scrollNotesPane.getHorizontalScrollBar().setValue(currentPosition + 30);
     }
-    System.out.println(notesPanel.redLinePos + " refresh");
   }
 
 

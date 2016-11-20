@@ -95,7 +95,7 @@ public class ConsoleView implements IMusicView {
         for (int j = 0; j < printNotes.size(); j++) {
           if (viewModel.getNotes().get(beatNumbers.get(n)).contains(printNotes.get(j))) {
             int indexNote = viewModel.getNotes().get(beatNumbers.get(n)).indexOf(printNotes.get(j));
-            if (viewModel.getNotes().get(beatNumbers.get(n)).get(indexNote).getbeginningOfNote()) {
+            if (viewModel.getNotes().get(beatNumbers.get(n)).get(indexNote).isBeginningOfNote()) {
               result.append("X");
               result.append("    ");
             } else {

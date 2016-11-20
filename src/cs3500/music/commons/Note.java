@@ -68,7 +68,7 @@ public class Note implements Comparable<Note> {
    * Method that returns whether the note is a sustain or a begin note.
    * @return true if the note is a begin note and false if sustain.
    */
-  public boolean getbeginningOfNote() {
+  public boolean isBeginningOfNote() {
     return this.beginningOfNote;
   }
 
@@ -121,7 +121,7 @@ public class Note implements Comparable<Note> {
   }
 
   public void toggleNote() {
-    if(this.getbeginningOfNote()) {
+    if(this.isBeginningOfNote()) {
       this.beginningOfNote = false;
     }
     else {

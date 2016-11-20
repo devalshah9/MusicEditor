@@ -5,7 +5,6 @@ import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import cs3500.music.commons.Note;
@@ -91,7 +90,7 @@ public class NotesPanel extends JPanel {
         ArrayList<Note> currentNotes = notes.get(n);
         for (int i = 0; i < currentNotes.size(); i++) {
           Note currNote = currentNotes.get(i);
-          if (currNote.getbeginningOfNote()) {
+          if (currNote.isBeginningOfNote()) {
             gimg.setColor(Color.BLACK);
           } else {
             gimg.setColor(Color.GREEN);

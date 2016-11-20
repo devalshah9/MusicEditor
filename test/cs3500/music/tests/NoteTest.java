@@ -27,7 +27,7 @@ public class NoteTest {
   @Test
   public void getbeginningOfNoteTest() {
     Note note = new Note(Pitch.A, Octave.EIGHT, false, 0, 1);
-    assertEquals(false, note.getbeginningOfNote());
+    assertEquals(false, note.isBeginningOfNote());
   }
 
   @Test

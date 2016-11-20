@@ -70,7 +70,7 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
         Integer beat = (Integer) i.next();
         ArrayList<Note> currNotes = overlayInfo.get(beat);
         for (int n = 0; n < currNotes.size(); n++) {
-          if (currNotes.get(n).getbeginningOfNote()) {
+          if (currNotes.get(n).isBeginningOfNote()) {
             //If the note at this current beat is a beginning note, it uses the normal
             //implementation of adding notes which can be read in the interface.
             int duration = overlaySheet.getBeatDuration(currNotes.get(n), beat);
@@ -121,7 +121,7 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
         Integer beat = (Integer) i.next();
         ArrayList<Note> currNotes = nextInfo.get(beat);
         for (int n = 0; n < currNotes.size(); n++) {
-          if (currNotes.get(n).getbeginningOfNote()) {
+          if (currNotes.get(n).isBeginningOfNote()) {
             int duration = nextSheet.getBeatDuration(currNotes.get(n), beat);
             int newBeat = beat + endofBase;
             this.sheets.get(baseSheetIndex).addNote(currNotes.get(n), duration, newBeat, false);

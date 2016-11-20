@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
@@ -28,7 +27,6 @@ public class MusicController implements IMusicController, ActionListener {
   MouseHandler mouseHandler;
   MetaEventHandler metaEventHandler;
   //boolean isInAddMode = false;
-  int clickLocation = 0;
   IViewModel viewModel;
   Timer timer = new Timer();
 
@@ -42,31 +40,8 @@ public class MusicController implements IMusicController, ActionListener {
     view.setMouseListener(mouseHandler);
     view.setMetaListener(metaEventHandler);
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
-
-//    class TimingTask extends TimerTask {
-//      public void run() {
-//        viewModel.incrementBeat();
-//        view.setBeat();
-//        view.refresh();
-//      }
-//    }
-//    int endBeat = viewModel.getEndBeat();
-//    int tempo = viewModel.getTempo();
-//    double bpm = 60000000 / tempo;
-//    long totalMs = (long) (endBeat / bpm * 60000);
-//    long msPerStep = (long) (totalMs/endBeat * 0.99);
-//    int a = viewModel.getTempo();
-//    int b = viewModel.getCurrBeat();
-//    timer.scheduleAtFixedRate(new TimingTask(), 0, msPerStep);
   }
 
-  //Runnable addNoteStart = () -> isInAddMode = true;
-
-//  Runnable addNoteFreq = () -> {
-//    if (isInAddMode) {
-//
-//    }
-//  };
 
   Runnable goBeg = () -> view.goBeginSong();
 
@@ -92,34 +67,35 @@ public class MusicController implements IMusicController, ActionListener {
   public void createKeyboardHandler() {
     keyboardHandler = new KeyboardHandler();
 
-    // to jump to the beginning of the song, type Q since there is no Home button
+    // to jump to the beginning of the song, press Q since there is no Home button
     keyboardHandler.installRunnable(KeyEvent.VK_Q, goBeg, KeyboardHandler.ActionType.PRESSED);
 
-    // to jump to the end of the song, type P since there is no End button
+    // to jump to the end of the song, press P since there is no End button
     keyboardHandler.installRunnable(KeyEvent.VK_P, goEnd, KeyboardHandler.ActionType.PRESSED);
 
-    // to scroll right, type the right arrow key
+    // to scroll right, press the right arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_RIGHT, scrollRight,
             KeyboardHandler.ActionType.PRESSED);
 
-    // to scroll left, type the left arrow key
+    // to scroll left, press the left arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_LEFT, scrollLeft,
             KeyboardHandler.ActionType.PRESSED);
 
-    // to scroll up, type the up arrow key
+    // to scroll up, press the up arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_UP, scrollUp,
             KeyboardHandler.ActionType.PRESSED);
 
-    // to scroll down, type the down arrow key
+    // to scroll down, press the down arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_DOWN, scrollDown,
             KeyboardHandler.ActionType.PRESSED);
 
-    // to add an empty measure to the end of the piece, type M
+    // to add an empty measure to the end of the piece, press M
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.PRESSED);
 
     keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.TYPED);
 
+    // to pause the song, press space bar
     keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.PRESSED);
   }
 
@@ -149,7 +125,6 @@ public class MusicController implements IMusicController, ActionListener {
   @Override
   public void onClick(int x, int y) {
     if(this.view.getPaused()) {
-      Note noteClicked;
       Pitch pitchClicked;
       Octave octaveClicked;
       int beatClicked;
@@ -189,29 +164,49 @@ public class MusicController implements IMusicController, ActionListener {
 
       beatClicked = x - x % boxWidth / boxWidth + 1;
 
-      // check whether where you clicked is a note or empty by iterating through all the notes in song
-      Note currNote = new Note(pitchClicked, octaveClicked, false, 1, 0);
-      if (viewModel.getNotes().containsKey(beatClicked)) {
-        if (viewModel.getNotes().get(beatClicked).contains(currNote)) {
-          int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
-          Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
-          if (prevNote.getbeginningOfNote()) {
-            removeNote(prevNote, beatClicked);
+      // CHECK WHETHER CURRENT BOX IS EMPTY OR NOT
+      if (editor.getBeats(0).containsKey(beatClicked)) {
+        if (editor.getBeats(0).get(beatClicked).equals(new Note(pitchClicked, octaveClicked,
+                false, 0, 0))) {
+          // when clicked box is not empty
+          Note currNote = new Note(pitchClicked, octaveClicked, false, 1, 0);
+          // if the clicked spot is an existing beat in song
+          if (viewModel.getNotes().containsKey(beatClicked)) {
+            // if clicked note is at that beat
+            if (viewModel.getNotes().get(beatClicked).contains(currNote)) {
+              int index = viewModel.getNotes().get(beatClicked).indexOf(currNote);
+              Note prevNote = viewModel.getNotes().get(beatClicked).get(index);
+              if (prevNote.isBeginningOfNote()) {
+                removeNote(prevNote, beatClicked);
+              } else {
+                prevNote.toggleNote();
+              }
+            }
+          }
+        } else {
+          // if empty - check if note should be added as head or sustain by checking if there is a
+          // note on previous beat
+
+          // PROBLEM IS THAT IF THE FIRST NOTE IN THE LIST OF THOSE BEATS IS NOT AT SAME PITCH
+          // AND OCTAVE, THEN ITS ADDED AS HEAD NEVER SUSTAIN
+
+          // IF THERE IS A SUSTAIN IN THE BEAT BEFORE AT ANY PITCH, NOTE HEAD ADDED AFTER NOTE IS
+          // REMOVED, WHEN YOU CLICK ON NOTE HEAD
+          List<Note> notesAtPrev = (List<Note>) (editor.getBeats(0).get(beatClicked - 1));
+          if (notesAtPrev == null) {
+            addHead(pitchClicked, octaveClicked, beatClicked);
           } else {
-            prevNote.toggleNote();
+            for (Note n : notesAtPrev) {
+              if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
+                addSustain(pitchClicked, octaveClicked, beatClicked);
+              } else {
+                addHead(pitchClicked, octaveClicked, beatClicked);
+              }
+            }
           }
         }
       }
 
-      // if empty - check if note should be added as head or sustain by checking if there is a
-      // note on previous beat
-      for (Note n : (List<Note>) (editor.getBeats(0).get(beatClicked - 1))) {
-        if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
-          addSustain(pitchClicked, octaveClicked, beatClicked);
-        } else {
-          addHead(pitchClicked, octaveClicked, beatClicked);
-        }
-      }
       view.refresh(view.getPaused());
       view.setMetaListener(this.metaEventHandler);
     }
@@ -249,5 +244,6 @@ public class MusicController implements IMusicController, ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+
   }
 }

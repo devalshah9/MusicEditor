@@ -106,17 +106,17 @@ public class ViewModel implements IViewModel {
     int length = 0;
     int n = 1;
     boolean noteNotOver = true;
-    if (note.getbeginningOfNote()) {
+    if (note.isBeginningOfNote()) {
       if (this.notes.get(startBeat).contains(note)) {
         int index = notes.get(startBeat).indexOf(note);
-        if (!(this.notes.get(startBeat).get(index).getbeginningOfNote())) {
+        if (!(this.notes.get(startBeat).get(index).isBeginningOfNote())) {
           throw new IllegalArgumentException("Must be beginning of note.");
         }
         do {
           if (this.notes.containsKey(startBeat + n)) {
             if (this.notes.get(startBeat + n).contains(note)) {
               index = notes.get(startBeat + n).indexOf(note);
-              if (this.notes.get(startBeat + n).get(index).getbeginningOfNote()) {
+              if (this.notes.get(startBeat + n).get(index).isBeginningOfNote()) {
                 return n;
               } else {
                 n++;
