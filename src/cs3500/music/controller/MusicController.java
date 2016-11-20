@@ -166,7 +166,7 @@ public class MusicController implements IMusicController, ActionListener {
 
       // CHECK WHETHER CURRENT BOX IS EMPTY OR NOT
       if (editor.getBeats(0).containsKey(beatClicked)) {
-        if (editor.getBeats(0).get(beatClicked).equals(new Note(pitchClicked, octaveClicked,
+        if (((ArrayList<Note>) (editor.getBeats(0).get(beatClicked))).contains(new Note(pitchClicked, octaveClicked,
                 false, 0, 0))) {
           // when clicked box is not empty
           Note currNote = new Note(pitchClicked, octaveClicked, false, 1, 0);
