@@ -124,7 +124,7 @@ public class MusicController implements IMusicController, ActionListener {
 
   @Override
   public void onClick(int x, int y) {
-    if(this.view.getPaused()) {
+    if (this.view.getPaused()) {
       Pitch pitchClicked;
       Octave octaveClicked;
       int beatClicked;
@@ -164,11 +164,13 @@ public class MusicController implements IMusicController, ActionListener {
 
       beatClicked = x - x % boxWidth / boxWidth + 1;
 
-      // CHECK WHETHER CURRENT BOX IS EMPTY OR NOT
-      if (editor.getBeats(0).containsKey(beatClicked)) {
-        if (((ArrayList<Note>) (editor.getBeats(0).get(beatClicked))).contains(new Note(pitchClicked, octaveClicked,
+      // CHECK WHETHER CURRENT BOX IS EMPTY OR CONTAINS A NOTE
+
+      // when clicked box is not empty
+      if (beatClicked > -1 && beatClicked < endBeat) {
+        if (((ArrayList<Note>) (editor.getBeats(0).get(beatClicked))).contains(
+                new Note(pitchClicked, octaveClicked,
                 false, 0, 0))) {
-          // when clicked box is not empty
           Note currNote = new Note(pitchClicked, octaveClicked, false, 1, 0);
           // if the clicked spot is an existing beat in song
           if (viewModel.getNotes().containsKey(beatClicked)) {
@@ -183,25 +185,24 @@ public class MusicController implements IMusicController, ActionListener {
               }
             }
           }
-        } else {
-          // if empty - check if note should be added as head or sustain by checking if there is a
-          // note on previous beat
-
-          // PROBLEM IS THAT IF THE FIRST NOTE IN THE LIST OF THOSE BEATS IS NOT AT SAME PITCH
-          // AND OCTAVE, THEN ITS ADDED AS HEAD NEVER SUSTAIN
-
-          // IF THERE IS A SUSTAIN IN THE BEAT BEFORE AT ANY PITCH, NOTE HEAD ADDED AFTER NOTE IS
-          // REMOVED, WHEN YOU CLICK ON NOTE HEAD
+        }
+        // if empty - check if note should be added as head or sustain by checking if there is a
+        // note on previous beat
+        else {
           List<Note> notesAtPrev = (List<Note>) (editor.getBeats(0).get(beatClicked - 1));
           if (notesAtPrev == null) {
             addHead(pitchClicked, octaveClicked, beatClicked);
           } else {
+            boolean predDetected = false;
             for (Note n : notesAtPrev) {
               if (n.getPitch().equals(pitchClicked) && n.getOctave() == octaveClicked) {
-                addSustain(pitchClicked, octaveClicked, beatClicked);
-              } else {
-                addHead(pitchClicked, octaveClicked, beatClicked);
+                predDetected = true;
               }
+            }
+            if (predDetected) {
+              addSustain(pitchClicked, octaveClicked, beatClicked);
+            } else {
+              addHead(pitchClicked, octaveClicked, beatClicked);
             }
           }
         }
@@ -214,9 +215,10 @@ public class MusicController implements IMusicController, ActionListener {
 
   /**
    * To add a note head.
-   * @param pitch the pitch of the note
+   *
+   * @param pitch  the pitch of the note
    * @param octave the octave of the note
-   * @param beat the beat that its at
+   * @param beat   the beat that its at
    */
   private void addHead(Pitch pitch, Octave octave, int beat) {
     editor.addSingleNote(0, new Note(pitch, octave, true, 1, 0), 1, beat);
@@ -224,9 +226,10 @@ public class MusicController implements IMusicController, ActionListener {
 
   /**
    * To add a note sustain.
-   * @param pitch the pitch of the note
+   *
+   * @param pitch  the pitch of the note
    * @param octave the octave of the note
-   * @param beat the beat that its at
+   * @param beat   the beat that its at
    */
   private void addSustain(Pitch pitch, Octave octave, int beat) {
     editor.addSingleNote(0, new Note(pitch, octave, false, 1, 0), 1, beat);
@@ -234,6 +237,7 @@ public class MusicController implements IMusicController, ActionListener {
 
   /**
    * To remove a note.
+   *
    * @param note the note to be removed
    * @param beat the beat that its at
    */

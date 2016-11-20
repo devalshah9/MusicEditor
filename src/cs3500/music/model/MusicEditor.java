@@ -48,7 +48,7 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
       throw new IllegalArgumentException("Invalid beat. Negative number.");
     } else {
       //The logic of addNote comes from the MusicSheet class.
-      this.sheets.get(sheetNumber).addNote(note, duration, beat, false);
+      this.sheets.get(sheetNumber).addNote(note, duration, beat, !(note.isBeginningOfNote()));
     }
   }
 
