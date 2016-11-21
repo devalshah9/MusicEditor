@@ -26,7 +26,6 @@ public class MusicController implements IMusicController, ActionListener {
   KeyboardHandler keyboardHandler;
   MouseHandler mouseHandler;
   MetaEventHandler metaEventHandler;
-  //boolean isInAddMode = false;
   IViewModel viewModel;
   Timer timer = new Timer();
 

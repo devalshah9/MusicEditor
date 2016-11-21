@@ -1,5 +1,7 @@
 package cs3500.music.tests;
 
+import org.junit.Test;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -7,8 +9,15 @@ import java.awt.event.MouseListener;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
+import javax.sound.midi.MetaMessage;
 
+import cs3500.music.controller.KeyboardHandler;
+import cs3500.music.controller.MetaEventHandler;
+import cs3500.music.controller.MouseHandler;
+import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
+import cs3500.music.model.MusicEditor;
+import cs3500.music.model.ViewModel;
 import cs3500.music.view.AudibleView;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.VisualView;
@@ -22,10 +31,25 @@ public class MockView implements IGuiView {
   MouseListener mouse;
   int horizontalScroll = 1000;
   int verticalScroll = 500;
+  StringBuilder a = new StringBuilder();
+  IMusicEditor editor = new MusicEditor();
+  IViewModel viewModel;
+  VisualView visual;
+  AudibleView audible;
+
+
+  Runnable mouseTester = () -> this.confirmMouse();
+
+  Runnable keyTester = () -> this.confirmKeys();
+
+  Runnable metaTester = () -> this.confirmMeta();
 
   @Override
   public void initialize() {
-
+    editor.createNewSheet();
+    viewModel = new ViewModel(editor, 0, 4, 4);
+    visual = new VisualView(viewModel);
+    audible = new AudibleView(viewModel);
   }
 
   @Override
@@ -118,11 +142,54 @@ public class MockView implements IGuiView {
     return false;
   }
 
-  public void SimulateKeyEvent(KeyEvent event){
+  public void SimulateKeyEvent(KeyEvent event) {
     keys.keyPressed(event);
   }
 
-  public void SimulateMouseEvent(MouseEvent event){
+  public void SimulateMouseEvent(MouseEvent event) {
     mouse.mouseClicked(event);
   }
+
+  public void confirmMouse() {
+    this.a.append("The mouse event fired.");
+  }
+
+  public void confirmKeys() {
+    this.a.append("The key event fired.");
+  }
+
+  public void confirmMeta() {
+    this.a.append("The meta message was sent.");
+  }
+
+  @Test
+  public void testMouse() {
+    initialize();
+    MouseHandler mouse = new MouseHandler();
+    this.setMouseListener(mouse);
+    mouse.installRunnable(mouseTester);
+    mouse.mouseClicked(new MouseEvent(visual, 1, 1, 1, 1, 1, 2, false, 1));
+    this.a.toString().contains("The mouse event fired.");
+  }
+
+  @Test
+  public void testKeys() {
+    initialize();
+    KeyboardHandler keys = new KeyboardHandler();
+    this.setKeyboardListener(keys);
+    keys.installRunnable(0, keyTester, KeyboardHandler.ActionType.TYPED);
+    keys.keyPressed(new KeyEvent(visual, 0, 1,1, 0, '1'));
+    this.a.toString().contains("The key event fired.");
+  }
+
+  @Test
+  public void testMeta() {
+    initialize();
+    MetaEventHandler meta = new MetaEventHandler(visual, audible);
+    this.setMetaListener(meta);
+    meta.installRunnable(metaTester);
+    meta.meta(new MetaMessage());
+    this.a.toString().contains("The meta message was sent.");
+  }
+
 }

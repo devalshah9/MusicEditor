@@ -57,7 +57,12 @@ public class VisualView extends JFrame implements IGuiView {
     this.getContentPane().add(scrollNotesPane, BorderLayout.CENTER);
     Note highestNote = viewModel.getHighestNote();
     Note lowestNote = viewModel.getLowestNote();
-    int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+    int numberOfDistinctNotes = 0;
+    try {
+      numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+    } catch(Exception e) {
+      numberOfDistinctNotes = 0;
+    }
     int numberOfBeats = viewModel.getEndBeat();
     System.out.println(numberOfBeats);
     this.pack();

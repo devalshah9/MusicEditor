@@ -16,7 +16,6 @@ public class MouseHandler implements MouseListener {
   // the y coordinate of the click
   private int y;
 
-  Map<String, Runnable> mouseClicks;
   Runnable runnable;
 
   public MouseHandler() {
@@ -32,7 +31,6 @@ public class MouseHandler implements MouseListener {
       y = e.getY();
       runnable.run();
     }
-    System.out.println("X is " + x + "\nY is " + y + "\n");
   }
 
   @Override

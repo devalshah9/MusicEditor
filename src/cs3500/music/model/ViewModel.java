@@ -42,7 +42,11 @@ public class ViewModel implements IViewModel {
 
   @Override
   public int getEndBeat() {
-    return this.notes.lastKey();
+    try {
+      return this.notes.lastKey();
+    } catch(Exception e) {
+      return 0;
+    }
   }
 
   @Override

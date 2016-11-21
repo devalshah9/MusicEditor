@@ -16,7 +16,7 @@ public class MetaEventHandler implements MetaEventListener {
 
   Runnable runnable;
 
-  MetaEventHandler(VisualView visualView, AudibleView audibleView) {
+  public MetaEventHandler(VisualView visualView, AudibleView audibleView) {
     this.visualView = visualView;
     this.audibleView = audibleView;
   }
