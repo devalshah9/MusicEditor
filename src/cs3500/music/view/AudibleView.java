@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -148,9 +149,24 @@ public class AudibleView implements IMusicView {
     this.sequence = tempSequence;
     Timer timer = new Timer();
     track = sequence.createTrack();
-    TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
-    int endBeat = model.getEndBeat();
-    double bpm = 60000000 / tempo;
+    TreeMap<Integer, ArrayList<Note>> notes = new TreeMap<Integer, ArrayList<Note>>();
+    try {
+      notes = model.getNotes();
+    } catch (Exception e ) {
+      notes = new TreeMap<Integer, ArrayList<Note>>();
+    }
+    int endBeat = 0;
+    try {
+      endBeat = model.getEndBeat();
+    } catch (Exception e) {
+      endBeat = 0;
+    }
+    double bpm = 1;
+    try {
+      bpm = 60000000 / tempo;
+    } catch (Exception e) {
+      bpm = 1;
+    }
     long totalMs = (long) (endBeat / bpm * 60000);
     for (int n = 0; n < endBeat; n++) {
       if (notes.containsKey(n)) {
@@ -165,7 +181,7 @@ public class AudibleView implements IMusicView {
         }
       }
     }
-    for (int n = 0; n < model.getEndBeat(); n++) {
+    for (int n = 0; n < endBeat; n++) {
       byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
       MidiEvent midiEvent = new MidiEvent(
               new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);

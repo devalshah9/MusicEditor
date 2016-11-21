@@ -141,8 +141,17 @@ public class MusicController implements IMusicController, ActionListener {
       Note lowestNote = viewModel.getLowestNote();
       int lowestIndex = newNotes.indexOf(lowestNote);
       int highestIndex = newNotes.indexOf(highestNote);
+      if(lowestIndex < 0 && highestIndex < 0) {
+        lowestIndex = 0;
+        highestIndex = 0;
+      }
       int measureLength = viewModel.getMeasureLength();
-      int numDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+      int numDistinctNotes = 0;
+      try {
+        numDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+      } catch (Exception e) {
+        numDistinctNotes = 0;
+      }
       int endBeat = viewModel.getEndBeat();
       java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
       int boxHeight = 30;

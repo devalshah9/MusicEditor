@@ -14,11 +14,13 @@ import javax.sound.midi.MetaMessage;
 import cs3500.music.controller.KeyboardHandler;
 import cs3500.music.controller.MetaEventHandler;
 import cs3500.music.controller.MouseHandler;
+import cs3500.music.controller.MusicController;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
 import cs3500.music.model.ViewModel;
 import cs3500.music.view.AudibleView;
+import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.VisualView;
 
@@ -36,13 +38,9 @@ public class MockView implements IGuiView {
   IViewModel viewModel;
   VisualView visual;
   AudibleView audible;
+  MusicController controller;
 
 
-  Runnable mouseTester = () -> this.confirmMouse();
-
-  Runnable keyTester = () -> this.confirmKeys();
-
-  Runnable metaTester = () -> this.confirmMeta();
 
   @Override
   public void initialize() {
@@ -50,6 +48,7 @@ public class MockView implements IGuiView {
     viewModel = new ViewModel(editor, 0, 4, 4);
     visual = new VisualView(viewModel);
     audible = new AudibleView(viewModel);
+    controller = new MusicController(editor, new CompositeView(visual, audible));
   }
 
   @Override
@@ -162,34 +161,5 @@ public class MockView implements IGuiView {
     this.a.append("The meta message was sent.");
   }
 
-  @Test
-  public void testMouse() {
-    initialize();
-    MouseHandler mouse = new MouseHandler();
-    this.setMouseListener(mouse);
-    mouse.installRunnable(mouseTester);
-    mouse.mouseClicked(new MouseEvent(visual, 1, 1, 1, 1, 1, 2, false, 1));
-    this.a.toString().contains("The mouse event fired.");
-  }
-
-  @Test
-  public void testKeys() {
-    initialize();
-    KeyboardHandler keys = new KeyboardHandler();
-    this.setKeyboardListener(keys);
-    keys.installRunnable(0, keyTester, KeyboardHandler.ActionType.TYPED);
-    keys.keyPressed(new KeyEvent(visual, 0, 1,1, 0, '1'));
-    this.a.toString().contains("The key event fired.");
-  }
-
-  @Test
-  public void testMeta() {
-    initialize();
-    MetaEventHandler meta = new MetaEventHandler(visual, audible);
-    this.setMetaListener(meta);
-    meta.installRunnable(metaTester);
-    meta.meta(new MetaMessage());
-    this.a.toString().contains("The meta message was sent.");
-  }
 
 }
