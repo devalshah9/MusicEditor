@@ -42,7 +42,6 @@ public class MusicController implements IMusicController, ActionListener {
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
   }
 
-
   Runnable goBeg = () -> view.goBeginSong();
 
   Runnable goEnd = () -> view.goEndSong();

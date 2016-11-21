@@ -15,6 +15,8 @@ import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.VisualView;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * To test the Controller and Composite View Functionality.
  */
@@ -30,6 +32,7 @@ public class ControllerTests {
     CompositionBuilder<IMusicEditor> builder;
     IMusicEditor editor;
     editor = new MusicEditor();
+    editor.createNewSheet();
     builder = new MusicBuilder();
     editor = builder.build();
     viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
@@ -54,8 +57,12 @@ public class ControllerTests {
 
   @Test
   public void testGoBeg() {
-    this.initialize();
     controller.createKeyboardHandler();
-
+    IMusicEditor editor = new MusicEditor();
+    editor.createNewSheet();
+    MockView view = new MockView();
+    controller = new MusicController(editor, view);
+    view.scrollLeft();
+    assertEquals(view.horizontalScroll, 900);
   }
 }
