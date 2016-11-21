@@ -75,7 +75,6 @@ public class NotesPanel extends JPanel {
       }
       gimg.setStroke(new BasicStroke(1));
       redLinePos = (n * boxWidth / measureLength);
-      //System.out.println(redLinePos);
     }
 
     gimg.setColor(Color.BLACK);

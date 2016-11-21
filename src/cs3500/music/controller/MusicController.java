@@ -57,7 +57,7 @@ public class MusicController implements IMusicController, ActionListener {
 
   Runnable pausePlay = () -> view.pausePlay();
 
-  Runnable addRest = () -> editor.addRest();
+  Runnable addRest = () -> this.addRest();
 
   Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
 
@@ -93,8 +93,6 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler.installRunnable(KeyEvent.VK_M, addRest,
             KeyboardHandler.ActionType.PRESSED);
 
-    keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.TYPED);
-
     // to pause the song, press space bar
     keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.PRESSED);
   }
@@ -112,14 +110,11 @@ public class MusicController implements IMusicController, ActionListener {
   }
 
 
-  private int getClickX() {
-    int x = this.mouseHandler.getX();
-    return x;
-  }
-
-  private int getClickY() {
-    int y = this.mouseHandler.getY();
-    return y;
+  public void addRest() {
+    if(view.getPaused()) {
+      editor.addRest(0, 4);
+      view.refresh(true);
+    }
   }
 
   @Override
@@ -149,13 +144,14 @@ public class MusicController implements IMusicController, ActionListener {
       int lowestIndex = newNotes.indexOf(lowestNote);
       int highestIndex = newNotes.indexOf(highestNote);
       int measureLength = viewModel.getMeasureLength();
+      int numDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
       int endBeat = viewModel.getEndBeat();
       java.util.List<Note> newList = newNotes.subList(lowestIndex, highestIndex + 1);
       int boxHeight = 30;
       int boxWidth = 120;
 
       x = x / 30 - 1;
-      y = (newList.size() * 30 - y) / 30;
+      y = ((int) (numDistinctNotes * 0.03) + (newList.size() * 30 - y) / 30);
 
       pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
       octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
@@ -167,7 +163,10 @@ public class MusicController implements IMusicController, ActionListener {
       // CHECK WHETHER CURRENT BOX IS EMPTY OR CONTAINS A NOTE
 
       // when clicked box is not empty
-      if (beatClicked > -1 && beatClicked < endBeat) {
+      if (beatClicked > -1 && beatClicked < endBeat + 8) {
+        if ((editor.getBeats(0).get(beatClicked)) == null) {
+          editor.getBeats(0).put(beatClicked, new ArrayList<Note>());
+        }
         if (((ArrayList<Note>) (editor.getBeats(0).get(beatClicked))).contains(
                 new Note(pitchClicked, octaveClicked,
                 false, 0, 0))) {

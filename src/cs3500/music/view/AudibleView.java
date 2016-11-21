@@ -92,7 +92,6 @@ public class AudibleView implements IMusicView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException {
-    Timer timer = new Timer();
     this.model = model;
     track = sequence.createTrack();
     TreeMap<Integer, ArrayList<Note>> notes = model.getNotes();
@@ -128,7 +127,6 @@ public class AudibleView implements IMusicView {
     sequencer.setMicrosecondPosition(0);
     sequencer.start();
     isPlaying = true;
-    timer.schedule(new TimeTask(), totalMs);
   }
 
   public void refresh(boolean paused)
@@ -183,11 +181,6 @@ public class AudibleView implements IMusicView {
     sequencer.setMicrosecondPosition(time);
   }
 
-  class TimeTask extends TimerTask {
-    public void run() {
-      System.exit(0);
-    }
-  }
 
   /**
    * Plays a single Note.

@@ -255,8 +255,10 @@ public class MusicSheet {
     return this.beats;
   }
 
-  public void addRest() {
-    this.beats.put(this.getFurthestBeat() + 1, new ArrayList<>());
+  public void addRest(int measureLength) {
+    for(int n = 1; n <= measureLength; n++) {
+      this.beats.put(this.getFurthestBeat() + n, new ArrayList<>());
+    }
   }
 
   /**

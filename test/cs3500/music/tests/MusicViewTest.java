@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
  * To test the MIDI music view.
  */
 public class MusicViewTest {
-  File file = new File("mary-little-lamb.txt");
   MusicReader reader = new MusicReader();
   CompositionBuilder builder = new MusicBuilder();
 
@@ -28,7 +27,7 @@ public class MusicViewTest {
   public void testOutput() {
     StringBuffer buffer = new StringBuffer();
     MockMidiReceiver receiver = new MockMidiReceiver(buffer);
-    FileReader read = null;
+    FileReader read;
     File file = new File("mary-little-lamb.txt");
     try {
       read = new FileReader(file);

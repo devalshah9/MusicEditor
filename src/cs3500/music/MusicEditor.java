@@ -71,15 +71,15 @@ public class MusicEditor {
     } else if (args[1].equals("composite")) {
       IGuiView visual = new VisualView(model);
       AudibleView audio = new AudibleView(model);
-      IGuiView newview = new CompositeView(visual, audio);
-      MusicController controller = new MusicController(editor, newview);
+      IGuiView compositeView = new CompositeView(visual, audio);
+      MusicController controller = new MusicController(editor, compositeView);
       try {
-        newview.initialize();
-        newview.renderSong(model, model.getTempo());
+        compositeView.initialize();
+        compositeView.renderSong(model, model.getTempo());
       } catch(InvalidMidiDataException e) {
         e.printStackTrace();
       }
-    }else {
+    } else {
       throw new InvalidMidiDataException("Invalid input!");
     }
     if (!args[1].equals("composite")) {

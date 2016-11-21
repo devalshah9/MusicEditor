@@ -118,7 +118,7 @@ public interface IMusicEditor<MusicSheet> {
    */
   TreeMap<Integer, ArrayList<Note>> getBeats(int index);
 
-  void addRest();
+  void addRest(int index, int measureLength);
 
   /**
    * To set the tempo of the song.
@@ -131,9 +131,6 @@ public interface IMusicEditor<MusicSheet> {
    * @return the tempo of the song
    */
   int getTempo();
-
-  List<Note> allNotes();
-
 }
 
 

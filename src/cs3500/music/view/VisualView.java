@@ -59,6 +59,7 @@ public class VisualView extends JFrame implements IGuiView {
     Note lowestNote = viewModel.getLowestNote();
     int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
     int numberOfBeats = viewModel.getEndBeat();
+    System.out.println(numberOfBeats);
     this.pack();
     // Below are seemingly random numbers -
     // they were chosen because they're the combination that bests renders our notes.
@@ -141,11 +142,12 @@ public class VisualView extends JFrame implements IGuiView {
 
   @Override
   public void refresh(boolean paused) {
+    int endBeat = viewModel.getEndBeat();
     if(!paused) {
       this.viewModel.incrementBeat();
     }
     this.notesPanel.setBeat(viewModel.getCurrBeat());
-    this.beat = viewModel.getCurrBeat();
+    this.resizeWindow();
     this.repaint();
     this.notesPanel.repaint();
     // scroll the bar when red line reaches end of panel
@@ -155,11 +157,19 @@ public class VisualView extends JFrame implements IGuiView {
     }
   }
 
-
-
   @Override
   public VisualView getVisual() {
     return this;
+  }
+
+  public void resizeWindow() {
+    Note highestNote = viewModel.getHighestNote();
+    Note lowestNote = viewModel.getLowestNote();
+    int numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
+    int numberOfBeats = viewModel.getEndBeat();
+    notesPanel.setPreferredSize(new Dimension(numberOfBeats * 37, numberOfDistinctNotes * 31 + 20));
+    beatsPanel.setPreferredSize(new Dimension(numberOfBeats * 37, 10));
+    noteLabelsPanel.setPreferredSize(new Dimension(30, numberOfDistinctNotes * 31 + 20));
   }
 
   @Override

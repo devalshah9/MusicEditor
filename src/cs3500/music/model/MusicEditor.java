@@ -238,8 +238,8 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
   }
 
   @Override
-  public void addRest() {
-
+  public void addRest(int index, int measureLength) {
+    this.getSheet(index).addRest(measureLength);
   }
 
   /**
