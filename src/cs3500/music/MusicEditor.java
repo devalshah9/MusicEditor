@@ -75,7 +75,7 @@ public class MusicEditor {
       try {
         compositeView.initialize();
         compositeView.renderSong(model, model.getTempo());
-      } catch(InvalidMidiDataException e) {
+      } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
     } else {

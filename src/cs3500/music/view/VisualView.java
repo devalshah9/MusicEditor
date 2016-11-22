@@ -6,7 +6,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import javax.sound.midi.MetaEventListener;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 
 import cs3500.music.commons.Note;
 import cs3500.music.model.IViewModel;
