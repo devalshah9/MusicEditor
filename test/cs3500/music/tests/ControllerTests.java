@@ -159,6 +159,13 @@ public class ControllerTests {
     editor.addSingleNote(0, new Note(Pitch.A, Octave.SEVEN, true, 3, 4), 5, 0);
     controller = new MusicController(editor, compositeView);
     assertEquals(editor.allNotes().size(), 10);
+    try {
+      if (visualView.getPaused()) {
+        controller.onClick(100, 50);
+      }
+    } catch (IllegalArgumentException i) {
+      System.out.println("Song is not paused!");
+    }
     controller.onClick(100, 50);
     assertEquals(editor.allNotes().size(), 11);
   }
