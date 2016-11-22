@@ -142,7 +142,7 @@ public class MusicController implements IMusicController {
 
   @Override
   public void addRest() {
-    if(view.getPaused()) {
+    if (view.getPaused()) {
       editor.addRest(0, 4);
       view.refresh(true);
     }
@@ -172,7 +172,7 @@ public class MusicController implements IMusicController {
       Note lowestNote = viewModel.getLowestNote();
       int lowestIndex = newNotes.indexOf(lowestNote);
       int highestIndex = newNotes.indexOf(highestNote);
-      if(lowestIndex < 0 && highestIndex < 0) {
+      if (lowestIndex < 0 && highestIndex < 0) {
         lowestIndex = 0;
         highestIndex = 0;
       }

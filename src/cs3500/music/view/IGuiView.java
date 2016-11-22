@@ -13,29 +13,29 @@ public interface IGuiView extends IMusicView {
 
   /**
    * To set the mouse listener for the view.
-   * @param mouse
+   * @param mouse The mouse listener set.
    */
   void setMouseListener(MouseListener mouse);
 
   /**
    * To set the keyboard listener for the view.
-   * @param keys
+   * @param keys The key listener set.
    */
   void setKeyboardListener(KeyListener keys);
 
   /**
    * To set the meta listener for the view.
-   * @param listener
+   * @param listener The meta listener set.
    */
   void setMetaListener(MetaEventListener listener);
 
   /**
-   * Goes to the beginning of the song in the view (not audio)
+   * Goes to the beginning of the song in the view (not audio).
    */
   void goBeginSong();
 
   /**
-   * Goes to the end of the song in the view (not audio)
+   * Goes to the end of the song in the view (not audio).
    */
   void goEndSong();
 

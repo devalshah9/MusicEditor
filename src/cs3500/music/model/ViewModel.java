@@ -44,7 +44,7 @@ public class ViewModel implements IViewModel {
   public int getEndBeat() {
     try {
       return this.notes.lastKey();
-    } catch(Exception e) {
+    } catch (Exception e) {
       return 0;
     }
   }

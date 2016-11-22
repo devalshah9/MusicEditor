@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
-import javax.swing.*;
 
 import cs3500.music.controller.MusicController;
 import cs3500.music.model.IMusicEditor;

@@ -1,10 +1,9 @@
 package cs3500.music.view;
 
-import java.lang.reflect.Array;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.TreeMap;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -130,13 +129,19 @@ public class AudibleView implements IMusicView {
     isPlaying = true;
   }
 
+  /**
+   * The method that refreshes the audiblew view depending on time.
+   * Used for pausing functionality.
+   *
+   * @param paused Whether the view is paused or not.
+   * @throws InvalidMidiDataException If the sequencer doesnt work.
+   */
   public void refresh(boolean paused)
           throws InvalidMidiDataException {
     time = sequencer.getMicrosecondPosition();
     int currTempo = tempo;
     Sequencer tempSequencer = null;
     Sequence tempSequence = null;
-
 
     try {
       tempSequencer = MidiSystem.getSequencer();
@@ -234,7 +239,7 @@ public class AudibleView implements IMusicView {
   }
 
   private MidiEvent createEndNote(Note note, int duration, int tempo, int startBeat)
-  throws InvalidMidiDataException {
+          throws InvalidMidiDataException {
     int endBeat = (startBeat + duration);
     int frequency = note.getPitch().ordinal() + note.getOctave().ordinal() * 12;
     int instrument = note.getInstrument() - 1;
@@ -252,8 +257,11 @@ public class AudibleView implements IMusicView {
     // does not do anything for MIDI
   }
 
+  /**
+   * Pauses the midi view.
+   */
   public void pausePlay() {
-    if(isPlaying) {
+    if (isPlaying) {
       sequencer.stop();
       try {
         sequencer.setSequence(sequence);
@@ -265,10 +273,10 @@ public class AudibleView implements IMusicView {
       time = sequencer.getMicrosecondPosition();
       return;
     }
-    if(!isPlaying) {
+    if (!isPlaying) {
       try {
         sequencer.setSequence(sequence);
-      } catch(InvalidMidiDataException e) {
+      } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
       sequencer.setMicrosecondPosition(time);
@@ -293,7 +301,7 @@ public class AudibleView implements IMusicView {
   }
 
   public long getBeat() {
-    return this.sequencer.getMicrosecondPosition()/100;
+    return this.sequencer.getMicrosecondPosition() / 100;
   }
 
   public boolean getPaused() {

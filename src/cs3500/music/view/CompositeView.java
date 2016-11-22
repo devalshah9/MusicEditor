@@ -20,7 +20,7 @@ public class CompositeView implements IGuiView {
   AudibleView audibleView;
 
   /**
-   * The constructor for a Composite View object
+   * The constructor for a Composite View object.
    * @param visualView the visual view to work with
    * @param audibleView the audible view to work with
    */
@@ -81,11 +81,12 @@ public class CompositeView implements IGuiView {
 
   @Override
   public void initialize() {
-
+    //Doesnt do anything for a composite view.
   }
 
   @Override
-  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+  public void renderSong(IViewModel model, int tempo)
+          throws InvalidMidiDataException, IllegalArgumentException {
     visualView.renderSong(model, tempo);
     tempo = tempo * 4;
     audibleView.renderSong(model, tempo);

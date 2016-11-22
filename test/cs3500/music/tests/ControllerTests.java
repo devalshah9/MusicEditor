@@ -40,6 +40,7 @@ public class ControllerTests {
   /**
    * To initialize the data.
    */
+
   private void initialize() {
     CompositionBuilder<IMusicEditor> builder;
     IMusicEditor editor;
@@ -86,13 +87,14 @@ public class ControllerTests {
   public void testMouse() {
     initialize();
     controller.onClick(5, 5);
-    this.a.toString().contains("The mouse event fired.");
+    assertEquals(this.a.toString().contains("The mouse event fired."), true);
   }
 
   // This tests if a meta event was sent
   @Test
   public void testMeta() {
-    this.a.toString().contains("The meta message was sent.");
+
+    assertEquals(this.a.toString().contains("The meta message was sent."), true);
   }
 
   public void confirmMouse() {

@@ -2,7 +2,6 @@ package cs3500.music.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Map;
 
 import javax.swing.SwingUtilities;
 
@@ -38,22 +37,22 @@ public class MouseHandler implements MouseListener {
 
   @Override
   public void mousePressed(MouseEvent e) {
-
+    //No mousepressed events needed.
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-
+    //No mousereleased events needed.
   }
 
   @Override
   public void mouseEntered(MouseEvent e) {
-
+    //No mouseentered events needed.
   }
 
   @Override
   public void mouseExited(MouseEvent e) {
-
+    //No mouseexited events needed.
   }
 
   /**

@@ -260,7 +260,7 @@ public class MusicSheet {
    * @param measureLength The length of rest to add.
    */
   public void addRest(int measureLength) {
-    for(int n = 1; n <= measureLength; n++) {
+    for (int n = 1; n <= measureLength; n++) {
       this.beats.put(this.getFurthestBeat() + n, new ArrayList<>());
     }
   }

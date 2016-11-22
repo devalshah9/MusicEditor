@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -54,7 +55,7 @@ public class VisualView extends JFrame implements IGuiView {
     int numberOfDistinctNotes = 0;
     try {
       numberOfDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
-    } catch(Exception e) {
+    } catch (Exception e) {
       numberOfDistinctNotes = 0;
     }
     int numberOfBeats = viewModel.getEndBeat();
@@ -139,7 +140,7 @@ public class VisualView extends JFrame implements IGuiView {
 
   @Override
   public void refresh(boolean paused) {
-    if(!paused) {
+    if (!paused) {
       this.viewModel.incrementBeat();
     }
     this.notesPanel.setBeat(viewModel.getCurrBeat());
