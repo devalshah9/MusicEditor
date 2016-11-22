@@ -102,3 +102,10 @@ the MIDI view's sense of time.
 
 This listener-runnable pattern is how all of the view's callbacks work. The mouselistener installed by the controller picks up on any mouseevents and
 updates the model and the view appropriately. Same goes for all key events.
+
+                 ----------------------------------------------WHAT WE CHANGED -----------------------------------------------------------
+The biggest thing that was changed from last time was the AudibleView. Before, we used a Synthesizer and Receiver to send our MidiMessages. We changed to a sequencer and sequence
+because this makes it easier to pause and play. This also makes it possible to advertise meta messages which we used to sync our two views. This change required reading an entirely
+new part of the documentation and refactoring the entire audible view that we had before. This is the
+only major change from our last submission - our model and view models are essentially the same
+as are our other view components.

@@ -98,6 +98,18 @@ public class Note implements Comparable<Note> {
             + this.getPitch().ordinal() - other.getPitch().ordinal());
   }
 
+  /**
+   * Method that toggles a note from sustain to head and vice versa.
+   */
+  public void toggleNote() {
+    if (this.beginningOfNote) {
+      this.beginningOfNote = false;
+    }
+    else {
+      this.beginningOfNote = true;
+    }
+  }
+
   @Override
   public String toString() {
     return this.pitch.toString() + this.octave.toString();
