@@ -65,9 +65,5 @@ public interface IViewModel {
    */
   void incrementBeat();
 
-  /**
-   * To decrement the beat by 1.
-   */
-  void decrementBeat();
 
 }

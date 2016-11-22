@@ -83,11 +83,6 @@ public class ViewModel implements IViewModel {
   }
 
   @Override
-  public void decrementBeat() {
-    this.currBeat -= 1;
-  }
-
-  @Override
   public Note getHighestNote() {
     Note currHighestNote = null;
     for (Object value : notes.values()) {

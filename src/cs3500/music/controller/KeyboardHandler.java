@@ -6,13 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to handle keyboard actions.
+ * Class to handle keyboard actions. Has maps for all the possible
+ * runnables that can be installed for all possible key actions.
  */
 public class KeyboardHandler implements KeyListener {
   Map<Integer, Runnable> keyTyped;
   Map<Integer, Runnable> keyPressed;
   Map<Integer, Runnable> keyReleased;
 
+  /**
+   * The constructor that initalizes a KeyboardHandler.
+   */
   public KeyboardHandler() {
     keyTyped = new HashMap<Integer, Runnable>();
     keyPressed = new HashMap<Integer, Runnable>();
@@ -63,6 +67,9 @@ public class KeyboardHandler implements KeyListener {
     }
   }
 
+  /**
+   * The three different kinds of actions that a keyevent can take on.
+   */
   public enum ActionType {
     TYPED, PRESSED, RELEASED
   }

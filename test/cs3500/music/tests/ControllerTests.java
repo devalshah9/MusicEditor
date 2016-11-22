@@ -35,6 +35,8 @@ public class ControllerTests {
   private static IViewModel viewModel;
   IMusicController controller;
   StringBuilder a = new StringBuilder();
+  IGuiView visualView;
+  AudibleView audibleView;
   /**
    * To initialize the data.
    */
@@ -44,8 +46,8 @@ public class ControllerTests {
     editor = new MusicEditor();
     editor.createNewSheet();
     viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
-    IGuiView visualView = new VisualView(viewModel);
-    AudibleView audibleView = new AudibleView(viewModel);
+    visualView = new VisualView(viewModel);
+    audibleView = new AudibleView(viewModel);
     IGuiView compositeView = new CompositeView(visualView, audibleView);
     controller = new MusicController(editor, compositeView);
     MouseHandler mouse = new MouseHandler();
@@ -65,14 +67,6 @@ public class ControllerTests {
   Runnable keyTester = () -> this.confirmKeys();
 
   Runnable metaTester = () -> this.confirmMeta();
-
-  /**
-   * Ben:
-   * Two aspects of the testing: testing whether the Runnables-that-provide-functionality are doing
-   * the right thing, and testing whether the keyboard handler is dispatching to the right Runnables.
-   * For one of those two purposes, using mock Runnables is fine.
-   * For the other, you need to find another way to test...
-   */
 
   // This tests if a keyboard handler can call the proper runnable based on a key event
   @Test

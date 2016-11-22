@@ -18,6 +18,9 @@ public class MouseHandler implements MouseListener {
 
   Runnable runnable;
 
+  /**
+   * The constructor for a mouseHandler.
+   */
   public MouseHandler() {
     this.x = -1;
     this.y = -1;
@@ -53,15 +56,26 @@ public class MouseHandler implements MouseListener {
 
   }
 
+  /**
+   * Method that allows a client to install their desired functionality to the mouseHandler.
+   * @param r The runnable.
+   */
   public void installRunnable(Runnable r) {
     this.runnable = r;
   }
 
-
+  /**
+   * Method to get the x coordinate clicked.
+   * @return The x coordinate.
+   */
   public int getX() {
     return this.x;
   }
 
+  /**
+   * Method to get the y coordinate clicked.
+   * @return The y coordinate.
+   */
   public int getY() {
     return this.y;
   }

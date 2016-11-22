@@ -108,9 +108,6 @@ public interface IMusicEditor<MusicSheet> {
   void editNote(int sheetIndex, Note note, int startBeat, int newEndBeat)
           throws IllegalArgumentException;
 
-  void toggleNote(int sheetIndex, Note note, int beat)
-    throws IllegalArgumentException;
-
   /**
    * Gets all the beats in a song.
    * @param index the sheet at which to get the beats
@@ -118,6 +115,12 @@ public interface IMusicEditor<MusicSheet> {
    */
   TreeMap<Integer, ArrayList<Note>> getBeats(int index);
 
+  /**
+   * Method that allows a user to add a rest at a particular beat. If this method is not called
+   * on a beat, it will simply have a null value at the key of that beat.
+   * @param index The beat to add a rest at.
+   * @param measureLength The amount of rest to add.
+   */
   void addRest(int index, int measureLength);
 
   /**
@@ -132,6 +135,10 @@ public interface IMusicEditor<MusicSheet> {
    */
   int getTempo();
 
+  /**
+   * A method to get all of the notes of a song, in the form of a unordered list.
+   * @return THe list of notes.
+   */
   List<Note> allNotes();
 }
 

@@ -72,15 +72,27 @@ public class Note implements Comparable<Note> {
     return this.beginningOfNote;
   }
 
+  /**
+   * Method that gets the instrument.
+   * @return Instrument int value.
+   */
   public int getInstrument() {
     return this.instrument;
   }
 
+  /**
+   * Method that gets the voluem
+   * @return Volume int value.
+   */
   public int getVolume() {
     return this.volume;
   }
 
-
+  /**
+   * Method that gets the amount of notes in range between two notes.
+   * @param other The note being compared.
+   * @return The amount of notes in the band between these two notes.
+   */
   public int notesBetweenTwoNotes(Note other) {
     return (((this.getOctave().ordinal() - other.getOctave().ordinal()) * 12)
             + this.getPitch().ordinal() - other.getPitch().ordinal());
@@ -118,15 +130,6 @@ public class Note implements Comparable<Note> {
   public int hashCode() {
     int hash = Objects.hash(this.pitch, this.octave);
     return hash;
-  }
-
-  public void toggleNote() {
-    if(this.isBeginningOfNote()) {
-      this.beginningOfNote = false;
-    }
-    else {
-      this.beginningOfNote = true;
-    }
   }
 
 }

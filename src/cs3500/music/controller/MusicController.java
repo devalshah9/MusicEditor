@@ -24,6 +24,11 @@ public class MusicController implements IMusicController {
   MetaEventHandler metaEventHandler;
   IViewModel viewModel;
 
+  /**
+   * Constructor for a MusicController.
+   * @param editor The editor/model.
+   * @param view The view.
+   */
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
     this.view = view;
@@ -36,25 +41,57 @@ public class MusicController implements IMusicController {
     this.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
   }
 
+  /**
+   * This runnable will send the view back to the beginning of the composition.
+   */
   Runnable goBeg = () -> view.goBeginSong();
 
+  /**
+   * This runnable sends the view to the end of the composition.
+   */
   Runnable goEnd = () -> view.goEndSong();
 
+  /**
+   * This runnable scrolls the view forward by about 100 pixels.
+   */
   Runnable scrollRight = () -> view.scrollRight();
 
+  /**
+   * This runnable scrolls the view backwards by about 100 pixels.
+   */
   Runnable scrollLeft = () -> view.scrollLeft();
 
+  /**
+   * This runnable scrolls the view upwards by about 50 pixels.
+   */
   Runnable scrollUp = () -> view.scrollUp();
 
+  /**
+   * This runnable scrolls the view downwards by about 50 pixels.
+   */
   Runnable scrollDown = () -> view.scrollDown();
 
+  /**
+   * This runnable pauses the composition and allows for editing.
+   */
   Runnable pausePlay = () -> view.pausePlay();
 
+  /**
+   * This runnable adds extra measures to the end of the composition.
+   */
   Runnable addRest = () -> this.addRest();
 
+  /**
+   * This runnable deals with clicking and toggling notes at particular beats and frequencies.
+   */
   Runnable toggleNote = () -> this.onClick(mouseHandler.getX(), mouseHandler.getY());
 
+  /**
+   * This runnable deals with refreshing the view, depending on whether the composition
+   * is paused or not.
+   */
   Runnable refreshView = () -> view.refresh(view.getPaused());
+
 
   @Override
   public void createKeyboardHandler() {

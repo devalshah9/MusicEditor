@@ -87,6 +87,18 @@ containing the song information to play. The second argument is the kind of view
 
                      ---------------------------------------------- COMPOSITE ------------------------------------------------------------
 To use the composite view and controller, press the 'Home' key. Fn + <- on Mac.
-For 'End' press 'End'. Fn + -> for Mac.
+To go to the beginning of a composition on Windows, press Home, or Fn + <- on Mac.
+To go the end of a composition on Windows press End, or Fn + -> on Mac.
 For scrolling in any direction, use the arrow keys.
-For adding a measure,
+For adding a measure, press m.
+For editing notes, the composition must be paused. To pause, press the spacebar. Once paused, a note's head can be clicked on to delete a note. A sustain can be clicked
+on to turn it into a head. If a blank space is clicked, a head will be added if there was no note of the same frequency at the beat before. If there was a note of the same
+frequency at the beat before, a sustain will be added.
+
+The composite view will play the song through MIDI as the red line scrolls through on the visual view. A composite view consists of a visual and audible view.
+In order to keep the two in sync, the midi track adds metaEvents to the track as it's synthesizing MidiEvents. These meta messages are picked up the metaEventListener
+and prompts the controller to refresh the view at every single beat, which keeps the red line in sync. Thus, the reference of time we chose for our implementation is
+the MIDI view's sense of time.
+
+This listener-runnable pattern is how all of the view's callbacks work. The mouselistener installed by the controller picks up on any mouseevents and
+updates the model and the view appropriately. Same goes for all key events.
