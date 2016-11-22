@@ -1,20 +1,14 @@
 package cs3500.music.view;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 import javax.sound.midi.MetaEventListener;
 import javax.swing.*;
 
 import cs3500.music.commons.Note;
-import cs3500.music.commons.Octave;
-import cs3500.music.commons.Pitch;
 import cs3500.music.model.IViewModel;
-import cs3500.music.model.ViewModel;
 
 /**
  * A VisualView is an implementation of IMusicView that displays a Song in GUI form.
@@ -133,16 +127,14 @@ public class VisualView extends JFrame implements IGuiView {
     // does not do anything
   }
 
+  @Override
   public double getDimensionX() {
     return this.getPreferredSize().getWidth();
   }
 
+  @Override
   public double getDimensionY() {
     return this.getPreferredSize().getHeight();
-  }
-
-  public void setBeat() {
-
   }
 
   @Override
