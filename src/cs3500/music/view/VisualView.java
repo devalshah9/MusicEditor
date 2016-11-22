@@ -162,6 +162,9 @@ public class VisualView extends JFrame implements IGuiView {
     return this;
   }
 
+  /**
+   * Resizes the window if more measures were added.
+   */
   public void resizeWindow() {
     Note highestNote = viewModel.getHighestNote();
     Note lowestNote = viewModel.getLowestNote();
