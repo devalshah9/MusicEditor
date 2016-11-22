@@ -7,7 +7,7 @@ import cs3500.music.view.AudibleView;
 import cs3500.music.view.VisualView;
 
 /**
- * Created by akati on 11/17/2016.
+ * A class for a Meta Event Handler to implement MetaEventListener interface.
  */
 public class MetaEventHandler implements MetaEventListener {
 

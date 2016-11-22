@@ -7,7 +7,6 @@ import java.awt.event.MouseListener;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
 
-import cs3500.music.controller.MetaEventHandler;
 import cs3500.music.model.IViewModel;
 
 /**

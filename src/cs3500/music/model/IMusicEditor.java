@@ -131,6 +131,8 @@ public interface IMusicEditor<MusicSheet> {
    * @return the tempo of the song
    */
   int getTempo();
+
+  List<Note> allNotes();
 }
 
 

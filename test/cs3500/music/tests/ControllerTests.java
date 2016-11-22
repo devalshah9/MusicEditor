@@ -2,10 +2,14 @@ package cs3500.music.tests;
 
 import org.junit.Test;
 
+
 import java.awt.event.KeyEvent;
 
 import javax.sound.midi.MetaMessage;
 
+import cs3500.music.commons.Note;
+import cs3500.music.commons.Octave;
+import cs3500.music.commons.Pitch;
 import cs3500.music.controller.IMusicController;
 import cs3500.music.controller.KeyboardHandler;
 import cs3500.music.controller.MetaEventHandler;
@@ -16,7 +20,6 @@ import cs3500.music.model.IViewModel;
 import cs3500.music.model.MusicEditor;
 import cs3500.music.model.ViewModel;
 import cs3500.music.util.CompositionBuilder;
-import cs3500.music.util.MusicBuilder;
 import cs3500.music.view.AudibleView;
 import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGuiView;
@@ -35,7 +38,7 @@ public class ControllerTests {
   /**
    * To initialize the data.
    */
-  public void initialize() {
+  private void initialize() {
     CompositionBuilder<IMusicEditor> builder;
     IMusicEditor editor;
     editor = new MusicEditor();
@@ -69,26 +72,22 @@ public class ControllerTests {
    * the right thing, and testing whether the keyboard handler is dispatching to the right Runnables.
    * For one of those two purposes, using mock Runnables is fine.
    * For the other, you need to find another way to test...
-   *
-   * Amit:
-   * You should test the controller. As with testing the Midiview, think about what exactly you are
-   * testing: you are *not* testing whether pressing a key fires a KeyEvent,
-   * because Java Swing will reliably do that...
    */
 
+  // This tests if a keyboard handler can call the proper runnable based on a key event
   @Test
-  public void testGoBeg() {
-    controller.createKeyboardHandler();
-    IMusicEditor editor = new MusicEditor();
-    editor.createNewSheet();
-    MockView view = new MockView();
-    controller = new MusicController(editor, view);
-    view.scrollLeft();
-    assertEquals(view.horizontalScroll, 900);
+  public void testKeyHandler() {
+    this.initialize();
+    StringBuilder testString = new StringBuilder();
+    KeyboardHandler keyboardHandler = new KeyboardHandler();
+    Runnable addToString = () -> testString.append("The Runnable works by the Keyboard Handler!");
+    keyboardHandler.installRunnable(KeyEvent.VK_T, addToString, KeyboardHandler.ActionType.PRESSED);
+    keyboardHandler.keyPressed(new KeyEvent(new VisualView(viewModel), 0, 0, 0,
+            KeyEvent.VK_T, 't', 0));
+    assertEquals(testString.toString(), "The Runnable works by the Keyboard Handler!");
   }
 
-
-
+  // This tests if a mouse event is fired
   @Test
   public void testMouse() {
     initialize();
@@ -96,11 +95,7 @@ public class ControllerTests {
     this.a.toString().contains("The mouse event fired.");
   }
 
-  @Test
-  public void testKeys() {
-
-  }
-
+  // This tests if a meta event was sent
   @Test
   public void testMeta() {
     this.a.toString().contains("The meta message was sent.");
@@ -116,5 +111,55 @@ public class ControllerTests {
 
   public void confirmMeta() {
     this.a.append("The meta message was sent.");
+  }
+
+  // to test if a meta handler completes the required actions
+  @Test
+  public void testMetaHandler() {
+    this.initialize();
+    StringBuilder testString = new StringBuilder();
+    VisualView visualView = new VisualView(viewModel);
+    AudibleView audibleView = new AudibleView(viewModel);
+    MetaEventHandler metaEventHandler = new MetaEventHandler(visualView, audibleView);
+    Runnable addToString = () -> testString.append("The Runnable works by the Meta Handler!");
+    metaEventHandler.installRunnable(addToString);
+    MetaMessage metaMessage = new MetaMessage();
+    metaEventHandler.meta(metaMessage);
+    assertEquals(testString.toString(), "The Runnable works by the Meta Handler!");
+  }
+
+  // to test adding a rest to a song by the controller successfully adds 4 beats to the song
+  @Test
+  public void testAddRest() {
+    this.initialize();
+    IMusicEditor editor = new MusicEditor();
+    editor.createNewSheet();
+    viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
+    IGuiView visualView = new VisualView(viewModel);
+    AudibleView audibleView = new AudibleView(viewModel);
+    IGuiView compositeView = new CompositeView(visualView, audibleView);
+    editor.addSingleNote(0, new Note(Pitch.A, Octave.EIGHT, true, 3, 4), 5, 0);
+    controller = new MusicController(editor, compositeView);
+    assertEquals(editor.getBeats(0).size(), 5);
+    controller.addRest();
+    assertEquals(editor.getBeats(0).size(), 9);
+  }
+
+  // to test clicking on a notes panel by the controller successfully adds a note to the song
+  @Test
+  public void testOnClick() {
+    this.initialize();
+    IMusicEditor editor = new MusicEditor();
+    editor.createNewSheet();
+    viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
+    IGuiView visualView = new VisualView(viewModel);
+    AudibleView audibleView = new AudibleView(viewModel);
+    IGuiView compositeView = new CompositeView(visualView, audibleView);
+    editor.addSingleNote(0, new Note(Pitch.A, Octave.EIGHT, true, 3, 4), 5, 0);
+    editor.addSingleNote(0, new Note(Pitch.A, Octave.SEVEN, true, 3, 4), 5, 0);
+    controller = new MusicController(editor, compositeView);
+    assertEquals(editor.allNotes().size(), 10);
+    controller.onClick(100, 50);
+    assertEquals(editor.allNotes().size(), 11);
   }
 }

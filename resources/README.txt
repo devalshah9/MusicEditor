@@ -83,3 +83,10 @@ to the console, rendering notes as they're rednered in the getSheetState method 
 
 To run the view, there is a MusicEditor runtime class that has a main method, which takes in two arguments. The first argument is tha path to the text file
 containing the song information to play. The second argument is the kind of view to display, which is either 'midi', 'visual', or 'console'.
+
+
+                     ---------------------------------------------- COMPOSITE ------------------------------------------------------------
+To use the composite view and controller, press the 'Home' key. Fn + <- on Mac.
+For 'End' press 'End'. Fn + -> for Mac.
+For scrolling in any direction, use the arrow keys.
+For adding a measure,

@@ -1,9 +1,7 @@
 package cs3500.music.controller;
 
-import java.util.Map;
-
 /**
- * Controller to work with Music Editor.
+ * Controller to work with Music Editor and the different views.
  */
 public interface IMusicController {
 
@@ -13,8 +11,8 @@ public interface IMusicController {
 
   void createMetaHandler();
 
+  void addRest();
+
   void onClick(int x, int y);
-
-
 
 }

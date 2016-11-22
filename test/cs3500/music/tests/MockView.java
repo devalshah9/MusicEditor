@@ -1,7 +1,5 @@
 package cs3500.music.tests;
 
-import org.junit.Test;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -9,11 +7,6 @@ import java.awt.event.MouseListener;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
-import javax.sound.midi.MetaMessage;
-
-import cs3500.music.controller.KeyboardHandler;
-import cs3500.music.controller.MetaEventHandler;
-import cs3500.music.controller.MouseHandler;
 import cs3500.music.controller.MusicController;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
@@ -52,7 +45,8 @@ public class MockView implements IGuiView {
   }
 
   @Override
-  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException,
+          IllegalArgumentException {
 
   }
 

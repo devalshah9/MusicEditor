@@ -147,7 +147,6 @@ public class VisualView extends JFrame implements IGuiView {
 
   @Override
   public void refresh(boolean paused) {
-    int endBeat = viewModel.getEndBeat();
     if(!paused) {
       this.viewModel.incrementBeat();
     }
@@ -198,10 +197,6 @@ public class VisualView extends JFrame implements IGuiView {
   @Override
   public void setMetaListener(MetaEventListener listener) {
     // does not do anything
-  }
-
-  public void setPaused(boolean paused) {
-    this.paused = paused;
   }
 
   @Override

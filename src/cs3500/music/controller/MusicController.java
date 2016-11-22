@@ -1,12 +1,8 @@
 package cs3500.music.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.Timer;
 
 import cs3500.music.commons.Note;
 import cs3500.music.commons.Octave;
@@ -17,9 +13,9 @@ import cs3500.music.model.ViewModel;
 import cs3500.music.view.IGuiView;
 
 /**
- * Controller class to implement IMusicController
+ * Controller class to implement IMusicController.
  */
-public class MusicController implements IMusicController, ActionListener {
+public class MusicController implements IMusicController {
 
   IMusicEditor editor;
   IGuiView view;
@@ -27,7 +23,6 @@ public class MusicController implements IMusicController, ActionListener {
   MouseHandler mouseHandler;
   MetaEventHandler metaEventHandler;
   IViewModel viewModel;
-  Timer timer = new Timer();
 
   public MusicController(IMusicEditor editor, IGuiView view) {
     this.editor = editor;
@@ -66,10 +61,10 @@ public class MusicController implements IMusicController, ActionListener {
     keyboardHandler = new KeyboardHandler();
 
     // to jump to the beginning of the song, press Q since there is no Home button
-    keyboardHandler.installRunnable(KeyEvent.VK_Q, goBeg, KeyboardHandler.ActionType.PRESSED);
+    keyboardHandler.installRunnable(KeyEvent.VK_HOME, goBeg, KeyboardHandler.ActionType.PRESSED);
 
     // to jump to the end of the song, press P since there is no End button
-    keyboardHandler.installRunnable(KeyEvent.VK_P, goEnd, KeyboardHandler.ActionType.PRESSED);
+    keyboardHandler.installRunnable(KeyEvent.VK_END, goEnd, KeyboardHandler.ActionType.PRESSED);
 
     // to scroll right, press the right arrow key
     keyboardHandler.installRunnable(KeyEvent.VK_RIGHT, scrollRight,
@@ -92,7 +87,8 @@ public class MusicController implements IMusicController, ActionListener {
             KeyboardHandler.ActionType.PRESSED);
 
     // to pause the song, press space bar
-    keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay, KeyboardHandler.ActionType.PRESSED);
+    keyboardHandler.installRunnable(KeyEvent.VK_SPACE, pausePlay,
+            KeyboardHandler.ActionType.PRESSED);
   }
 
   @Override
@@ -107,7 +103,7 @@ public class MusicController implements IMusicController, ActionListener {
     mouseHandler.installRunnable(toggleNote);
   }
 
-
+  @Override
   public void addRest() {
     if(view.getPaused()) {
       editor.addRest(0, 4);
@@ -121,8 +117,6 @@ public class MusicController implements IMusicController, ActionListener {
       Pitch pitchClicked;
       Octave octaveClicked;
       int beatClicked;
-      double viewDimensionX = this.view.getDimensionX();
-      double viewDimensionY = this.view.getDimensionY();
 
       // convert the x and y into a frequency and beat number to create a note
 
@@ -145,7 +139,6 @@ public class MusicController implements IMusicController, ActionListener {
         lowestIndex = 0;
         highestIndex = 0;
       }
-      int measureLength = viewModel.getMeasureLength();
       int numDistinctNotes = 0;
       try {
         numDistinctNotes = highestNote.notesBetweenTwoNotes(lowestNote);
@@ -162,8 +155,6 @@ public class MusicController implements IMusicController, ActionListener {
 
       pitchClicked = newList.get(y - y % boxHeight / boxHeight).getPitch();
       octaveClicked = newList.get(y - y % boxHeight / boxHeight).getOctave();
-
-      int widthScale = 30;
 
       beatClicked = x - x % boxWidth / boxWidth + 1;
 
@@ -251,9 +242,4 @@ public class MusicController implements IMusicController, ActionListener {
     editor.deleteNote(0, note, beat);
   }
 
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-
-  }
 }

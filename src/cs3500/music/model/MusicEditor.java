@@ -273,6 +273,7 @@ public class MusicEditor implements IMusicEditor<MusicSheet> {
     }
   }
 
+  @Override
   public List<Note> allNotes() {
     List<Note> notes = new ArrayList<Note>();
     for (int i = 0; i < this.sheets.get(0).getFurthestBeat(); i++) {
