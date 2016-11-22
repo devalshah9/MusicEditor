@@ -93,7 +93,9 @@ For scrolling in any direction, use the arrow keys.
 For adding a measure, press m.
 For editing notes, the composition must be paused. To pause, press the spacebar. Once paused, a note's head can be clicked on to delete a note. A sustain can be clicked
 on to turn it into a head. If a blank space is clicked, a head will be added if there was no note of the same frequency at the beat before. If there was a note of the same
-frequency at the beat before, a sustain will be added.
+frequency at the beat before, a sustain will be added. It should be noted that on large songs,
+such as Through the Fire and Flames, there will be a large amount of lag when a note is added due to
+the way this functionality was implemented.
 
 The composite view will play the song through MIDI as the red line scrolls through on the visual view. A composite view consists of a visual and audible view.
 In order to keep the two in sync, the midi track adds metaEvents to the track as it's synthesizing MidiEvents. These meta messages are picked up the metaEventListener
