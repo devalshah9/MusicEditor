@@ -19,11 +19,15 @@ public class CompositeView implements IGuiView {
   IGuiView visualView;
   AudibleView audibleView;
 
+  /**
+   * The constructor for a Composite View object
+   * @param visualView the visual view to work with
+   * @param audibleView the audible view to work with
+   */
   public CompositeView(IGuiView visualView, AudibleView audibleView) {
     this.visualView = visualView;
     this.audibleView = audibleView;
   }
-
 
   @Override
   public void setMouseListener(MouseListener mouse) {
@@ -100,18 +104,13 @@ public class CompositeView implements IGuiView {
   @Override
   public void refresh(boolean paused) {
     this.visualView.refresh(paused);
-    if(paused) {
+    if (paused) {
       try {
         this.audibleView.refresh(paused);
       } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
     }
-  }
-
-  @Override
-  public void setBeat() {
-    this.visualView.setBeat();
   }
 
   @Override
@@ -124,7 +123,8 @@ public class CompositeView implements IGuiView {
     return this.audibleView;
   }
 
-  @Override public boolean getPaused() {
+  @Override
+  public boolean getPaused() {
     return (this.audibleView.getPaused());
   }
 }
