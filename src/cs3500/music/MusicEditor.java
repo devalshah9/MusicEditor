@@ -3,12 +3,19 @@ package cs3500.music;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.controller.MusicController;
 import cs3500.music.model.IMusicEditor;
 import cs3500.music.model.IViewModel;
 import cs3500.music.model.ViewModel;
+import cs3500.music.provider.AudioVisualView;
+import cs3500.music.provider.GuiViewFrame;
+import cs3500.music.provider.IMusicEditorGuiView;
+import cs3500.music.provider.IMusicEditorPlayableView;
+import cs3500.music.provider.MidiView;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicBuilder;
 import cs3500.music.util.MusicReader;
@@ -16,6 +23,7 @@ import cs3500.music.view.AudibleView;
 import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IMusicView;
+import cs3500.music.view.ViewAdapter;
 import cs3500.music.view.VisualView;
 
 /**
@@ -39,13 +47,14 @@ public class MusicEditor {
     editor = new cs3500.music.model.MusicEditor();
     builder = new MusicBuilder();
     editor = builder.build();
-    MusicEditor.viewModel = new ViewModel(editor, 0 , 4, editor.getTempo());
+    MusicEditor.viewModel = new ViewModel(editor, 0, 4, editor.getTempo());
   }
 
   /**
    * The main method for running our program.
+   *
    * @param args the arguments given to the program
-   * @throws IOException if invalid input or output
+   * @throws IOException              if invalid input or output
    * @throws InvalidMidiDataException if invalid MIDI data
    */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
@@ -61,6 +70,7 @@ public class MusicEditor {
     IMusicEditor editor = (cs3500.music.model.MusicEditor) builder.build();
     IViewModel model = new ViewModel(editor, 0, 4, editor.getTempo());
     IMusicView view = null;
+    MusicController controller = null;
     if (args[1].equals("console")) {
       view = IMusicView.create("console", model);
     } else if (args[1].equals("visual")) {
@@ -71,13 +81,30 @@ public class MusicEditor {
       IGuiView visual = new VisualView(model);
       AudibleView audio = new AudibleView(model);
       IGuiView compositeView = new CompositeView(visual, audio);
-      MusicController controller = new MusicController(editor, compositeView);
+      controller = new MusicController(editor, compositeView);
       try {
         compositeView.initialize();
         compositeView.renderSong(model, model.getTempo());
       } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
+    } else if (args[1].equals("provider")) {
+      IMusicEditorPlayableView providerAudio = null;
+      IMusicEditorGuiView providerVisual = new GuiViewFrame();
+      try {
+        providerAudio = new MidiView();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+      AudioVisualView audioVisualView = new AudioVisualView(providerVisual, providerAudio);
+      ViewAdapter providerComposite = null;
+      try {
+        providerComposite = new ViewAdapter(audioVisualView);
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+      controller = new MusicController(editor, providerComposite);
+      providerComposite.initialize();
     } else {
       throw new InvalidMidiDataException("Invalid input!");
     }
