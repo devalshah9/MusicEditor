@@ -3,7 +3,7 @@ package cs3500.music.provider;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import cs3500.music.model.note.Note;
+
 
 /**
  * An Abstract music editor view which keeps track of the notes to initialize using an ArrayList.

@@ -1,4 +1,4 @@
-package cs3500.music.provider.note;
+package cs3500.music.provider;
 
 import java.util.Objects;
 

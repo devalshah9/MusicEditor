@@ -1,4 +1,4 @@
-package cs3500.music.provider.fixedgrid;
+package cs3500.music.provider;
 
 /**
  * Represents a slot on a FixedGrid.

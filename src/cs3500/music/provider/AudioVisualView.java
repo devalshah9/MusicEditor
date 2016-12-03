@@ -3,8 +3,6 @@ package cs3500.music.provider;
 import java.awt.event.KeyListener;
 import java.util.Collection;
 
-import cs3500.music.provider.note.Note;
-
 /**
  * A view which combines the Gui and Midi views.
  */

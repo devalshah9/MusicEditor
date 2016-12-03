@@ -8,10 +8,6 @@ import java.util.Arrays;
 
 import javax.swing.JPanel;
 
-import cs3500.music.model.fixedgrid.FixedGrid;
-import cs3500.music.model.fixedgrid.FixedGridMarker;
-import cs3500.music.model.note.Note;
-import cs3500.music.model.note.Pitch;
 
 /**
  * A panel for displaying notes.

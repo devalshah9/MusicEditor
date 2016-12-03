@@ -15,10 +15,10 @@ import cs3500.music.provider.GuiViewFrame;
 import cs3500.music.provider.IMusicEditorGuiView;
 import cs3500.music.provider.IMusicEditorPlayableView;
 import cs3500.music.provider.MidiView;
-import cs3500.music.provider.fixedgrid.FixedGrid;
-import cs3500.music.provider.note.Note;
-import cs3500.music.provider.note.Pitch;
-import cs3500.music.provider.note.PitchType;
+import cs3500.music.provider.FixedGrid;
+import cs3500.music.provider.Note;
+import cs3500.music.provider.Pitch;
+import cs3500.music.provider.PitchType;
 
 /**
  * Adapter class to convert their methods to ours for the Composite View.
@@ -41,7 +41,10 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
-
+    provider.setNotes(songConverter(model));
+    provider.setLength(model.getEndBeat());
+    provider.setMeasureLength(4);
+    provider.setTempo(tempo);
     provider.initialize();
   }
 

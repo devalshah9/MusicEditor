@@ -1,4 +1,4 @@
-package cs3500.music.provider.note;
+package cs3500.music.provider;
 
 /**
  * Represents the pitches accessible on a standard chromatic scale.
