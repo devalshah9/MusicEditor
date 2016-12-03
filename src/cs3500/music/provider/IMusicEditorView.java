@@ -2,7 +2,7 @@ package cs3500.music.provider;
 
 import java.util.Collection;
 
-import cs3500.music.model.note.Note;
+import cs3500.music.provider.note.Note;
 
 /**
  * An interface for views of the music editor.

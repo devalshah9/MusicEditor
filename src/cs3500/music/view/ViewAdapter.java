@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
@@ -13,6 +15,10 @@ import cs3500.music.provider.GuiViewFrame;
 import cs3500.music.provider.IMusicEditorGuiView;
 import cs3500.music.provider.IMusicEditorPlayableView;
 import cs3500.music.provider.MidiView;
+import cs3500.music.provider.fixedgrid.FixedGrid;
+import cs3500.music.provider.note.Note;
+import cs3500.music.provider.note.Pitch;
+import cs3500.music.provider.note.PitchType;
 
 /**
  * Adapter class to convert their methods to ours for the Composite View.
@@ -35,6 +41,7 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+
     provider.initialize();
   }
 
@@ -123,5 +130,53 @@ public class ViewAdapter implements IGuiView {
   @Override
   public boolean getPaused() {
     return false;
+  }
+
+  public FixedGrid fixedGridCreator(IViewModel model) {
+    return new FixedGrid(songConverter(model), model.getEndBeat());
+  }
+
+  public ArrayList<Note> songConverter(IViewModel model) {
+    TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
+    ArrayList<Note> newList = new ArrayList<Note>();
+    for (int n = 0; n < model.getEndBeat(); n++) {
+      try {
+        if (notes.containsKey(n)) {
+          ArrayList<cs3500.music.commons.Note> currNotes = notes.get(n);
+          for (int i = 0; i < currNotes.size(); i++) {
+            Note note = noteConverter(model, currNotes.get(i), n);
+            newList.add(note);
+          }
+        }
+      } catch (Exception e) {
+
+      }
+    }
+    return newList;
+  }
+
+
+  public Note noteConverter(IViewModel model, cs3500.music.commons.Note note, int startBeat)
+  throws IllegalArgumentException {
+    TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
+    if (notes.containsKey(startBeat)) {
+      ArrayList<cs3500.music.commons.Note> notesAtBeat = notes.get(startBeat);
+      if (notesAtBeat.contains(note)) {
+        int index = notesAtBeat.indexOf(note);
+        note = notesAtBeat.get(index);
+        if (notesAtBeat.get(index).isBeginningOfNote()) {
+          Pitch pitch = new Pitch(PitchType.fromInt(note.getPitch().ordinal()),
+                  note.getOctave().ordinal());
+          int duration = model.getNoteDuration(note, startBeat);
+          Note newNote = new Note(pitch, startBeat, duration);
+          return newNote;
+        } else {
+        }
+      } else {
+      }
+    } else {
+      throw new IllegalArgumentException("Note doesnt exist here.");
+    }
+    return null;
   }
 }

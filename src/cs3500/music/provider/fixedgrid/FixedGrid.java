@@ -2,8 +2,8 @@ package cs3500.music.provider.fixedgrid;
 
 import java.util.Collection;
 
-import cs3500.music.model.note.Note;
-import cs3500.music.model.note.Pitch;
+import cs3500.music.provider.note.Note;
+import cs3500.music.provider.note.Pitch;
 
 /**
  * Represents an immutable grid with axis of beats and pitch with each position in the grid being

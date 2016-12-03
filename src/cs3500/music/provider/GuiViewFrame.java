@@ -6,8 +6,8 @@ import java.util.Collection;
 
 import javax.swing.JScrollPane;
 
-import cs3500.music.model.fixedgrid.FixedGrid;
-import cs3500.music.model.note.Note;
+import cs3500.music.provider.fixedgrid.FixedGrid;
+import cs3500.music.provider.note.Note;
 
 /**
  * A skeleton Frame (i.e., a window) in Swing
