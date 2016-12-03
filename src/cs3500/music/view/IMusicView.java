@@ -1,8 +1,14 @@
 package cs3500.music.view;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.model.IViewModel;
+import cs3500.music.provider.AudioVisualView;
+import cs3500.music.provider.GuiViewFrame;
+import cs3500.music.provider.IMusicEditorGuiView;
+import cs3500.music.provider.IMusicEditorPlayableView;
+import cs3500.music.provider.MidiView;
 
 /**
  * The View interface for all different types of views.
@@ -43,8 +49,23 @@ public interface IMusicView {
       VisualView visual = new VisualView(model);
       AudibleView audible = new AudibleView(model);
       return new CompositeView(visual, audible);
+    } else if (type.equals("provider")) {
+      IMusicEditorPlayableView providerAudio = null;
+      try {
+        providerAudio = new MidiView();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+      IMusicEditorGuiView providerVisual = new GuiViewFrame();
+      AudioVisualView audioVisualView = new AudioVisualView(providerVisual, providerAudio);
+      try {
+        return new ViewAdapter(audioVisualView);
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
     } else {
       throw new IllegalArgumentException("Invalid view type!");
     }
+    return null;
   }
 }

@@ -104,17 +104,9 @@ public class MusicEditor {
         e.printStackTrace();
       }
       controller = new MusicController(editor, providerComposite);
-      providerComposite.initialize();
+      providerComposite.renderSong(model, model.getTempo());
     } else {
       throw new InvalidMidiDataException("Invalid input!");
-    }
-    if (!args[1].equals("composite")) {
-      try {
-        view.initialize();
-        view.renderSong(model, model.getTempo());
-      } catch (InvalidMidiDataException e) {
-        e.printStackTrace();
-      }
     }
   }
 }

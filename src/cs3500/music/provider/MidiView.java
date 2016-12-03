@@ -14,7 +14,6 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 
-import cs3500.music.model.note.Note;
 
 /**
  * A skeleton for MIDI playback.

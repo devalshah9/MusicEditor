@@ -43,7 +43,6 @@ public class FixedGrid {
 
     int lowNote = Integer.MAX_VALUE;
     int highNote = 0;
-
     for (Note note : notes) {
       lowNote = note.getPitchIntValue() < lowNote ? note.getPitchIntValue() : lowNote;
       highNote = note.getPitchIntValue() > highNote ? note.getPitchIntValue() : highNote;
