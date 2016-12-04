@@ -41,8 +41,8 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+    provider.setLength(model.getEndBeat() + 1);
     provider.setNotes(songConverter(model));
-    provider.setLength(model.getEndBeat());
     provider.setMeasureLength(4);
     provider.setTempo(tempo);
     provider.initialize();
@@ -147,8 +147,12 @@ public class ViewAdapter implements IGuiView {
         if (notes.containsKey(n)) {
           ArrayList<cs3500.music.commons.Note> currNotes = notes.get(n);
           for (int i = 0; i < currNotes.size(); i++) {
-            Note note = noteConverter(model, currNotes.get(i), n);
-            newList.add(note);
+            try {
+              Note note = noteConverter(model, currNotes.get(i), n);
+              newList.add(note);
+            } catch(Exception e) {
+              continue;
+            }
           }
         }
       } catch (Exception e) {
