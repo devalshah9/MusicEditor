@@ -9,9 +9,11 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
+import cs3500.music.controller.MouseHandler;
 import cs3500.music.model.IViewModel;
 import cs3500.music.provider.AudioVisualView;
 import cs3500.music.provider.GuiViewFrame;
+import cs3500.music.provider.GuiViewFrameMouseListener;
 import cs3500.music.provider.IMusicEditorGuiView;
 import cs3500.music.provider.IMusicEditorPlayableView;
 import cs3500.music.provider.MidiView;
@@ -41,17 +43,16 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
-    provider.setLength(model.getEndBeat() + 1);
-    provider.setNotes(songConverter(model));
     provider.setMeasureLength(4);
     provider.setTempo(tempo);
+    provider.setLength(model.getEndBeat() + 1);
+    provider.setNotes(songConverter(model));
     provider.initialize();
   }
 
   @Override
   public void setMouseListener(MouseListener mouse) {
-//    GuiViewFrameMouseListener listener = new GuiViewFrameMouseListener()
-//    provider.addMouseEventHandler(mouse);
+    provider.addMouseEventHandler((MouseHandler) mouse);
   }
 
   @Override
@@ -132,7 +133,7 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public boolean getPaused() {
-    return false;
+    return isPaused;
   }
 
   public FixedGrid fixedGridCreator(IViewModel model) {
