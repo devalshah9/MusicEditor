@@ -2,6 +2,7 @@ package cs3500.music.provider;
 
 import java.io.IOException;
 
+import cs3500.music.provider.FixedGrid;
 
 /**
  * A textual view for the music editor.

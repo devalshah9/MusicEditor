@@ -171,15 +171,12 @@ public class ViewAdapter implements IGuiView {
           Pitch pitch = new Pitch(PitchType.fromInt(note.getPitch().ordinal()),
                   note.getOctave().ordinal());
           int duration = model.getNoteDuration(note, startBeat);
-          Note newNote = new Note(pitch, startBeat, duration);
+          Note newNote = new Note(pitch, startBeat, duration, note.getInstrument());
           return newNote;
-        } else {
         }
-      } else {
       }
-    } else {
-      throw new IllegalArgumentException("Note doesnt exist here.");
-    }
-    return null;
+  }
+    System.out.println("why are you doing this");
+    throw new IllegalArgumentException("Note doesnt exist here.");
   }
 }

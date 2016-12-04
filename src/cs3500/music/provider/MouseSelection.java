@@ -1,5 +1,7 @@
 package cs3500.music.provider;
 
+import cs3500.music.provider.Note;
+
 /**
  * Represents a selection made by the user. Can either be a note, or a location.
  */
