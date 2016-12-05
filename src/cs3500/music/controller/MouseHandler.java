@@ -5,10 +5,13 @@ import java.awt.event.MouseListener;
 
 import javax.swing.SwingUtilities;
 
+import cs3500.music.provider.IMouseEventHandler;
+import cs3500.music.provider.MouseSelection;
+
 /**
  * Class to handle mouse actions.
  */
-public class MouseHandler implements MouseListener {
+public class MouseHandler implements MouseListener, IMouseEventHandler {
 
   // the x coordinate of the click
   private int x;
@@ -43,6 +46,21 @@ public class MouseHandler implements MouseListener {
   @Override
   public void mouseReleased(MouseEvent e) {
     //No mousereleased events needed.
+  }
+
+  @Override
+  public void mouseClicked(MouseSelection selection, MouseEvent e) {
+    mouseClicked(e);
+  }
+
+  @Override
+  public void mousePressed(MouseSelection selection, MouseEvent e) {
+
+  }
+
+  @Override
+  public void mouseReleased(MouseSelection s, MouseEvent e) {
+
   }
 
   @Override

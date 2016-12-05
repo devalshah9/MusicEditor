@@ -150,6 +150,7 @@ public class MusicController implements IMusicController {
 
   @Override
   public void onClick(int x, int y) {
+    System.out.println(x + y);
     if (this.view.getPaused()) {
       Pitch pitchClicked;
       Octave octaveClicked;

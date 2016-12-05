@@ -9,9 +9,11 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
+import cs3500.music.controller.MouseHandler;
 import cs3500.music.model.IViewModel;
 import cs3500.music.provider.AudioVisualView;
 import cs3500.music.provider.GuiViewFrame;
+import cs3500.music.provider.GuiViewFrameMouseListener;
 import cs3500.music.provider.IMusicEditorGuiView;
 import cs3500.music.provider.IMusicEditorPlayableView;
 import cs3500.music.provider.MidiView;
@@ -50,7 +52,7 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void setMouseListener(MouseListener mouse) {
-    // provider.addMouseEventHandler(mouse);
+    provider.addMouseEventHandler((MouseHandler) mouse);
   }
 
   @Override
@@ -131,7 +133,7 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public boolean getPaused() {
-    return false;
+    return isPaused;
   }
 
   public FixedGrid fixedGridCreator(IViewModel model) {
@@ -140,7 +142,6 @@ public class ViewAdapter implements IGuiView {
 
   public ArrayList<Note> songConverter(IViewModel model) {
     TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
-
     ArrayList<Note> newList = new ArrayList<Note>();
     for (int n = 0; n < model.getEndBeat(); n++) {
       try {
@@ -180,6 +181,7 @@ public class ViewAdapter implements IGuiView {
         }
       }
   }
+    System.out.println("why are you doing this");
     throw new IllegalArgumentException("Note doesnt exist here.");
   }
 }
