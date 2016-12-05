@@ -13,7 +13,6 @@ import cs3500.music.controller.MouseHandler;
 import cs3500.music.model.IViewModel;
 import cs3500.music.provider.AudioVisualView;
 import cs3500.music.provider.GuiViewFrame;
-import cs3500.music.provider.GuiViewFrameMouseListener;
 import cs3500.music.provider.IMusicEditorGuiView;
 import cs3500.music.provider.IMusicEditorPlayableView;
 import cs3500.music.provider.MidiView;
