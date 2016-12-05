@@ -41,17 +41,16 @@ public class ViewAdapter implements IGuiView {
 
   @Override
   public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
-    provider.setLength(model.getEndBeat() + 1);
-    provider.setNotes(songConverter(model));
     provider.setMeasureLength(4);
     provider.setTempo(tempo);
+    provider.setLength(model.getEndBeat() + 1);
+    provider.setNotes(songConverter(model));
     provider.initialize();
   }
 
   @Override
   public void setMouseListener(MouseListener mouse) {
-//    GuiViewFrameMouseListener listener = new GuiViewFrameMouseListener()
-//    provider.addMouseEventHandler(mouse);
+    // provider.addMouseEventHandler(mouse);
   }
 
   @Override
@@ -141,6 +140,7 @@ public class ViewAdapter implements IGuiView {
 
   public ArrayList<Note> songConverter(IViewModel model) {
     TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
+
     ArrayList<Note> newList = new ArrayList<Note>();
     for (int n = 0; n < model.getEndBeat(); n++) {
       try {
@@ -180,7 +180,6 @@ public class ViewAdapter implements IGuiView {
         }
       }
   }
-    System.out.println("why are you doing this");
     throw new IllegalArgumentException("Note doesnt exist here.");
   }
 }
