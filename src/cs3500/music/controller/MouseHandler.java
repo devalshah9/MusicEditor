@@ -39,7 +39,17 @@ public class MouseHandler implements MouseListener, IMouseEventHandler {
   }
 
   @Override
+  public void mouseClicked(MouseSelection selection, MouseEvent e) {
+    mouseClicked(e);
+  }
+
+  @Override
   public void mousePressed(MouseEvent e) {
+    //No mousepressed events needed.
+  }
+
+  @Override
+  public void mousePressed(MouseSelection selection, MouseEvent e) {
     //No mousepressed events needed.
   }
 
@@ -49,18 +59,8 @@ public class MouseHandler implements MouseListener, IMouseEventHandler {
   }
 
   @Override
-  public void mouseClicked(MouseSelection selection, MouseEvent e) {
-    mouseClicked(e);
-  }
-
-  @Override
-  public void mousePressed(MouseSelection selection, MouseEvent e) {
-
-  }
-
-  @Override
   public void mouseReleased(MouseSelection s, MouseEvent e) {
-
+    //No mousereleased events needed.
   }
 
   @Override

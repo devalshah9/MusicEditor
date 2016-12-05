@@ -1,7 +1,5 @@
 package cs3500.music.provider;
 
-import cs3500.music.provider.Note;
-
 /**
  * Represents the location and size of a note.
  */

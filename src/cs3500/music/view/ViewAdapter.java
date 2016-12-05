@@ -41,7 +41,8 @@ public class ViewAdapter implements IGuiView {
   }
 
   @Override
-  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException, IllegalArgumentException {
+  public void renderSong(IViewModel model, int tempo) throws InvalidMidiDataException,
+          IllegalArgumentException {
     provider.setMeasureLength(4);
     provider.setTempo(tempo);
     provider.setLength(model.getEndBeat() + 1);
@@ -135,10 +136,20 @@ public class ViewAdapter implements IGuiView {
     return isPaused;
   }
 
+  /**
+   * To create a fixed grid.
+   * @param model the viewModel to work with
+   * @return a fixed grid of that viewModel
+   */
   public FixedGrid fixedGridCreator(IViewModel model) {
     return new FixedGrid(songConverter(model), model.getEndBeat());
   }
 
+  /**
+   * To convert our song to their format.
+   * @param model our viewModel
+   * @return a list of notes for the newly formatted song
+   */
   public ArrayList<Note> songConverter(IViewModel model) {
     TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
     ArrayList<Note> newList = new ArrayList<Note>();
@@ -150,21 +161,29 @@ public class ViewAdapter implements IGuiView {
             try {
               Note note = noteConverter(model, currNotes.get(i), n);
               newList.add(note);
-            } catch(Exception e) {
+            } catch (Exception e) {
               continue;
             }
           }
         }
       } catch (Exception e) {
-
+          // do no action if an exception is caught
       }
     }
     return newList;
   }
 
 
+  /**
+   * To convert our notes to theirs.
+   * @param model our viewModel
+   * @param note our note to be converted
+   * @param startBeat the beat that it starts at
+   * @return their version of the note
+   * @throws IllegalArgumentException if there is no note that exists
+   */
   public Note noteConverter(IViewModel model, cs3500.music.commons.Note note, int startBeat)
-  throws IllegalArgumentException {
+          throws IllegalArgumentException {
     TreeMap<Integer, ArrayList<cs3500.music.commons.Note>> notes = model.getNotes();
     if (notes.containsKey(startBeat)) {
       ArrayList<cs3500.music.commons.Note> notesAtBeat = notes.get(startBeat);
@@ -179,8 +198,7 @@ public class ViewAdapter implements IGuiView {
           return newNote;
         }
       }
-  }
-    System.out.println("why are you doing this");
+    }
     throw new IllegalArgumentException("Note doesnt exist here.");
   }
 }

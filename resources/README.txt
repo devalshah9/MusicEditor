@@ -111,3 +111,7 @@ because this makes it easier to pause and play. This also makes it possible to a
 new part of the documentation and refactoring the entire audible view that we had before. This is the
 only major change from our last submission - our model and view models are essentially the same
 as are our other view components.
+
+                 ---------------------------------------------- PROVIDER VIEW -----------------------------------------------------------
+In order to use the provider's composite view instead of ours, simply type "provider" into the arguments for the main, instead of "composite".
+After that, as usual the song file you want to play.
